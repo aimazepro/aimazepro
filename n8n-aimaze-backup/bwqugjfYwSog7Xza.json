@@ -1,0 +1,163 @@
+{
+  "createdAt": "2025-01-30T18:33:56.101Z",
+  "updatedAt": "2025-01-31T14:19:08.873Z",
+  "id": "bwqugjfYwSog7Xza",
+  "name": "Recebe dados do formulário",
+  "active": true,
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "obrigado",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "7ae7af07-9d0c-40f6-b114-d360f9cf7494",
+      "name": "Webhook1",
+      "webhookId": "eb6819ec-5b7c-4e69-a6e1-0f66daac2430"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a17caef8-061b-45c6-a889-3596c8052f92",
+              "name": "nome",
+              "value": "={{ $json.body.nome }}",
+              "type": "string"
+            },
+            {
+              "id": "94e3f940-43cd-4728-8173-c1f29153df43",
+              "name": "empresa",
+              "value": "={{ $json.body.empresa }}",
+              "type": "string"
+            },
+            {
+              "id": "dc6745ea-ceb8-4ec0-844c-0df6a44b3e33",
+              "name": "email",
+              "value": "={{ $json.body.email }}",
+              "type": "string"
+            },
+            {
+              "id": "a6526cab-0a08-4097-b295-444a4620c63d",
+              "name": "telefone",
+              "value": "={{ $json.body.telefone }}",
+              "type": "string"
+            },
+            {
+              "id": "1c054d3f-dd2f-491f-b78b-a4caf3fc8529",
+              "name": "funcionarios",
+              "value": "={{ $json.body.funcionarios }}",
+              "type": "string"
+            },
+            {
+              "id": "c89107fc-1b47-4a0c-961f-cea8ff5701ef",
+              "name": "faturamento",
+              "value": "={{ $json.body.faturamento }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        220,
+        0
+      ],
+      "id": "f3d9c776-aa15-470e-a967-2ce60dd7d9e3",
+      "name": "Edit Fields"
+    }
+  ],
+  "connections": {
+    "Webhook1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all",
+    "saveExecutionProgress": true,
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {
+    "Webhook1": [
+      {
+        "json": {
+          "headers": {
+            "host": "webhooks.aimaze.com.br",
+            "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36",
+            "content-length": "150",
+            "accept": "*/*",
+            "accept-encoding": "gzip, deflate, br, zstd",
+            "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+            "content-type": "application/json",
+            "origin": "https://webhooks.aimaze.com.br",
+            "priority": "u=1, i",
+            "referer": "https://webhooks.aimaze.com.br/webhook/cadastro",
+            "sec-ch-ua": "\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"",
+            "sec-ch-ua-mobile": "?0",
+            "sec-ch-ua-platform": "\"macOS\"",
+            "sec-fetch-dest": "empty",
+            "sec-fetch-mode": "cors",
+            "sec-fetch-site": "same-origin",
+            "x-forwarded-for": "170.82.105.75",
+            "x-forwarded-host": "webhooks.aimaze.com.br",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "traefik_traefik.1",
+            "x-real-ip": "170.82.105.75"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "nome": "João Reis",
+            "empresa": "Pixeo Marketing",
+            "email": "joao@pixeo.com.br",
+            "telefone": "(38) 9922-5622",
+            "funcionarios": "1-10",
+            "faturamento": "10-15k"
+          },
+          "webhookUrl": "https://webhooks.aimaze.com.br/webhook/obrigado",
+          "executionMode": "production"
+        }
+      }
+    ]
+  },
+  "versionId": "74d8edf8-a60a-4583-9c6a-cf2e54e3635c",
+  "triggerCount": 1,
+  "tags": [
+    {
+      "createdAt": "2024-11-20T21:22:28.345Z",
+      "updatedAt": "2024-11-20T21:22:28.345Z",
+      "id": "7F9yOqhoeiiO1xNv",
+      "name": "produção"
+    },
+    {
+      "createdAt": "2025-01-29T16:24:57.018Z",
+      "updatedAt": "2025-01-29T16:24:57.018Z",
+      "id": "yw2uzQc2gPhZxV4o",
+      "name": "contrato"
+    }
+  ]
+}
