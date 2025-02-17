@@ -1,6 +1,6 @@
 {
   "createdAt": "2024-11-21T13:43:31.135Z",
-  "updatedAt": "2025-02-17T17:54:34.706Z",
+  "updatedAt": "2025-02-17T18:08:30.679Z",
   "id": "F4WpbJirhVJnRRxJ",
   "name": "[Backup - Fluxos] - workflows.aimaze.com.br - joao@aimaze.com.br",
   "active": true,
@@ -38,7 +38,7 @@
             {
               "id": "29c802c0-f374-4214-a1ad-b115dd0e7583",
               "name": "repository",
-              "value": "n8n-aimaze-backup",
+              "value": "aimazepro",
               "type": "string"
             }
           ]
@@ -449,7 +449,7 @@
   },
   "meta": null,
   "pinData": {},
-  "versionId": "31101ce0-abee-419e-9c62-1b28705e16c2",
+  "versionId": "d3a737ec-0300-4b45-8d1b-07592aa60534",
   "triggerCount": 1,
   "tags": [
     {
