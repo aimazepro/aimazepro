@@ -1,0 +1,2645 @@
+{
+  "createdAt": "2024-12-05T21:32:01.850Z",
+  "updatedAt": "2024-12-09T01:28:19.125Z",
+  "id": "2RzShSC8MZHQH3Oi",
+  "name": "[facebook] postagem no instagram",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "c893e814-c722-4ccd-88c0-afdd9e19ecb8",
+      "name": "When clicking ‘Test workflow’",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -300,
+        1420
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $('Edit Fields').item.json.instagram_id }}/media",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "image_url",
+              "value": "={{ $json.url }}"
+            },
+            {
+              "name": "access_token",
+              "value": "EAASjtWPpvTMBOydS3svZAtZCUcG3jCZAkBk9JzZANZAl2cnunKE7FdO5gPwZAnAYkgofY6uup3nJxhcq5FLB7QnywZCsa4iZB65orb8OsBbZAFYgC2L8igO4ZALWiw3zdqV3zx1mmzZBJD0TPIyNRJvmR1aWtzOCAyPY1DM3rOwOrlCTm0uXPF8t9Ec48ElHSiEoc7HqnNseZBUFqhTzrYQZD"
+            },
+            {
+              "name": "caption",
+              "value": "={{ $('Edit Fields').item.json.legenda }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b7abc97e-9acc-428e-bb66-aed12bbbafc1",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        200,
+        -880
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e618bbe8-4dfb-4f1f-af4e-64c448aa9b18",
+              "name": "url",
+              "value": "={{ $json.property_criativo_final }}",
+              "type": "string"
+            },
+            {
+              "id": "d040dae7-06a2-4798-9d99-61f614ab2e21",
+              "name": "legenda",
+              "value": "={{ $('DB Creative Main').item.json.property_legenda_do_criativo }}",
+              "type": "string"
+            },
+            {
+              "id": "0f054b58-8ff6-49b2-9940-b0d3a9bbead4",
+              "name": "instagram_id",
+              "value": "={{ $('DB Creative Main').item.json.property_ig_business_id[0] }}",
+              "type": "string"
+            },
+            {
+              "id": "b6233db0-7013-4895-b43b-363db9976083",
+              "name": "status",
+              "value": "={{ $('DB Creative Main').item.json.property_status }}",
+              "type": "string"
+            },
+            {
+              "id": "c7e09e41-53b9-430f-8bd4-9f324aa167b8",
+              "name": "tipo_postagem",
+              "value": "={{ $('DB Creative Main').item.json.property_type }}",
+              "type": "string"
+            },
+            {
+              "id": "1344c451-c374-44b5-8155-85f737a7f291",
+              "name": "access_token",
+              "value": "={{ $('DB Creative Main').item.json.property_access_token[0] }}",
+              "type": "string"
+            },
+            {
+              "id": "5f39eb89-bba4-4ed2-aa4a-699d629469c3",
+              "name": "is_carousel_item",
+              "value": "={{ $('DB Creative Main').item.json.property_is_carousel_item }}",
+              "type": "string"
+            },
+            {
+              "id": "ad6f5386-f512-4576-816a-bb98f5cbb655",
+              "name": "media_type",
+              "value": "={{ $('DB Creative Main').item.json.property_media_type_post }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        0,
+        -320
+      ],
+      "id": "0e96dfde-405f-4aa2-b69a-7c2233d1d428",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.baserow.io/api/user-files/upload-via-url/",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Token zXN9lFRoIjDR02BfU21any3QdjMBiHCc"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "url",
+              "value": "={{ $json.url }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        60,
+        -880
+      ],
+      "id": "f05692ea-5757-4f31-bb9e-2e56166c3229",
+      "name": "Envia o arquivo para o baserow"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $('Edit Fields').item.json.instagram_id }}/media",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "image_url",
+              "value": "={{ $json.url }}"
+            },
+            {
+              "name": "access_token",
+              "value": "={{ $json.access_token }}"
+            },
+            {
+              "name": "caption",
+              "value": "={{ $('Edit Fields').item.json.legenda }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "c47e6373-0b51-43ca-b723-a5e1e8a97293",
+      "name": "Criação de container",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1020,
+        -840
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $('Edit Fields').item.json.instagram_id }}/media_publish",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "creation_id",
+              "value": "={{ $json.id }}"
+            },
+            {
+              "name": "access_token",
+              "value": "={{ $('Edit Fields').item.json.access_token }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "05b9a103-265d-4913-8ae3-755a90006c0e",
+      "name": "Postar container",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1340,
+        -840
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "property_criativo_final",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        -320
+      ],
+      "id": "9a519f78-a46c-434c-8c10-a081ff1de9be",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $('Edit Fields').item.json.instagram_id }}/media",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "image_url",
+              "value": "={{ $json.url }}"
+            },
+            {
+              "name": "access_token",
+              "value": "={{ $json.access_token }}"
+            },
+            {
+              "name": "is_carousel_item",
+              "value": "={{ $json.is_carousel_item }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "48eeae9c-01c5-4996-a39e-a5d2e60ccf15",
+      "name": "Carrega as imagens do carrossel",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1000,
+        -320
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $('Edit Fields').item.json.instagram_id }}/media",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "image_url",
+              "value": "={{ $json.url }}"
+            },
+            {
+              "name": "access_token",
+              "value": "={{ $json.access_token }}"
+            },
+            {
+              "name": "is_carousel_item",
+              "value": "={{ $json.is_carousel_item }}"
+            },
+            {
+              "name": "media_type",
+              "value": "={{ $json.media_type }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "aad94d36-a3b1-45b0-8c2c-1a2de5456709",
+      "name": "Carrega as imagens do carrossel2",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3600,
+        580
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Recebe os itens de entrada do nó anterior\nconst items = $input.all();\n\n// Extraindo os IDs de cada item e concatenando em uma string separada por vírgulas\nconst children = items.map(item => item.json.id).join(',');\n\n// Retorna o resultado\nreturn [\n  {\n    json: {\n      children: children\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3840,
+        300
+      ],
+      "id": "6b0de0b4-f42b-4dc3-8073-4ca98dc64f45",
+      "name": "Code - Junta os ids1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        3380,
+        480
+      ],
+      "id": "e8485598-a7d0-416d-aaae-42382a32b619",
+      "name": "Loop Over Items1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $('Edit Fields').item.json.instagram_id }}/media",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "image_url",
+              "value": "={{ $json.url }}"
+            },
+            {
+              "name": "access_token",
+              "value": "={{ $json.access_token }}"
+            },
+            {
+              "name": "is_carousel_item",
+              "value": "={{ $json.is_carousel_item }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "34a85688-be86-45e7-8775-fef0134f0ce7",
+      "name": "Carrega as imagens do carrossel1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -520,
+        -680
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $('Edit Fields').first().json.instagram_id }}/media",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "access_token",
+              "value": "={{ $('Edit Fields').first().json.access_token }}"
+            },
+            {
+              "name": "caption",
+              "value": "={{ $('Edit Fields').first().json.legenda }}"
+            },
+            {
+              "name": "media_type",
+              "value": "={{ $('Seleciona tipo de postagem').item.json.media_type }}"
+            },
+            {
+              "name": "children",
+              "value": "={{ $json.id }} "
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "297ab084-a67a-4e00-9bf0-c08874ce6a78",
+      "name": "Carrega as imagens do carrossel3",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1340,
+        -320
+      ]
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "id"
+            }
+          ]
+        },
+        "options": {
+          "mergeLists": true
+        }
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        1180,
+        -320
+      ],
+      "id": "fbba5228-f743-4dea-9550-16dbce5c8f4c",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $('Edit Fields').first().json.instagram_id }}/media_publish",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "access_token",
+              "value": "={{ $('Edit Fields').first().json.access_token }}"
+            },
+            {
+              "name": "creation_id",
+              "value": "={{ $json.id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "5d7c557c-af7b-4f0a-a2a1-79f604983a5d",
+      "name": "Postar container1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1500,
+        -320
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $json.instagram_id }}/media",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "image_url",
+              "value": "={{ $json.url }}"
+            },
+            {
+              "name": "access_token",
+              "value": "={{ $json.access_token }}"
+            },
+            {
+              "name": "is_carousel_item",
+              "value": "={{ $json.is_carousel_item }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "086fe212-f101-4e9f-8ef7-eca14fb0db41",
+      "name": "Carrega as imagens do carrossel5",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2560,
+        1380
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $('Edit Fields').item.json.instagram_id }}/media",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "caption",
+              "value": "={{ $('Edit Fields').item.json.legenda }}"
+            },
+            {
+              "name": "media_type",
+              "value": "={{ $('DB Creative Main').item.json.property_media_type_post }}"
+            },
+            {
+              "name": "children",
+              "value": "={{ $json.id }} "
+            },
+            {
+              "name": "access_token",
+              "value": "={{ $('Edit Fields').item.json.access_token }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "393afb4b-1692-41a4-bea4-24e1041ee6c1",
+      "name": "Carrega as imagens do carrossel6",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3460,
+        1560
+      ]
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "id"
+            },
+            {}
+          ]
+        },
+        "options": {
+          "mergeLists": true
+        }
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        3100,
+        1560
+      ],
+      "id": "141d6527-7ea2-48bd-b6f4-50cb2ed99860",
+      "name": "Aggregate1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $('Edit Fields').first().json.instagram_id }}/media_publish",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "access_token",
+              "value": "={{ $('Edit Fields').first().json.access_token }}"
+            },
+            {
+              "name": "creation_id",
+              "value": "={{ $json.id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "536bbed1-abca-467d-95aa-9d328fdbf3bd",
+      "name": "Postar container2",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3640,
+        1560
+      ]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.url.split('?')[0].split('.').pop() }}",
+                    "rightValue": "png",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "png"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "82340baa-5d3c-4e6c-8092-4531ffe9c699",
+                    "leftValue": "={{ $json.url.split('?')[0].split('.').pop() }}",
+                    "rightValue": "jpg",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "jpg"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "43dd2b91-4afd-420a-b9ec-af37b2abf54c",
+                    "leftValue": "={{ $json.url.split('?')[0].split('.').pop() }}",
+                    "rightValue": "mp4, mov",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "mp4"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "774d4a0f-49fa-419a-914c-19472e59ed0f",
+                    "leftValue": "={{ $json.url.split('?')[0].split('.').pop() }}",
+                    "rightValue": "mov",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "mov"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        2180,
+        1560
+      ],
+      "id": "6c13e743-f5a2-4609-89c4-e5b3c3674940",
+      "name": "Switch1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $json.instagram_id }}/media",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "video_url",
+              "value": "={{ $json.url }}"
+            },
+            {
+              "name": "access_token",
+              "value": "={{ $json.access_token }}"
+            },
+            {
+              "name": "is_carousel_item",
+              "value": "={{ $json.is_carousel_item }}"
+            },
+            {
+              "name": "media_type",
+              "value": "VIDEO"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "53c7ecd4-b398-4211-a82b-95f85350c303",
+      "name": "Carrega as imagens do carrossel7",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2560,
+        1760
+      ]
+    },
+    {
+      "parameters": {
+        "numberInputs": 3
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        2940,
+        1560
+      ],
+      "id": "6414785c-1e9b-4395-8a77-e30b73dbd148",
+      "name": "Merge1"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "Post estático",
+                    "rightValue": "={{ $json.tipo_postagem }}",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Post estático"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "241f9c19-dc74-4a45-a2d9-c6c3703eefcc",
+                    "leftValue": "carrossel",
+                    "rightValue": "={{ $json.tipo_postagem }}",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Carrossel"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "38b8c76c-a918-4c0d-b9ca-63f35707f12d",
+                    "leftValue": "Reels",
+                    "rightValue": "={{ $json.tipo_postagem }}",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Reels"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "08a0e87d-6405-4848-8506-f921162bd1df",
+                    "leftValue": "Stories",
+                    "rightValue": "={{ $json.tipo_postagem }}",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Stories"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        320,
+        -340
+      ],
+      "id": "66181e59-a4d6-4d9b-a73c-4a15ea985944",
+      "name": "Seleciona tipo de postagem"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.url.split('?')[0].split('.').pop() }}",
+                    "rightValue": "png",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "png"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "82340baa-5d3c-4e6c-8092-4531ffe9c699",
+                    "leftValue": "={{ $json.url.split('?')[0].split('.').pop() }}",
+                    "rightValue": "jpg",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "jpg"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "43dd2b91-4afd-420a-b9ec-af37b2abf54c",
+                    "leftValue": "={{ $json.url.split('?')[0].split('.').pop() }}",
+                    "rightValue": "mp4",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "mp4"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "af5c5b58-51ad-4f50-9277-fc9f20a71467",
+                    "leftValue": "={{ $json.url.split('?')[0].split('.').pop() }}",
+                    "rightValue": "mov",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "mov"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        740,
+        -740
+      ],
+      "id": "59dc4d94-36dd-48c4-9ae9-242f8b6bb65d",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $('Edit Fields').item.json.instagram_id }}/media",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "video_url",
+              "value": "={{ $json.url }}"
+            },
+            {
+              "name": "access_token",
+              "value": "={{ $json.access_token }}"
+            },
+            {
+              "name": "media_type",
+              "value": "REELS"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "007d4ae4-9cf2-493c-a156-e370e7086c66",
+      "name": "Carrega as imagens do carrossel8",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1020,
+        -620
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $('Edit Fields').item.json.instagram_id }}/media_publish",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "creation_id",
+              "value": "={{ $('Carrega as imagens do carrossel8').item.json.id }}"
+            },
+            {
+              "name": "access_token",
+              "value": "={{ $('Edit Fields').item.json.access_token }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "8a2354ab-3b67-4e46-875b-803931b04060",
+      "name": "Postar container3",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1340,
+        -620
+      ]
+    },
+    {
+      "parameters": {
+        "amount": 1,
+        "unit": "minutes"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1180,
+        -620
+      ],
+      "id": "1a67bb1b-b551-43aa-bc86-5132e5c44c91",
+      "name": "Wait",
+      "webhookId": "52a72c37-ef6c-4826-8eaa-7219e01a5e8d"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1180,
+        -840
+      ],
+      "id": "b69622d8-f91c-42ed-88cb-7b533ff8a8cc",
+      "name": "Wait1",
+      "webhookId": "ad8cf7b9-69e8-49f2-b2e4-89862e0e4ac2"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $('Edit Fields').item.json.instagram_id }}/media",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "video_url",
+              "value": "={{ $json.url }}"
+            },
+            {
+              "name": "access_token",
+              "value": "={{ $json.access_token }}"
+            },
+            {
+              "name": "media_type",
+              "value": "REELS"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "2b73e987-5ffe-47cd-922b-320b111c9b7a",
+      "name": "Carrega as imagens do carrossel9",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1020,
+        -100
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $('Edit Fields').item.json.instagram_id }}/media_publish",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "creation_id",
+              "value": "={{ $('Carrega as imagens do carrossel9').item.json.id }}"
+            },
+            {
+              "name": "access_token",
+              "value": "={{ $('Edit Fields').item.json.access_token }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e7cef90d-5f31-4526-ba6c-08581ab629fa",
+      "name": "Postar container4",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1340,
+        -100
+      ]
+    },
+    {
+      "parameters": {
+        "amount": 1,
+        "unit": "minutes"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1180,
+        -100
+      ],
+      "id": "b0ef7e6a-d29e-434d-866c-e00ee2be4035",
+      "name": "Wait2",
+      "webhookId": "52a72c37-ef6c-4826-8eaa-7219e01a5e8d"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $('Edit Fields').item.json.instagram_id }}/media",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "video_url",
+              "value": "={{ $json.url }}"
+            },
+            {
+              "name": "access_token",
+              "value": "={{ $json.access_token }}"
+            },
+            {
+              "name": "media_type",
+              "value": "STORIES"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "58af524b-d21a-4144-8e10-79720a4190dc",
+      "name": "Carrega as imagens do carrossel10",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1020,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $('Edit Fields').item.json.instagram_id }}/media_publish",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "creation_id",
+              "value": "={{ $('Carrega as imagens do carrossel10').item.json.id }}"
+            },
+            {
+              "name": "access_token",
+              "value": "={{ $('Edit Fields').item.json.access_token }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "43736c3d-73f6-4e81-86ae-39772e3a23a7",
+      "name": "Postar container5",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1340,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "amount": 1,
+        "unit": "minutes"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1180,
+        160
+      ],
+      "id": "089dba62-6c1b-443a-b2e5-25fd0bef4b01",
+      "name": "Wait3",
+      "webhookId": "52a72c37-ef6c-4826-8eaa-7219e01a5e8d"
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "getAll",
+        "databaseId": {
+          "__rl": true,
+          "value": "13216533-6e91-8032-b555-ec9affaf6ac9",
+          "mode": "list",
+          "cachedResultName": "DB de Creative Main",
+          "cachedResultUrl": "https://www.notion.so/132165336e918032b555ec9affaf6ac9"
+        },
+        "returnAll": true,
+        "options": {}
+      },
+      "id": "70ea9edc-41ff-43ff-8503-fb3ee1e5e4ea",
+      "name": "DB Creative Main",
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        -320,
+        -320
+      ],
+      "credentials": {
+        "notionApi": {
+          "id": "RqJiCMcIqeauBnye",
+          "name": "[pixeomarketing] - notion.so/app - agenciapixeo@gmail.com"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e618bbe8-4dfb-4f1f-af4e-64c448aa9b18",
+              "name": "url",
+              "value": "={{ $json.property_criativo_final }}",
+              "type": "string"
+            },
+            {
+              "id": "d040dae7-06a2-4798-9d99-61f614ab2e21",
+              "name": "legenda",
+              "value": "={{ $('DB Creative Main1').item.json.property_legenda_do_criativo }}",
+              "type": "string"
+            },
+            {
+              "id": "0f054b58-8ff6-49b2-9940-b0d3a9bbead4",
+              "name": "instagram_id",
+              "value": "={{ $('DB Creative Main1').item.json.property_ig_business_id[0] }}",
+              "type": "string"
+            },
+            {
+              "id": "b6233db0-7013-4895-b43b-363db9976083",
+              "name": "status",
+              "value": "={{ $('DB Creative Main1').item.json.property_status }}",
+              "type": "string"
+            },
+            {
+              "id": "c7e09e41-53b9-430f-8bd4-9f324aa167b8",
+              "name": "tipo_postagem",
+              "value": "={{ $('DB Creative Main1').item.json.property_type }}",
+              "type": "string"
+            },
+            {
+              "id": "1344c451-c374-44b5-8155-85f737a7f291",
+              "name": "access_token",
+              "value": "={{ $('DB Creative Main1').item.json.property_access_token[0] }}",
+              "type": "string"
+            },
+            {
+              "id": "5f39eb89-bba4-4ed2-aa4a-699d629469c3",
+              "name": "is_carousel_item",
+              "value": "={{ $('DB Creative Main1').item.json.property_is_carousel_item }}",
+              "type": "string"
+            },
+            {
+              "id": "ad6f5386-f512-4576-816a-bb98f5cbb655",
+              "name": "media_type",
+              "value": "={{ $('DB Creative Main1').item.json.property_media_type_post }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        200,
+        1420
+      ],
+      "id": "3a64bc92-ba89-4714-9766-05843df3ba50",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "property_criativo_final",
+        "include": "allOtherFields",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        40,
+        1420
+      ],
+      "id": "be3204bf-31de-4297-a35e-34c469e2c86c",
+      "name": "Split Out1"
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "getAll",
+        "databaseId": {
+          "__rl": true,
+          "value": "13216533-6e91-8032-b555-ec9affaf6ac9",
+          "mode": "list",
+          "cachedResultName": "DB de Creative Main",
+          "cachedResultUrl": "https://www.notion.so/132165336e918032b555ec9affaf6ac9"
+        },
+        "returnAll": true,
+        "options": {}
+      },
+      "id": "28b5e484-d348-4ca8-8a11-1ecc51a5fa19",
+      "name": "DB Creative Main1",
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        -120,
+        1420
+      ],
+      "credentials": {
+        "notionApi": {
+          "id": "RqJiCMcIqeauBnye",
+          "name": "[pixeomarketing] - notion.so/app - agenciapixeo@gmail.com"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "Post estático",
+                    "rightValue": "={{ $json.tipo_postagem }}",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Post estático"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "241f9c19-dc74-4a45-a2d9-c6c3703eefcc",
+                    "leftValue": "carrossel",
+                    "rightValue": "={{ $json.tipo_postagem }}",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Carrossel"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "38b8c76c-a918-4c0d-b9ca-63f35707f12d",
+                    "leftValue": "Reels",
+                    "rightValue": "={{ $json.tipo_postagem }}",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Reels"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "08a0e87d-6405-4848-8506-f921162bd1df",
+                    "leftValue": "Stories",
+                    "rightValue": "={{ $json.tipo_postagem }}",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Stories"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        380,
+        1400
+      ],
+      "id": "d0e27d81-8e65-4993-8fc1-c28ee22ca3f1",
+      "name": "Seleciona tipo de postagem1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $('Edit Fields').item.json.instagram_id }}/media",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "image_url",
+              "value": "={{ $json.url }}"
+            },
+            {
+              "name": "access_token",
+              "value": "={{ $json.access_token }}"
+            },
+            {
+              "name": "caption",
+              "value": "={{ $('Edit Fields').item.json.legenda }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "31d6ed9e-a955-45e0-92f9-a1011b17a393",
+      "name": "Criação de container2",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        880,
+        1060
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $('Edit Fields').item.json.instagram_id }}/media_publish",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "creation_id",
+              "value": "={{ $json.id }}"
+            },
+            {
+              "name": "access_token",
+              "value": "={{ $('Edit Fields').item.json.access_token }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "32e860a6-13bb-4bdb-91f9-3d4c9b2925a8",
+      "name": "Postar container7",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1200,
+        1060
+      ]
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1040,
+        1060
+      ],
+      "id": "2e7ee4c4-0443-45e5-b173-62b663a8b1ee",
+      "name": "Wait5",
+      "webhookId": "ad8cf7b9-69e8-49f2-b2e4-89862e0e4ac2"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $json.instagram_id }}/media",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "image_url",
+              "value": "={{ $json.url }}"
+            },
+            {
+              "name": "access_token",
+              "value": "={{ $json.access_token }}"
+            },
+            {
+              "name": "is_carousel_item",
+              "value": "={{ $json.is_carousel_item }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "83cb1803-1c37-4035-af6c-5168c1f46371",
+      "name": "Carrega as imagens do carrossel11",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2560,
+        1560
+      ]
+    },
+    {
+      "parameters": {
+        "amount": 60
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        3280,
+        1560
+      ],
+      "id": "bb2dd029-73fa-4836-bfc2-3d3bd8154734",
+      "name": "Wait4",
+      "webhookId": "8f867c59-f567-4ed4-8988-e9d0ea23bbc2"
+    },
+    {
+      "parameters": {
+        "content": "# Envia carrossel com diversos tipos de mídias [EM PRODUÇÃO TEM ERRO NA HIRERARQUIA ]\n",
+        "height": 740,
+        "width": 1780
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2100,
+        1220
+      ],
+      "id": "f3ce11be-bfcb-415f-ae2f-084cf6a3b55f",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $('Edit Fields').item.json.instagram_id }}/media",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "video_url",
+              "value": "={{ $json.url }}"
+            },
+            {
+              "name": "access_token",
+              "value": "={{ $json.access_token }}"
+            },
+            {
+              "name": "media_type",
+              "value": "REELS"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "cdf6424c-ce04-4368-a1d0-ba3bb73f1c01",
+      "name": "Carrega as imagens do carrossel12",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        880,
+        1500
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $('Edit Fields').item.json.instagram_id }}/media_publish",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "creation_id",
+              "value": "={{ $('Carrega as imagens do carrossel12').item.json.id }}"
+            },
+            {
+              "name": "access_token",
+              "value": "={{ $('Edit Fields').item.json.access_token }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "f36b89d8-d683-4366-b2f2-1c0ea61d9d2a",
+      "name": "Postar container6",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1200,
+        1500
+      ]
+    },
+    {
+      "parameters": {
+        "amount": 1,
+        "unit": "minutes"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1040,
+        1500
+      ],
+      "id": "d8808293-f714-48a9-beba-2bd812a50fca",
+      "name": "Wait6",
+      "webhookId": "52a72c37-ef6c-4826-8eaa-7219e01a5e8d"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $('Edit Fields').item.json.instagram_id }}/media",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "video_url",
+              "value": "={{ $json.url }}"
+            },
+            {
+              "name": "access_token",
+              "value": "={{ $json.access_token }}"
+            },
+            {
+              "name": "media_type",
+              "value": "STORIES"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "d2ca9127-9ac6-4cbf-b4e5-e40e28ea66c0",
+      "name": "Carrega as imagens do carrossel13",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        900,
+        1760
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $('Edit Fields').item.json.instagram_id }}/media_publish",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "creation_id",
+              "value": "={{ $('Carrega as imagens do carrossel13').item.json.id }}"
+            },
+            {
+              "name": "access_token",
+              "value": "={{ $('Edit Fields').item.json.access_token }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "663eb790-9d1a-4820-ad39-a9a1f509b9f5",
+      "name": "Postar container8",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1220,
+        1760
+      ]
+    },
+    {
+      "parameters": {
+        "amount": 1,
+        "unit": "minutes"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1060,
+        1760
+      ],
+      "id": "60ad7a36-a0b1-4f6e-90a4-148b516a64f7",
+      "name": "Wait7",
+      "webhookId": "52a72c37-ef6c-4826-8eaa-7219e01a5e8d"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $json.instagram_id }}/media",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "image_url",
+              "value": "={{ $json.url }}"
+            },
+            {
+              "name": "access_token",
+              "value": "={{ $json.access_token }}"
+            },
+            {
+              "name": "is_carousel_item",
+              "value": "={{ $json.is_carousel_item }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "bfe22ef5-ab7c-4c75-9acc-14008b0e1289",
+      "name": "Carrega as imagens do carrossel4",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        880,
+        1300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $('Edit Fields1').first().json.instagram_id }}/media",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "access_token",
+              "value": "={{ $('Seleciona tipo de postagem1').first().json.access_token }}"
+            },
+            {
+              "name": "caption",
+              "value": "={{ $('Seleciona tipo de postagem1').first().json.legenda }}"
+            },
+            {
+              "name": "media_type",
+              "value": "={{ $('Seleciona tipo de postagem1').first().json.media_type }}"
+            },
+            {
+              "name": "children",
+              "value": "={{ $json.id }} "
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "70185384-c757-46c4-9f7f-3c83166763cc",
+      "name": "Carrega as imagens do carrossel14",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1220,
+        1300
+      ]
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "id"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        1060,
+        1300
+      ],
+      "id": "3d5f9519-d4db-416d-b5f4-bab2f3149486",
+      "name": "Aggregate2",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $('Seleciona tipo de postagem1').first().json.instagram_id }}/media_publish",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "access_token",
+              "value": "={{ $('Seleciona tipo de postagem1').first().json.access_token }}"
+            },
+            {
+              "name": "creation_id",
+              "value": "={{ $json.id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b0bc9d6d-1b8b-4407-91b5-a493d20ea313",
+      "name": "Postar container9",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1420,
+        1300
+      ]
+    }
+  ],
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "DB Creative Main1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Seleciona tipo de postagem",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Envia o arquivo para o baserow": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Criação de container": {
+      "main": [
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Carrega as imagens do carrossel": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Carrega as imagens do carrossel2": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items1": {
+      "main": [
+        [
+          {
+            "node": "Code - Junta os ids1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Carrega as imagens do carrossel2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Carrega as imagens do carrossel3": {
+      "main": [
+        [
+          {
+            "node": "Postar container1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Carrega as imagens do carrossel3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Carrega as imagens do carrossel5": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Carrega as imagens do carrossel6": {
+      "main": [
+        [
+          {
+            "node": "Postar container2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate1": {
+      "main": [
+        [
+          {
+            "node": "Wait4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch1": {
+      "main": [
+        [
+          {
+            "node": "Carrega as imagens do carrossel5",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Carrega as imagens do carrossel11",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Carrega as imagens do carrossel7",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Carrega as imagens do carrossel7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Carrega as imagens do carrossel7": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "Aggregate1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Seleciona tipo de postagem": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Carrega as imagens do carrossel",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Carrega as imagens do carrossel9",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Carrega as imagens do carrossel10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Criação de container",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Criação de container",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Carrega as imagens do carrossel8",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Carrega as imagens do carrossel8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Carrega as imagens do carrossel8": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Postar container3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "Postar container",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Carrega as imagens do carrossel9": {
+      "main": [
+        [
+          {
+            "node": "Wait2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait2": {
+      "main": [
+        [
+          {
+            "node": "Postar container4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Carrega as imagens do carrossel10": {
+      "main": [
+        [
+          {
+            "node": "Wait3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait3": {
+      "main": [
+        [
+          {
+            "node": "Postar container5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DB Creative Main": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DB Creative Main1": {
+      "main": [
+        [
+          {
+            "node": "Split Out1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Seleciona tipo de postagem1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Criação de container2": {
+      "main": [
+        [
+          {
+            "node": "Wait5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait5": {
+      "main": [
+        [
+          {
+            "node": "Postar container7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Seleciona tipo de postagem1": {
+      "main": [
+        [
+          {
+            "node": "Criação de container2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Carrega as imagens do carrossel4",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Carrega as imagens do carrossel12",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Carrega as imagens do carrossel13",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Carrega as imagens do carrossel11": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Wait4": {
+      "main": [
+        [
+          {
+            "node": "Carrega as imagens do carrossel6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Carrega as imagens do carrossel12": {
+      "main": [
+        [
+          {
+            "node": "Wait6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait6": {
+      "main": [
+        [
+          {
+            "node": "Postar container6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Carrega as imagens do carrossel13": {
+      "main": [
+        [
+          {
+            "node": "Wait7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait7": {
+      "main": [
+        [
+          {
+            "node": "Postar container8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Carrega as imagens do carrossel4": {
+      "main": [
+        [
+          {
+            "node": "Aggregate2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Carrega as imagens do carrossel14": {
+      "main": [
+        [
+          {
+            "node": "Postar container9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate2": {
+      "main": [
+        [
+          {
+            "node": "Carrega as imagens do carrossel14",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "3ad6004d-a77e-4480-b707-43899aa407e8",
+  "triggerCount": 0,
+  "tags": []
+}
