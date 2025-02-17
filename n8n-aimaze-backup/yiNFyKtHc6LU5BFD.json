@@ -1,0 +1,1387 @@
+{
+  "createdAt": "2024-12-27T20:14:13.390Z",
+  "updatedAt": "2024-12-28T22:14:19.156Z",
+  "id": "yiNFyKtHc6LU5BFD",
+  "name": "gerador de conteudo automatico imediato",
+  "active": true,
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "8f66ff7a-c7b6-4b48-9e18-6d39c27457e6",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        180,
+        680
+      ],
+      "id": "f7a94465-9188-4824-bb47-a2ad9fb3de0f",
+      "name": "Webhook",
+      "webhookId": "8f66ff7a-c7b6-4b48-9e18-6d39c27457e6"
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "databaseId": {
+          "__rl": true,
+          "value": "13216533-6e91-8032-b555-ec9affaf6ac9",
+          "mode": "list",
+          "cachedResultName": "DB de Creative Main[P]",
+          "cachedResultUrl": "https://www.notion.so/132165336e918032b555ec9affaf6ac9"
+        }
+      },
+      "type": "n8n-nodes-base.notionTrigger",
+      "typeVersion": 1,
+      "position": [
+        -340,
+        500
+      ],
+      "id": "72af85b9-3982-4b70-8edf-f14264a33143",
+      "name": "Notion Trigger",
+      "credentials": {
+        "notionApi": {
+          "id": "RqJiCMcIqeauBnye",
+          "name": "[pixeomarketing] - notion.so/app - agenciapixeo@gmail.com"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "77915ae0-ebdd-47f1-bd07-0e4d8af3a00d",
+              "name": "row_id",
+              "value": "={{ $json.body.data.id }}",
+              "type": "string"
+            },
+            {
+              "id": "335580bd-9f79-4d2f-8fa4-5f9e76f78c68",
+              "name": "empresa",
+              "value": "={{ $json.body.data.properties.Business_name.rollup.array[0].formula.string }}",
+              "type": "string"
+            },
+            {
+              "id": "ff923eb7-8258-41f0-a7bb-bdeaad7d963a",
+              "name": "pag_name",
+              "value": "={{ $json.body.data.properties.Nome.title[0].text.content }}",
+              "type": "string"
+            },
+            {
+              "id": "d8299361-4021-457f-ae6c-533f8512eb3e",
+              "name": "titulo_criativo",
+              "value": "={{ $json.body.data.properties['Título do Criativo'].rich_text[0].text.content }}",
+              "type": "string"
+            },
+            {
+              "id": "bfb8e275-8030-4958-9ad2-d3c73079d4e9",
+              "name": "corpo_criativo",
+              "value": "={{ $json.body.data.properties['Corpo do Criativo'].rich_text[0].text.content }}",
+              "type": "string"
+            },
+            {
+              "id": "c3f2f8c5-01b2-4022-9482-ca319b8ef1b2",
+              "name": "legenda_criativo",
+              "value": "={{ $json.body.data.properties['Legenda do Criativo'].rich_text[0].text.content }}",
+              "type": "string"
+            },
+            {
+              "id": "9581f25c-d5fe-4b03-91ad-a15883cba28d",
+              "name": "prompt_adicional",
+              "value": "={{ $json.body.data.properties.Prompt.rich_text[0].text.content }}",
+              "type": "string"
+            },
+            {
+              "id": "76167ff0-2dcb-4b8d-8461-65c7b8dcc36a",
+              "name": "Status_produção",
+              "value": "={{ $json.body.data.properties.Status.status.name }}",
+              "type": "string"
+            },
+            {
+              "id": "2fa458b5-7471-4e49-ba5a-3aaf26ce722e",
+              "name": "run_content",
+              "value": "={{ $json.body.data.properties['RUN content [C]'].checkbox }}",
+              "type": "string"
+            },
+            {
+              "id": "94e66764-b1fc-4262-8e7e-86a028e5609c",
+              "name": "run_ia",
+              "value": "={{ $json.body.data.properties['RUN IA [C]'].checkbox }}",
+              "type": "string"
+            },
+            {
+              "id": "3c03aa13-fac5-40bf-b388-721a52cfaeba",
+              "name": "run_caption",
+              "value": "={{ $json.body.data.properties['RUN caption [C]'].checkbox }}",
+              "type": "string"
+            },
+            {
+              "id": "c7cc30af-73fb-4a28-adab-a4deaca9cf4e",
+              "name": "tipo_criativo",
+              "value": "={{ $json.body.data.properties.Type.select.name }}",
+              "type": "string"
+            },
+            {
+              "id": "f326a52f-872f-412e-b2db-b1769a3836ce",
+              "name": "objetivo_post",
+              "value": "={{ $json.body.data.properties.objetivo_post.select.name }}",
+              "type": "string"
+            },
+            {
+              "id": "a998284d-6301-4c27-8978-142e3526fb78",
+              "name": "publico_alvo",
+              "value": "={{ $json['Público Alvo'][0] }}",
+              "type": "string"
+            },
+            {
+              "id": "2e7ae74a-8e89-4288-814d-877de819fb81",
+              "name": "['Status IA [F]']",
+              "value": "={{ $json.body.data.properties['Status IA [F]'].formula.string }}",
+              "type": "string"
+            },
+            {
+              "id": "bba9a50d-b89b-4fc2-b8ca-1a083ea5c232",
+              "name": "group_sinapse_id",
+              "value": "={{ $json.body.data.properties.group_id_sinapse.rollup.array[0].formula.string }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        400,
+        680
+      ],
+      "id": "b5f3c77d-9fa9-4eaf-becc-30bfb35f6bd1",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "ef688cd0-59c8-4d4e-87bf-f693026490b4",
+              "leftValue": "={{ $json['Status_produção'] }}",
+              "rightValue": "Ideia",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        580,
+        680
+      ],
+      "id": "8c1485b9-2c24-44b3-9b0e-b32ebf25e05c",
+      "name": "Usar a IA?"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        840,
+        800
+      ],
+      "id": "bccd746f-f3fd-44b0-a2fd-a33ae7f76fd6",
+      "name": "No Operation, do nothing"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.run_content.toBoolean() }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Run_content"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "e7f7a567-6727-4741-811b-1a09e0b667fd",
+                    "leftValue": "={{ $json.run_caption.toBoolean() }}",
+                    "rightValue": "={{ $json.gerar_legenda }}",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Run_caption"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        860,
+        380
+      ],
+      "id": "fd0f5493-94c1-472a-bc2c-187eec928028",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=#Informações importante\nempresa:{{ $json.empresa }}\ntitulo: {{ $json.titulo_criativo }}\ncorpo: {{ $json.corpo_criativo }}\nprompt adiconal: {{ $json.prompt_adicional }}\n--\n#instruções\n\nVocê é um copywriter com mais de 10 anos de experiencia, especializado em criar legendas para o instagram que chamem atenção do usuário. Leve em consideração as informações acima para criar a legenda para essa publicação do instagram. O titulo e o corpo é a publicação. Caso precise use o prompt adicional caso não  precisw não use. \n\n##Instruções\nEscreve legendas curtas quando o assunto nao for tão grande, media quando o assunto for medio, e grande quando o assunto for grande.\n\nme retorne a legenda\n\nlegenda: aqui voce coloca a leganda",
+              "role": "system"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        1180,
+        400
+      ],
+      "id": "fe694415-cb17-410a-b7c8-b7047e30b08d",
+      "name": "OpenAI1",
+      "credentials": {
+        "openAiApi": {
+          "id": "HqyrCnwePmXKkfxw",
+          "name": "[main] - openia.com - tools@aimaze.com.br"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "update",
+        "pageId": {
+          "__rl": true,
+          "value": "={{ $('Edit Fields').item.json.row_id }}",
+          "mode": "id"
+        },
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Legenda do Criativo|rich_text",
+              "textContent": "={{ $json.message.content.legenda }}"
+            },
+            {
+              "key": "Executou IA? [C]|checkbox",
+              "checkboxValue": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        1520,
+        400
+      ],
+      "id": "aebcde91-bcf4-4124-a425-5eb17e6ac056",
+      "name": "Notion1",
+      "credentials": {
+        "notionApi": {
+          "id": "RqJiCMcIqeauBnye",
+          "name": "[pixeomarketing] - notion.so/app - agenciapixeo@gmail.com"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=# Informações importantes\n\nCriativo: {{ $json.titulo_criativo }}, {{ $json.corpo_criativo }}, {{ $json.legenda_criativo }}, isto é um {{ $json.tipo_criativo }}\n\n## Instruções\n\nVocê é um engenheiro de prompt de imagens que está gerando prompts para colocar em publicações no instagram, esses prompts são usados no Freepik, então gere prompts para ele. Gere também prompts de imagens mais limpas sem muitas informações . Seu dever é gerar prompts acertivos para que o designer consiga usar o prompt para gerar imagens uteis para a criação da peça grafica. Você não colocará nenhuma informação de texto fornecido, você criará somente a imagem que tenha sentido para o designer usar.\n\n##Decisão\nVocê gerará prompts para o freepik, e com base nas informações fornecidas e no prompt gerado, você tomara a decisão de quais variaveis usar na geração da imagem com base no criativo e com base no prompt\n\n\n\nprompt: Aqui você colocará o prompt\n\nNão se esqueça de escolher somente um.\n\nnegative_prompt: Attributes to avoid in the generated image\nstyling: \"aqui colocara o estilo com base nos dados e na sua decisão: photo, digital-art, 3d, painting, low-poly, pixel-art, anime, cyberpunk, comic, vintage, cartoon, vector, studio-shot, dark, sketch, mockup, 2000s-pone, 70s-vibe, watercolor, art-nouveau, origami, surreal, fantasy, traditional-japan \"\n\ncolor: \"b&w, pastel, sepia, dramatic, vibrant, orange&teal, film-filter, split, electric, pastel-pink, gold-glow, autumn, muted-green, deep-teal, duotone, terracotta&teal, red&blue, cold-neon, burgundy&blue \"\n\nlightning: \"studio, warm, cinematic, volumetric, golden-hour, long-exposure, cold, iridescent, dramatic, hardlight, redscale, indoor-light\"\n\nframing: \"portrait, macro, panoramic, aerial-view, close-up, cinematic, high-angle, low-angle, symmetry, fish-eye, first-person \"\n\nguidance_scale: \"efines the level of fidelity to the prompt when generating the image. A lower value allows for more creativity from the AI, while a higher value ensures closer adherence to the prompt.\nValid values range [0.0, 2.0], default 1.0.\n\nRequired range: 0 < x < 2\"\n\nsize: \"Escolha este com base no tipo de criativo: {{ $json.tipo_criativo }}. square_1_1, classic_4_3, traditional_3_4, widescreen_16_9, social_story_9_16, smartphone_horizontal_20_9, smartphone_vertical_9_20, standard_3_2, portrait_2_3, horizontal_2_1, vertical_1_2, social_5_4, social_post_4_5 \"\n\nnum_images: \"Specifies the number of images to generate in a single request.\nValid values range [1, 4], default 1.\n\nRequired range: 1 < x < 4\"\n\nseed: \"Seed value for image generation. Using the same seed will produce the same image. If omitted, -1 will apply a random seed, resulting in a different image each time.\nValid values range [0, 1000000], default -1.\n\nRequired range: 0 < x < 1000000\"\n\n",
+              "role": "system"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        2120,
+        320
+      ],
+      "id": "9558fcdf-91fa-4a57-adbf-ee1a72c47188",
+      "name": "OpenAI2",
+      "credentials": {
+        "openAiApi": {
+          "id": "HqyrCnwePmXKkfxw",
+          "name": "[main] - openia.com - tools@aimaze.com.br"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.freepik.com/v1/ai/text-to-image",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "x-freepik-api-key",
+              "value": "FPSXd240dca1d3a64db49e6b005413a74311"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "prompt",
+              "value": "={{ $json.message.content.prompt }}"
+            },
+            {
+              "name": "negative_prompt",
+              "value": "={{ $json.message.content.negative_prompt }}"
+            },
+            {
+              "name": "style",
+              "value": "={{ $json.message.content.styling }}"
+            },
+            {
+              "name": "color",
+              "value": "={{ $json.message.content.color }}"
+            },
+            {
+              "name": "lightning",
+              "value": "={{ $json.message.content.lightning }}"
+            },
+            {
+              "name": "framing",
+              "value": "={{ $json.message.content.framing }}"
+            },
+            {
+              "name": "guidance_scale",
+              "value": "={{ $json.message.content.guidance_scale }}"
+            },
+            {
+              "name": "size",
+              "value": "={{ $json.message.content.size }}"
+            },
+            {
+              "name": "num_images",
+              "value": "=1"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "247cb255-1f1d-4ed1-9c6b-178c1214726d",
+      "name": "Gera Imagem no Freepik",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2140,
+        480
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "base64",
+        "options": {}
+      },
+      "id": "b3938949-56a4-4304-ac79-a0a507a557cc",
+      "name": "Convert to File",
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        2300,
+        480
+      ]
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "event": "pagedUpdatedInDatabase",
+        "databaseId": {
+          "__rl": true,
+          "value": "13216533-6e91-8032-b555-ec9affaf6ac9",
+          "mode": "list",
+          "cachedResultName": "DB de Creative Main[P]",
+          "cachedResultUrl": "https://www.notion.so/132165336e918032b555ec9affaf6ac9"
+        }
+      },
+      "type": "n8n-nodes-base.notionTrigger",
+      "typeVersion": 1,
+      "position": [
+        -140,
+        500
+      ],
+      "id": "fa87b163-1359-4874-8d5d-983dfa802296",
+      "name": "Notion Trigger1",
+      "credentials": {
+        "notionApi": {
+          "id": "RqJiCMcIqeauBnye",
+          "name": "[pixeomarketing] - notion.so/app - agenciapixeo@gmail.com"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "update",
+        "pageId": {
+          "__rl": true,
+          "value": "={{ $('Edit Fields').item.json.row_id }}",
+          "mode": "id"
+        },
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Sugestão de Imagens|files",
+              "fileUrls": {
+                "fileUrl": [
+                  {
+                    "name": "=imagem",
+                    "url": "={{ $json.url }}"
+                  }
+                ]
+              }
+            },
+            {
+              "key": "Gerar Imagem|checkbox",
+              "checkboxValue": "={{ false }}"
+            },
+            {
+              "key": "ExecutarIA|checkbox",
+              "checkboxValue": "={{ false }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        2320,
+        680
+      ],
+      "id": "56434534-301b-4804-ae64-d4a83f88815c",
+      "name": "Notion2",
+      "credentials": {
+        "notionApi": {
+          "id": "RqJiCMcIqeauBnye",
+          "name": "[pixeomarketing] - notion.so/app - agenciapixeo@gmail.com"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.baserow.io/api/user-files/upload-file/",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Token zXN9lFRoIjDR02BfU21any3QdjMBiHCc"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "parameterType": "formBinaryData",
+              "name": "file",
+              "inputDataFieldName": "data"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2140,
+        680
+      ],
+      "id": "50c550dd-5909-4e79-986a-afe702467b14",
+      "name": "Envia imagem para o baserow"
+    },
+    {
+      "parameters": {
+        "content": "## Gera conteúdo \n",
+        "height": 960,
+        "width": 2480,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        80,
+        80
+      ],
+      "id": "a43ee141-a215-40f3-9a6c-7d0535a43d14",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "update",
+        "pageId": {
+          "__rl": true,
+          "value": "={{ $('Edit Fields').item.json.row_id }}",
+          "mode": "id"
+        },
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Título do Criativo|rich_text",
+              "textContent": "={{ $json.message.content.headline }}"
+            },
+            {
+              "key": "Corpo do Criativo|rich_text",
+              "textContent": "={{ $json.message.content.corpo_criativo }}"
+            },
+            {
+              "key": "Legenda do Criativo|rich_text",
+              "textContent": "={{ $json.message.content.legenda_criativo }}"
+            },
+            {
+              "key": "Executou IA? [C]|checkbox",
+              "checkboxValue": true
+            },
+            {
+              "key": "Criado por|select",
+              "selectValue": "=Pixeo[AI]"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        1520,
+        140
+      ],
+      "id": "7b9d16de-ba9c-4a75-ad3c-2c664ce94308",
+      "name": "Notion3",
+      "credentials": {
+        "notionApi": {
+          "id": "RqJiCMcIqeauBnye",
+          "name": "[pixeomarketing] - notion.so/app - agenciapixeo@gmail.com"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=#Informações importantes\n\nEmpresa:{{ $json.empresa }}\nprompt_adicional: {{ $json.prompt_adicional }}\ntipo_publicação:{{ $json.tipo_criativo }}\n\n--\n#Instruções \nVocê é copywrinting especialista em criação de conteudo para o Instagram com mais de 10 anos de experiência. Você se chama Pixeo. O seu objetivo é criar a ideia de conteúdo para o designer desenvolver a arte gráfica. Dê instruções ao designer de como você pensou na arte. O material sempre será criado para Brasileiros.\n\n## Avisos\nSempre tenha em mente que você está criando conteúdo para um designer criar as peças gráficas, então, hieraquise o conteúdo que vai no corpo do conteúdo.\n\nA cta deve ir na legenda e no corpo do criativo quando necessário.\n\n## Como deve ser os conteúdos\nOs conteúdos devem ser humanizados, leves e descontraídos. Conteúdos curtos visto que é para o Instagram. Devem ter um tom próximo e acessivel, incentivando o enganjamento com perguntas e CTA naturais e relacionadas ao tema que for pedido. Use framework AIDA para criar o texto. Divida o ponto central em 3 tópicos. Leve em consideração as boas práticas recomendadas pela Meta, para conseguir criar conteúdos que gerem engajamento.\n\n\nForneça a estrutura do post completa com:\n\nHeadline: aqui vai o título do conteúdo; \nCorpo do criativo: aqui vai o corpo do conteúdo e a CTA;\nLegenda: aqui vai a copy da legenda do conteúdo;\nInstruções designer: coloque as instruções para o designer aqui\n\n### Formatos\nLeve em consideração o tipo de criativo, são eles: estático, carrossel, stories e reels. Crie o conteúdo baseado no que chegar em tipo.\n\nPara conteúdos em formato estático:\nEstruture o post com headline que chame Atenção do público, corpo da arte e uma CTA simples, como clique no link - para conteúdos de venda, compartilhe, curta e comente para os demais tipos de conteúdo. Não se esqueça de usar textos curtos e chamativos, por ser um formato pequeno não podem ser textos grandes.\n\nPara conteúdos em formato de carrossel:\nEstruture o carrossel em no máximo 5 telas, sendo a primeira com headline e corpo da arte, e a última com a CTA simples, a mais usual sendo compartilhe.\n\nPara conteúdos em formato de reels:\nAja como um roteirista profissional capaz de escrever roteiros de vídeos leves, humanizados e divertidos. Estruture um roteiro de vídeo para no máximo 1 minuto e meio, com as falas, sugestão de imagem e texto para tela.\n\nPara conteúdos em formato stories:\nUse storytelling para cativar o público, destacar os benefícios e incentivar a ação. Estruture com um roteiro dividido por telas com até 30 segundos, com as falas e sugestão de imagem.\n\n--\n\nRetorne\nheadline: Coloque a headline aqui\ncorpo_criativo: coloque o corpo do criativo aqui\nlegenda_criativo: retorne aqui a legenda\n\n",
+              "role": "system"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        2120,
+        140
+      ],
+      "id": "b23e2292-a0b4-48ad-8251-4c0c0b13084a",
+      "name": "v1",
+      "credentials": {
+        "openAiApi": {
+          "id": "HqyrCnwePmXKkfxw",
+          "name": "[main] - openia.com - tools@aimaze.com.br"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=#Informações importantes\n\nEmpresa:{{ $json.empresa }}\nprompt_adicional: {{ $json.prompt_adicional }}\ntipo_publicação:{{ $json.tipo_criativo }}\nobjetivo_post: {{ $json.objetivo_post }}\npúblico alvo: {{ $json.publico_alvo }}\n--\n#Instruções \nVocê é copywrinting especialista em criação de conteudo para o Instagram com mais de 10 anos de experiência. Você se chama Pixeo. O seu objetivo é criar a ideia de conteúdos para o designer desenvolver a arte gráfica. O material sempre será criado para Brasileiros. Sua missão é criar conteúdos altamente chamativos, criativos e relevantes, com foco em engajamento máximo e atração de audiência. Cada conteúdo deve ser otimizado para os algoritmos da plataforma e direcionado ao público-alvo definido.\n\n--\n\n## Avisos\nSempre tenha em mente que você está criando conteúdo para um designer criar as peças gráficas, então, faça textos curtos e organizados que façam sentido para ir no corpo do criativo.\n\nA cta deve ir na legenda e no corpo do criativo quando necessário.\n\n## Como deve ser os conteúdos\nOs conteúdos devem ser humanizados, leves e descontraídos. Conteúdos curtos visto que é para o Instagram. Devem ter um tom próximo e acessivel, incentivando o enganjamento com perguntas e CTA naturais e relacionadas ao tema que for pedido, sendo claras e impactantes. Use framework AIDA para criar o texto. Divida o ponto central em 3 tópicos. Leve em consideração as boas práticas recomendadas pela Meta, para conseguir criar conteúdos que gerem engajamento. Cada conteúdo deve ser otimizado para os algoritmos da plataforma e direcionado ao público-alvo definido\n\nForneça a estrutura do post completa com:\n\nHeadline: aqui vai o título do conteúdo; \n-Corpo do criativo: aqui vai o corpo do conteúdo e uma CTA. O corpo do conteúdo é composto por um subtítulo, um complemento da headline, um texto curto. E quando o conteúdo for em formato carrossel, é o conteúdo que compõe os slides do carrossel. #OBS gere o coteudo continuo, não gere vetores ou objetos somente o texto continuo \n\n-Legenda: Escreva a legenda e coloque hashtags de tendência relacionadas ao nicho, variando em tamanho e alcance;\nInstruções designer: coloque as instruções para o designer aqui\n\n### Formatos\nLeve em consideração o tipo de criativo, são eles: estático, carrossel, stories e reels. Crie o conteúdo baseado no que chegar em tipo.\n\nPara conteúdos em formato estático:\nEstruture o post com headline que chame Atenção do público, corpo da arte e uma CTA simples, como clique no link - para conteúdos de venda, compartilhe, curta e comente para os demais tipos de conteúdo. Não se esqueça de usar textos curtos e chamativos, por ser um formato pequeno não podem ser textos grandes.\n\nPara conteúdos em formato de carrossel:\nEstruture o carrossel em no máximo 5 telas, sendo a primeira com headline e corpo da arte, e a última com a CTA simples, a mais usual sendo compartilhe.\n\nPara conteúdos em formato de reels:\nAja como um roteirista profissional capaz de escrever roteiros de vídeos leves, humanizados e divertidos. Estruture um roteiro de vídeo para no máximo 1 minuto e meio, com as falas, sugestão de imagem e texto para tela.\n\nPara conteúdos em formato stories:\nUse storytelling para cativar o público, destacar os benefícios e incentivar a ação. Estruture com um roteiro dividido por telas com até 30 segundos, com as falas e sugestão de imagem.\n\n--\n\nRetorne\nheadline: Coloque a headline aqui\ncorpo_criativo: coloque o corpo do criativo aqui\nlegenda_criativo: retorne aqui a legenda",
+              "role": "system"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        1180,
+        140
+      ],
+      "id": "cb21fde8-f55c-414a-92fa-f746a6e8c172",
+      "name": "Gera conteúdo",
+      "credentials": {
+        "openAiApi": {
+          "id": "HqyrCnwePmXKkfxw",
+          "name": "[main] - openia.com - tools@aimaze.com.br"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Usar a IA?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Usar a IA?": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Gera conteúdo",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "OpenAI1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI1": {
+      "main": [
+        [
+          {
+            "node": "Notion1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI2": {
+      "main": [
+        [
+          {
+            "node": "Gera Imagem no Freepik",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gera Imagem no Freepik": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File": {
+      "main": [
+        [
+          {
+            "node": "Envia imagem para o baserow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Envia imagem para o baserow": {
+      "main": [
+        [
+          {
+            "node": "Notion2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gera conteúdo": {
+      "main": [
+        [
+          {
+            "node": "Notion3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": {
+    "Notion Trigger1": [
+      {
+        "json": {
+          "id": "16916533-6e91-806f-99cd-cc87b6eb1386",
+          "Executou IA? [C]": false,
+          "Legenda do Criativo": "",
+          "Criativo Final": [],
+          "Seleção [D]": false,
+          "Status": "Ideia",
+          "Criado em": "2024-12-27T18:11:00.000Z",
+          "Type": null,
+          "RUN caption [C]": false,
+          "Criado por": null,
+          "RUN IA [C]": true,
+          "prompt_imagem": "",
+          "Prompt": "desenvolva um conteudo que tenha como tema: 5 mitos sobre procedimentos estéticos. Esse post vai ser publicado em janeiro. Quero uma headline atrante, o corpo do carrossel e a legenda, usando o metodo AIDA, um tom de voz proximo, acolhedor e humanizado",
+          "user_access_token": [
+            "EAASjtWPpvTMBO8T9ojeY0r2A4nG6CB5qgYZCeHfZBUep9qwyyAHQ3pcaPzwvbL2zmCM1rdta7GSYmZCsz3J3j5c56TPQHuzWwzaI4mIzZC9JnFbQ2Q2ZA7hHBtXMqeu3Arncys1R3u7xulj4gNlHReIlU6aFZBvdiSTxDZBFZChqkZAWdzAwPZAMZAOC7reqOtD8p5VPZAG2x6ZAx"
+          ],
+          "Empresa": [
+            "14516533-6e91-8042-b5a6-ee65a061ad13"
+          ],
+          "ig_business_id": [
+            ""
+          ],
+          "objetivo_post": null,
+          "media_type_post": "",
+          "Público Alvo": [
+            ""
+          ],
+          "Business_name": [
+            "Clin Dermy"
+          ],
+          "Postagem": {
+            "start": "2025-01-15",
+            "end": null,
+            "time_zone": null
+          },
+          "Entrega": "08/01/2025",
+          "Sugestão de Imagens": [],
+          "Título do Criativo": "",
+          "group_id_sinapse": [
+            "120363356138030656@g.us"
+          ],
+          "[G]": true,
+          "access_token": [
+            ""
+          ],
+          "Status IA [F]": "🟨 Gerando conteúdo...",
+          "Corpo do Criativo": "",
+          "Última edição": "2024-12-27T19:54:00.000Z",
+          "RUN content [C]": true,
+          "is_carousel_item": false,
+          "Nome": "Publicação #6"
+        }
+      }
+    ],
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "webhooks.aimaze.com.br",
+            "user-agent": "NotionAutomation",
+            "content-length": "8406",
+            "baggage": "sentry-environment=production,sentry-release=0.0.890,sentry-public_key=529a6d1990e5471d874257842c4f4ad8,sentry-trace_id=28ed7766aa9b4b9094e11c3b70aaea7b",
+            "content-type": "application/json",
+            "sentry-trace": "28ed7766aa9b4b9094e11c3b70aaea7b-953df0f912ffabfa",
+            "traceparent": "00-677076b5000000005e3ef6b8ad849da5-1f1fa65e1e8f0378-00",
+            "tracestate": "dd=t.tid:677076b500000000;t.dm:-4;s:-1;p:1f1fa65e1e8f0378",
+            "x-datadog-parent-id": "2242694062623622008",
+            "x-datadog-sampling-priority": "-1",
+            "x-datadog-tags": "_dd.p.tid=677076b500000000",
+            "x-datadog-trace-id": "6791136561166851493",
+            "x-forwarded-for": "44.238.170.230",
+            "x-forwarded-host": "webhooks.aimaze.com.br",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "traefik_traefik.1",
+            "x-real-ip": "44.238.170.230",
+            "accept-encoding": "gzip"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "source": {
+              "type": "automation",
+              "automation_id": "15c16533-6e91-80dd-b104-004d0cbe22d9",
+              "action_id": "16a16533-6e91-80ec-9f86-005a73a5073f",
+              "event_id": "b361600b-d40b-4d87-8ef7-7f1f066a55a7",
+              "attempt": 1
+            },
+            "data": {
+              "object": "page",
+              "id": "16a16533-6e91-8075-ab47-db7f74572584",
+              "created_time": "2024-12-28T21:57:00.000Z",
+              "last_edited_time": "2024-12-28T22:07:00.000Z",
+              "created_by": {
+                "object": "user",
+                "id": "87d5f958-1e5f-4639-984d-18bc06d5db19"
+              },
+              "last_edited_by": {
+                "object": "user",
+                "id": "87d5f958-1e5f-4639-984d-18bc06d5db19"
+              },
+              "cover": null,
+              "icon": null,
+              "parent": {
+                "type": "database_id",
+                "database_id": "13216533-6e91-8032-b555-ec9affaf6ac9"
+              },
+              "archived": false,
+              "in_trash": false,
+              "properties": {
+                "Executou IA? [C]": {
+                  "id": "%3BUKz",
+                  "type": "checkbox",
+                  "checkbox": false
+                },
+                "Legenda do Criativo": {
+                  "id": "%3DVyS",
+                  "type": "rich_text",
+                  "rich_text": [
+                    {
+                      "type": "text",
+                      "text": {
+                        "content": "Transforme seus sonhos em realidade! ✨💪 Vamos nessa?\n👉 Comente abaixo o que você vai fazer hoje!  #Inspiração #Motivação #Sonhos #Sucesso #Ação #PixeoMarketing",
+                        "link": null
+                      },
+                      "annotations": {
+                        "bold": false,
+                        "italic": false,
+                        "strikethrough": false,
+                        "underline": false,
+                        "code": false,
+                        "color": "default"
+                      },
+                      "plain_text": "Transforme seus sonhos em realidade! ✨💪 Vamos nessa?\n👉 Comente abaixo o que você vai fazer hoje!  #Inspiração #Motivação #Sonhos #Sucesso #Ação #PixeoMarketing",
+                      "href": null
+                    }
+                  ]
+                },
+                "Criativo Final": {
+                  "id": "%3FP%7C%3E",
+                  "type": "files",
+                  "files": [
+                    {
+                      "name": "3.png",
+                      "type": "file",
+                      "file": {
+                        "url": "https://prod-files-secure.s3.us-west-2.amazonaws.com/f7dfa2b2-a487-4ede-a435-4ed8b02a7bae/d1069aa4-58ca-43f6-b80b-a98d053f807b/3.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45FSPPWI6X%2F20241228%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20241228T220749Z&X-Amz-Expires=3600&X-Amz-Signature=3bfcfecea212fef6a5368dac1eabbac0c93d2b8112fd22beaf3cff92c703d5b0&X-Amz-SignedHeaders=host&x-id=GetObject",
+                        "expiry_time": "2024-12-28T23:07:49.302Z"
+                      }
+                    },
+                    {
+                      "name": "1c.png",
+                      "type": "file",
+                      "file": {
+                        "url": "https://prod-files-secure.s3.us-west-2.amazonaws.com/f7dfa2b2-a487-4ede-a435-4ed8b02a7bae/9a6ed79a-2a0a-403c-ac88-2c09fd4ebc0e/1c.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45FSPPWI6X%2F20241228%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20241228T220749Z&X-Amz-Expires=3600&X-Amz-Signature=dd27e2465767990127534edfc872d56dcf84268e999574a0b3c37af3ba89c261&X-Amz-SignedHeaders=host&x-id=GetObject",
+                        "expiry_time": "2024-12-28T23:07:49.329Z"
+                      }
+                    }
+                  ]
+                },
+                "Seleção [D]": {
+                  "id": "A%7Bh%5E",
+                  "type": "checkbox",
+                  "checkbox": true
+                },
+                "Status": {
+                  "id": "CUYV",
+                  "type": "status",
+                  "status": {
+                    "id": "b7056050-3aaf-441d-8260-cf561dc1f244",
+                    "name": "Ideia",
+                    "color": "default"
+                  }
+                },
+                "Criado em": {
+                  "id": "C%5DJB",
+                  "type": "created_time",
+                  "created_time": "2024-12-28T21:57:00.000Z"
+                },
+                "Type": {
+                  "id": "Cm%7Bg",
+                  "type": "select",
+                  "select": {
+                    "id": "@GS:",
+                    "name": "carrossel",
+                    "color": "orange"
+                  }
+                },
+                "RUN caption [C]": {
+                  "id": "Fgyf",
+                  "type": "checkbox",
+                  "checkbox": true
+                },
+                "Criado por": {
+                  "id": "GVgr",
+                  "type": "select",
+                  "select": {
+                    "id": "FIdt",
+                    "name": "Pixeo[AI]",
+                    "color": "green"
+                  }
+                },
+                "RUN IA [C]": {
+                  "id": "Gh%3AM",
+                  "type": "checkbox",
+                  "checkbox": true
+                },
+                "prompt_imagem": {
+                  "id": "J%3AeV",
+                  "type": "rich_text",
+                  "rich_text": []
+                },
+                "Prompt": {
+                  "id": "L%40Fk",
+                  "type": "rich_text",
+                  "rich_text": [
+                    {
+                      "type": "text",
+                      "text": {
+                        "content": "Prompt adicional $$$$$$$ crie um post aleatorio",
+                        "link": null
+                      },
+                      "annotations": {
+                        "bold": false,
+                        "italic": false,
+                        "strikethrough": false,
+                        "underline": false,
+                        "code": false,
+                        "color": "default"
+                      },
+                      "plain_text": "Prompt adicional $$$$$$$ crie um post aleatorio",
+                      "href": null
+                    }
+                  ]
+                },
+                "user_access_token": {
+                  "id": "LCHo",
+                  "type": "rollup",
+                  "rollup": {
+                    "type": "array",
+                    "array": [
+                      {
+                        "type": "formula",
+                        "formula": {
+                          "type": "string",
+                          "string": "EAASjtWPpvTMBO8T9ojeY0r2A4nG6CB5qgYZCeHfZBUep9qwyyAHQ3pcaPzwvbL2zmCM1rdta7GSYmZCsz3J3j5c56TPQHuzWwzaI4mIzZC9JnFbQ2Q2ZA7hHBtXMqeu3Arncys1R3u7xulj4gNlHReIlU6aFZBvdiSTxDZBFZChqkZAWdzAwPZAMZAOC7reqOtD8p5VPZAG2x6ZAx"
+                        }
+                      }
+                    ],
+                    "function": "show_original"
+                  }
+                },
+                "Empresa": {
+                  "id": "MMQ%5B",
+                  "type": "relation",
+                  "relation": [
+                    {
+                      "id": "13216533-6e91-8084-97aa-e2fe85fa37ee"
+                    }
+                  ],
+                  "has_more": false
+                },
+                "ig_business_id": {
+                  "id": "M%5DY%3D",
+                  "type": "rollup",
+                  "rollup": {
+                    "type": "array",
+                    "array": [
+                      {
+                        "type": "rich_text",
+                        "rich_text": [
+                          {
+                            "type": "text",
+                            "text": {
+                              "content": "17841457241350243",
+                              "link": null
+                            },
+                            "annotations": {
+                              "bold": false,
+                              "italic": false,
+                              "strikethrough": false,
+                              "underline": false,
+                              "code": false,
+                              "color": "default"
+                            },
+                            "plain_text": "17841457241350243",
+                            "href": null
+                          }
+                        ]
+                      }
+                    ],
+                    "function": "show_original"
+                  }
+                },
+                "objetivo_post": {
+                  "id": "Mf%3DV",
+                  "type": "select",
+                  "select": {
+                    "id": "d70e49cd-005a-4f8c-80e2-ab8ed502ec70",
+                    "name": "Inspirar",
+                    "color": "brown"
+                  }
+                },
+                "media_type_post": {
+                  "id": "OMhC",
+                  "type": "formula",
+                  "formula": {
+                    "type": "string",
+                    "string": "CAROUSEL"
+                  }
+                },
+                "Público Alvo": {
+                  "id": "Pb%5B%40",
+                  "type": "rollup",
+                  "rollup": {
+                    "type": "array",
+                    "array": [
+                      {
+                        "type": "rich_text",
+                        "rich_text": []
+                      }
+                    ],
+                    "function": "show_original"
+                  }
+                },
+                "Business_name": {
+                  "id": "Qx%3DF",
+                  "type": "rollup",
+                  "rollup": {
+                    "type": "array",
+                    "array": [
+                      {
+                        "type": "formula",
+                        "formula": {
+                          "type": "string",
+                          "string": "Pixeo Marketing"
+                        }
+                      }
+                    ],
+                    "function": "show_original"
+                  }
+                },
+                "Postagem": {
+                  "id": "SOtg",
+                  "type": "date",
+                  "date": {
+                    "start": "2024-12-29",
+                    "end": null,
+                    "time_zone": null
+                  }
+                },
+                "Entrega": {
+                  "id": "VcS%5D",
+                  "type": "formula",
+                  "formula": {
+                    "type": "string",
+                    "string": "22/12/2024"
+                  }
+                },
+                "Sugestão de Imagens": {
+                  "id": "W%5EQ~",
+                  "type": "files",
+                  "files": []
+                },
+                "Título do Criativo": {
+                  "id": "%5DWb%40",
+                  "type": "rich_text",
+                  "rich_text": [
+                    {
+                      "type": "text",
+                      "text": {
+                        "content": "Transforme seus Sonhos em Realidade!",
+                        "link": null
+                      },
+                      "annotations": {
+                        "bold": false,
+                        "italic": false,
+                        "strikethrough": false,
+                        "underline": false,
+                        "code": false,
+                        "color": "default"
+                      },
+                      "plain_text": "Transforme seus Sonhos em Realidade!",
+                      "href": null
+                    }
+                  ]
+                },
+                "group_id_sinapse": {
+                  "id": "kUHh",
+                  "type": "rollup",
+                  "rollup": {
+                    "type": "array",
+                    "array": [
+                      {
+                        "type": "formula",
+                        "formula": {
+                          "type": "string",
+                          "string": "120363356138030656@g.us"
+                        }
+                      }
+                    ],
+                    "function": "show_original"
+                  }
+                },
+                "[G]": {
+                  "id": "msru",
+                  "type": "checkbox",
+                  "checkbox": true
+                },
+                "access_token": {
+                  "id": "pX%60%3D",
+                  "type": "rollup",
+                  "rollup": {
+                    "type": "array",
+                    "array": [
+                      {
+                        "type": "rich_text",
+                        "rich_text": [
+                          {
+                            "type": "text",
+                            "text": {
+                              "content": "EAASjtWPpvTMBOydS3svZAtZCUcG3jCZAkBk9JzZANZAl2cnunKE7FdO5gPwZAnAYkgofY6uup3nJxhcq5FLB7QnywZCsa4iZB65orb8OsBbZAFYgC2L8igO4ZALWiw3zdqV3zx1mmzZBJD0TPIyNRJvmR1aWtzOCAyPY1DM3rOwOrlCTm0uXPF8t9Ec48ElHSiEoc7HqnNseZBUFqhTzrYQZD",
+                              "link": null
+                            },
+                            "annotations": {
+                              "bold": false,
+                              "italic": false,
+                              "strikethrough": false,
+                              "underline": false,
+                              "code": true,
+                              "color": "blue"
+                            },
+                            "plain_text": "EAASjtWPpvTMBOydS3svZAtZCUcG3jCZAkBk9JzZANZAl2cnunKE7FdO5gPwZAnAYkgofY6uup3nJxhcq5FLB7QnywZCsa4iZB65orb8OsBbZAFYgC2L8igO4ZALWiw3zdqV3zx1mmzZBJD0TPIyNRJvmR1aWtzOCAyPY1DM3rOwOrlCTm0uXPF8t9Ec48ElHSiEoc7HqnNseZBUFqhTzrYQZD",
+                            "href": null
+                          }
+                        ]
+                      }
+                    ],
+                    "function": "show_original"
+                  }
+                },
+                "Status IA [F]": {
+                  "id": "pg%40b",
+                  "type": "formula",
+                  "formula": {
+                    "type": "string",
+                    "string": "🟪 Gerando legenda..."
+                  }
+                },
+                "Corpo do Criativo": {
+                  "id": "rnGL",
+                  "type": "rich_text",
+                  "rich_text": [
+                    {
+                      "type": "text",
+                      "text": {
+                        "content": "✨ **Descubra o Segredo da Inspiração!** ✨\n\n1️⃣ **Visualize** seus objetivos todos os dias.\n2️⃣ **Acredite** que você é capaz de conquistá-los.\n3️⃣ **Aja**! Dê o primeiro passo hoje mesmo!\n\n💪 Não deixe seus sonhos apenas no papel. Faça acontecer! \n\n🗨️ O que você vai fazer hoje para se aproximar do seu sonho? Comente abaixo! ❤️",
+                        "link": null
+                      },
+                      "annotations": {
+                        "bold": false,
+                        "italic": false,
+                        "strikethrough": false,
+                        "underline": false,
+                        "code": false,
+                        "color": "default"
+                      },
+                      "plain_text": "✨ **Descubra o Segredo da Inspiração!** ✨\n\n1️⃣ **Visualize** seus objetivos todos os dias.\n2️⃣ **Acredite** que você é capaz de conquistá-los.\n3️⃣ **Aja**! Dê o primeiro passo hoje mesmo!\n\n💪 Não deixe seus sonhos apenas no papel. Faça acontecer! \n\n🗨️ O que você vai fazer hoje para se aproximar do seu sonho? Comente abaixo! ❤️",
+                      "href": null
+                    }
+                  ]
+                },
+                "Última edição": {
+                  "id": "rwRQ",
+                  "type": "last_edited_time",
+                  "last_edited_time": "2024-12-28T22:07:00.000Z"
+                },
+                "RUN content [C]": {
+                  "id": "uAsf",
+                  "type": "checkbox",
+                  "checkbox": false
+                },
+                "is_carousel_item": {
+                  "id": "weU%7C",
+                  "type": "formula",
+                  "formula": {
+                    "type": "boolean",
+                    "boolean": true
+                  }
+                },
+                "Nome": {
+                  "id": "title",
+                  "type": "title",
+                  "title": [
+                    {
+                      "type": "text",
+                      "text": {
+                        "content": "Publicação #555",
+                        "link": null
+                      },
+                      "annotations": {
+                        "bold": false,
+                        "italic": false,
+                        "strikethrough": false,
+                        "underline": false,
+                        "code": false,
+                        "color": "default"
+                      },
+                      "plain_text": "Publicação #555",
+                      "href": null
+                    }
+                  ]
+                }
+              },
+              "url": "https://www.notion.so/Publica-o-555-16a165336e918075ab47db7f74572584",
+              "public_url": null,
+              "request_id": "a73abb34-3321-4385-a71a-f86fc26918c8"
+            }
+          },
+          "webhookUrl": "https://webhooks.aimaze.com.br/webhook/8f66ff7a-c7b6-4b48-9e18-6d39c27457e6",
+          "executionMode": "production"
+        }
+      }
+    ]
+  },
+  "versionId": "84a9dcbd-1491-49d2-830c-cbab0f2ccf3e",
+  "triggerCount": 1,
+  "tags": []
+}
