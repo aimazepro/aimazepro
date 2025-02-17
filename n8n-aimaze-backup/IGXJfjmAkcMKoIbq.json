@@ -1,0 +1,321 @@
+{
+  "createdAt": "2024-12-13T13:31:10.611Z",
+  "updatedAt": "2024-12-17T13:45:08.487Z",
+  "id": "IGXJfjmAkcMKoIbq",
+  "name": "coda.io - tests",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "seconds"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        160,
+        -260
+      ],
+      "id": "45437bba-aab9-443d-bbd3-715efab806d6",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "operation": "getAllRows",
+        "docId": "l8wpTH4HRN",
+        "tableId": "grid-lBfxq87a6d",
+        "limit": 1,
+        "options": {
+          "valueFormat": "simple"
+        }
+      },
+      "type": "n8n-nodes-base.coda",
+      "typeVersion": 1.1,
+      "position": [
+        340,
+        -260
+      ],
+      "id": "3e88d183-0a6d-403a-9d6b-fba1b5e5adb0",
+      "name": "Coda",
+      "credentials": {
+        "codaApi": {
+          "id": "NfVXjHsu0waQDZzb",
+          "name": "[coda.io] - tools@aimaze.com.br"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=#Informações importantes\n\nEmpresa:\nprompt_adicional: {{ $json.Prompt }}\ntipo_publicação: {{ $json['content type'] }}\nobjetivo_post: {{ $json['objetivo content'] }}\npúblico alvo: \n--\n#Instruções \nVocê é copywrinting especialista em criação de conteudo para o Instagram com mais de 10 anos de experiência. Você se chama Pixeo. O seu objetivo é criar a ideia de conteúdos para o designer desenvolver a arte gráfica. O material sempre será criado para Brasileiros. Sua missão é criar conteúdos altamente chamativos, criativos e relevantes, com foco em engajamento máximo e atração de audiência. Cada conteúdo deve ser otimizado para os algoritmos da plataforma e direcionado ao público-alvo definido.\n\n--\n\n## Avisos\nSempre tenha em mente que você está criando conteúdo para um designer criar as peças gráficas, então, faça textos curtos e organizados que façam sentido para ir no corpo do criativo.\n\nA cta deve ir na legenda e no corpo do criativo quando necessário.\n\n## Como deve ser os conteúdos\nOs conteúdos devem ser humanizados, leves e descontraídos. Conteúdos curtos visto que é para o Instagram. Devem ter um tom próximo e acessivel, incentivando o enganjamento com perguntas e CTA naturais e relacionadas ao tema que for pedido, sendo claras e impactantes. Use framework AIDA para criar o texto. Divida o ponto central em 3 tópicos. Leve em consideração as boas práticas recomendadas pela Meta, para conseguir criar conteúdos que gerem engajamento. Cada conteúdo deve ser otimizado para os algoritmos da plataforma e direcionado ao público-alvo definido\n\nForneça a estrutura do post completa com:\n\nHeadline: aqui vai o título do conteúdo; \n-Corpo do criativo: aqui vai o corpo do conteúdo e a CTA;\n-Legenda: Escreva a legenda e coloque hashtags de tendência relacionadas ao nicho, variando em tamanho e alcance;\nInstruções designer: coloque as instruções para o designer aqui\n\n### Formatos\nLeve em consideração o tipo de criativo, são eles: estático, carrossel, stories e reels. Crie o conteúdo baseado no que chegar em tipo.\n\nPara conteúdos em formato estático:\nEstruture o post com headline que chame Atenção do público, corpo da arte e uma CTA simples, como clique no link - para conteúdos de venda, compartilhe, curta e comente para os demais tipos de conteúdo. Não se esqueça de usar textos curtos e chamativos, por ser um formato pequeno não podem ser textos grandes.\n\nPara conteúdos em formato de carrossel:\nEstruture o carrossel em no máximo 5 telas, sendo a primeira com headline e corpo da arte, e a última com a CTA simples, a mais usual sendo compartilhe.\n\nPara conteúdos em formato de reels:\nAja como um roteirista profissional capaz de escrever roteiros de vídeos leves, humanizados e divertidos. Estruture um roteiro de vídeo para no máximo 1 minuto e meio, com as falas, sugestão de imagem e texto para tela.\n\nPara conteúdos em formato stories:\nUse storytelling para cativar o público, destacar os benefícios e incentivar a ação. Estruture com um roteiro dividido por telas com até 30 segundos, com as falas e sugestão de imagem.\n\n--\n\nRetorne\nheadline: Coloque a headline aqui\ncorpo_criativo: coloque o corpo do criativo aqui\nlegenda_criativo: retorne aqui a legenda\n",
+              "role": "system"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        520,
+        -260
+      ],
+      "id": "0d4d5fc8-b554-4042-b71c-0d29899ee6d8",
+      "name": "Gera conteúdo",
+      "credentials": {
+        "openAiApi": {
+          "id": "HqyrCnwePmXKkfxw",
+          "name": "[main] - openia.com - tools@aimaze.com.br"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "322d2113-83d4-4e55-96a0-77bbc3ffd8c0",
+              "name": "c-wm935lSyB5",
+              "value": "Titulo",
+              "type": "string"
+            },
+            {
+              "id": "88de9298-3a39-4b94-9fda-5ef8dc5530d4",
+              "name": "c-4143imYicq",
+              "value": "Corpo do criativo",
+              "type": "string"
+            },
+            {
+              "id": "84e6c1cc-d2db-48fb-a340-9129d2927628",
+              "name": "c-VjgB0OCmnc",
+              "value": "legenda",
+              "type": "string"
+            },
+            {
+              "id": "f58d6ada-ebf0-4666-85f4-6556d58f374d",
+              "name": "c-cH9ksyTvo2",
+              "value": "false",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        160,
+        -440
+      ],
+      "id": "3f3cd8d2-24b8-4c1b-8094-ae90f3ed6747",
+      "name": "dados coluna"
+    },
+    {
+      "parameters": {
+        "operation": "getRow",
+        "docId": "l8wpTH4HRN",
+        "tableId": "grid-lBfxq87a6d",
+        "rowId": "={{ $('Coda').item.json.id }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.coda",
+      "typeVersion": 1.1,
+      "position": [
+        840,
+        -260
+      ],
+      "id": "4ffcddaf-b11f-4005-9010-a04b6cff39de",
+      "name": "Coda3",
+      "credentials": {
+        "codaApi": {
+          "id": "NfVXjHsu0waQDZzb",
+          "name": "[coda.io] - tools@aimaze.com.br"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "322d2113-83d4-4e55-96a0-77bbc3ffd8c0",
+              "name": "values.Titulo_criativo",
+              "value": "={{ $('Gera conteúdo').item.json.message.content.headline }}",
+              "type": "string"
+            },
+            {
+              "id": "88de9298-3a39-4b94-9fda-5ef8dc5530d4",
+              "name": "values.Corpo_criativo",
+              "value": "={{ $('Gera conteúdo').item.json.message.content.corpo_criativo }}",
+              "type": "string"
+            },
+            {
+              "id": "f58d6ada-ebf0-4666-85f4-6556d58f374d",
+              "name": "values.Checkbox",
+              "value": "true",
+              "type": "string"
+            },
+            {
+              "id": "21c20bfe-12ff-49a8-b299-062c054936a7",
+              "name": "id",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "61c73e45-689d-4f86-a32a-ef7f0ab87beb",
+              "name": "values.caption",
+              "value": "={{ $('Gera conteúdo').item.json.message.content.legenda_criativo }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1020,
+        -260
+      ],
+      "id": "9c2ce20f-fd75-4f4a-8b52-bb985bcf78cb",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "resource": "view",
+        "operation": "updateViewRow",
+        "docId": "l8wpTH4HRN",
+        "viewId": "table-7wjkEOtlbd",
+        "rowId": "={{ $json.id }}",
+        "keyName": "values",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.coda",
+      "typeVersion": 1.1,
+      "position": [
+        1200,
+        -260
+      ],
+      "id": "6388f0a6-919f-4f9d-9eca-20ab259ec5c6",
+      "name": "Coda4",
+      "credentials": {
+        "codaApi": {
+          "id": "NfVXjHsu0waQDZzb",
+          "name": "[coda.io] - tools@aimaze.com.br"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {
+          "keyColumns": ""
+        }
+      },
+      "type": "n8n-nodes-base.coda",
+      "typeVersion": 1.1,
+      "position": [
+        380,
+        -440
+      ],
+      "id": "f3180dbc-ad05-4c09-90b8-6998a30f722d",
+      "name": "Coda1",
+      "credentials": {
+        "codaApi": {
+          "id": "KhuWfnLmxr0sRqQh",
+          "name": "[coda.io] - tools@pixeo.com.br"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Coda",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Coda": {
+      "main": [
+        [
+          {
+            "node": "Gera conteúdo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gera conteúdo": {
+      "main": [
+        [
+          {
+            "node": "Coda3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Coda3": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Coda4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "dados coluna": {
+      "main": [
+        [
+          {
+            "node": "Coda1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": {},
+  "versionId": "2a8f88a8-8f77-4627-93bc-e287632e7a0f",
+  "triggerCount": 0,
+  "tags": []
+}
