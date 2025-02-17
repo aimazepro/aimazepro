@@ -1,0 +1,2271 @@
+{
+  "createdAt": "2024-12-29T00:52:48.623Z",
+  "updatedAt": "2024-12-30T21:05:28.930Z",
+  "id": "dwb0cn4okLzdCuYI",
+  "name": "Postagem Instagram automática",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "89de34f7-8971-4367-a417-3ea77b625949",
+              "name": "row_id",
+              "value": "={{ $json.body.data.id }}",
+              "type": "string"
+            },
+            {
+              "id": "f281279c-7c07-4cf2-99cd-9fc5c1027075",
+              "name": "row_name",
+              "value": "={{ $json.body.data.properties.Nome.title[0].text.content }} - {{ $json.body.data.properties['Título do Criativo'].rich_text[0].text.content }}",
+              "type": "string"
+            },
+            {
+              "id": "1db426f3-0689-4598-a296-04dfb7ddcf31",
+              "name": "business_id",
+              "value": "={{ $json.body.data.properties.Business_name.rollup.array[0].formula.string }}@{{ $json.body.data.properties.Empresa.relation[0].id }}",
+              "type": "string"
+            },
+            {
+              "id": "24806f0d-707e-44f4-b054-e79c991f40f5",
+              "name": "content_name",
+              "value": "={{ $json.body.data.properties['Título do Criativo'].rich_text[0].text.content }}",
+              "type": "string"
+            },
+            {
+              "id": "2176899f-7afa-4eaf-bcec-f05ba586a6e1",
+              "name": "media_url",
+              "value": "={{ $json.body.data.properties['Criativo Final'].files.map(file => file.file.url) }}",
+              "type": "array"
+            },
+            {
+              "id": "0683836f-3341-42a5-9f2f-21a07ed63ed3",
+              "name": "caption",
+              "value": "={{ $json.body.data.properties['Legenda do Criativo'].rich_text[0].text.content }}",
+              "type": "string"
+            },
+            {
+              "id": "83bfe35d-f5cf-4917-a6ef-d35dd7db39c5",
+              "name": "creative_status",
+              "value": "={{ $json.body.data.properties.Status.status.name }}",
+              "type": "string"
+            },
+            {
+              "id": "96a4a28f-7eb9-4c8c-8e07-5c3503ad9083",
+              "name": "creative_type",
+              "value": "={{ $json.body.data.properties.Type.select.name }}",
+              "type": "string"
+            },
+            {
+              "id": "b6d47849-47ae-4adc-bb36-dc0b6a2c3054",
+              "name": "instagram_id",
+              "value": "={{ $json.body.data.properties.ig_business_id.rollup.array[0].rich_text[0].text.content }}",
+              "type": "string"
+            },
+            {
+              "id": "d377a681-c83b-45c7-b4a6-23a922990d66",
+              "name": "access_token",
+              "value": "={{ $json.body.data.properties.access_token.rollup.array[0].rich_text[0].text.content }}",
+              "type": "string"
+            },
+            {
+              "id": "383b1451-2395-4a67-96d9-7689f7036872",
+              "name": "media_type_api",
+              "value": "={{ $json.body.data.properties.media_type_post.formula.string }}",
+              "type": "string"
+            },
+            {
+              "id": "268446d2-b980-4f36-a623-3a2220b7496f",
+              "name": "is_carousel_item",
+              "value": "={{ $json.body.data.properties.is_carousel_item.formula.boolean }}",
+              "type": "string"
+            },
+            {
+              "id": "15cfa8bb-993a-4084-8568-78f25bbc6070",
+              "name": "user_access_token",
+              "value": "={{ $json.body.data.properties.user_access_token.rollup.array[0].formula.string }}",
+              "type": "string"
+            },
+            {
+              "id": "4216a813-45f6-461f-9103-25b24492f0d5",
+              "name": "data_postagem",
+              "value": "={{ $json.body.data.properties.Postagem.date.start }}",
+              "type": "string"
+            },
+            {
+              "id": "45a84055-ea83-4714-8e14-e0a22bae33bd",
+              "name": "objetivo_post",
+              "value": "={{ $json.body.data.properties.objetivo_post }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1260,
+        900
+      ],
+      "id": "7133b664-f2dd-497b-ac65-4237142ed2b0",
+      "name": "Variáveis importantes1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b1450aba-dd66-4c6b-bf00-1ba3c02d09dc",
+              "leftValue": "={{ $json.media_url }}",
+              "rightValue": "",
+              "operator": {
+                "type": "array",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "b838665a-8569-4e1b-b482-e8575eff5828",
+              "leftValue": "={{ $json.creative_status }}",
+              "rightValue": "Programado",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -1040,
+        900
+      ],
+      "id": "bbab1ab3-be15-4b22-ba23-649b95c42c14",
+      "name": "Tem arquivo de criativo1"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "notion-pixeomarketing-dbdecreativemain",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -1500,
+        900
+      ],
+      "id": "bdf2eb11-fb1a-4a99-bda2-b2b66e05fb69",
+      "name": "Webhook",
+      "webhookId": "f42e36db-9b22-4629-bbae-08bafe7bfa88"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.creative_type }}",
+                    "rightValue": "Post estático",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": "={{ true }}",
+              "outputKey": "=Post estático"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "635ea938-28ff-441d-b83e-601bc11f690e",
+                    "leftValue": "={{ $json.creative_type }}",
+                    "rightValue": "carrossel",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "=Carrossel"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "0b5c835f-35a1-4b73-bb8a-859dad0f70ca",
+                    "leftValue": "={{ $json.creative_type }}",
+                    "rightValue": "Reels",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Reels"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "c4501965-2f3f-46e8-88a4-6d743466cb65",
+                    "leftValue": "={{ $json.creative_type }}",
+                    "rightValue": "Stories",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Stories"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -460,
+        840
+      ],
+      "id": "89b11f70-3082-4ab5-8650-2ad8927ae223",
+      "name": "Tipo postagem1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $json.instagram_id }}/media",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "access_token",
+              "value": "={{ $json.access_token }}"
+            },
+            {
+              "name": "image_url",
+              "value": "={{ $json.media_url.file.url }}"
+            },
+            {
+              "name": "is_carousel_item",
+              "value": "={{ $json.is_carousel_item }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        860,
+        700
+      ],
+      "id": "3c8d83a0-e474-4452-8c85-21f8745113bf",
+      "name": "Carrega itens Carrossel1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $('Loop Over Items4').item.json.instagram_id }}/media",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "access_token",
+              "value": "={{ $('Loop Over Items4').item.json.access_token }}"
+            },
+            {
+              "name": "caption",
+              "value": "={{ $('Loop Over Items4').item.json.caption }}"
+            },
+            {
+              "name": "media_type",
+              "value": "={{ $('Loop Over Items4').item.json.media_type_api }}"
+            },
+            {
+              "name": "children",
+              "value": "={{ $json.id }} "
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1220,
+        700
+      ],
+      "id": "3642f4f9-3192-4159-9bf7-9b05590d3286",
+      "name": "Cria Container Carrossel1",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "id"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        700
+      ],
+      "id": "29ae2c4a-873c-40ba-9012-0808a127de6c",
+      "name": "Aggregate1",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $('Loop Over Items4').item.json.instagram_id }}/media_publish",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "access_token",
+              "value": "={{ $('Loop Over Items4').item.json.access_token }}"
+            },
+            {
+              "name": "creation_id",
+              "value": "={{ $json.id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1400,
+        700
+      ],
+      "id": "14c06d83-1019-4e29-8515-eff21163f80a",
+      "name": "Publica container1"
+    },
+    {
+      "parameters": {
+        "amount": 30
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1560,
+        700
+      ],
+      "id": "b78e5587-fde9-4576-ae74-dca73dfd4064",
+      "name": "Wait3",
+      "webhookId": "ccba47cb-a2f0-4162-8740-7eed909d2fcb"
+    },
+    {
+      "parameters": {
+        "maxItems": "={{ $('Tipo postagem1').all().length }}",
+        "keep": "lastItems"
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        120,
+        580
+      ],
+      "id": "ff791254-0fc3-4ffa-a375-8ed66602f0c9",
+      "name": "Limit4"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "media_url",
+        "include": "allOtherFields",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        700,
+        700
+      ],
+      "id": "6c271e68-4395-4bec-9ad0-95a15aedeac4",
+      "name": "Split Out2",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $json.instagram_id }}/media",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "access_token",
+              "value": "={{ $json.access_token }}"
+            },
+            {
+              "name": "image_url",
+              "value": "={{ $json.media_url[0].file.url }}"
+            },
+            {
+              "name": "caption",
+              "value": "={{ $json.caption }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        640,
+        200
+      ],
+      "id": "18d9349f-6bec-4656-b5e1-28143b588e72",
+      "name": "Cria container post unico1",
+      "disabled": true
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -520,
+        1100
+      ],
+      "id": "d6be828d-df30-4e5b-9835-13e5c21c90af",
+      "name": "No Operation, do nothing1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $('Tipo postagem1').item.json.instagram_id }}/media_publish",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "access_token",
+              "value": "={{ $('Tipo postagem1').item.json.access_token }}"
+            },
+            {
+              "name": "creation_id",
+              "value": "={{ $json.id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1040,
+        200
+      ],
+      "id": "af9ce354-5be4-4111-84d8-d72e4c803a87",
+      "name": "Publica o container1",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        440,
+        120
+      ],
+      "id": "33cb8e37-a4e3-40d2-991c-30a232854b9a",
+      "name": "Loop Over Items5"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1500,
+        200
+      ],
+      "id": "8750370f-5a2a-45ca-9db3-db3e33e55e06",
+      "name": "Wait5",
+      "webhookId": "2222eda4-3ced-4660-8215-678f722b8720",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "maxItems": "={{ $('Tipo postagem1').all().length }}"
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        120,
+        120
+      ],
+      "id": "f4e28f1f-d991-4b1b-9d2e-15ed45502a5e",
+      "name": "Limit5"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $json.instagram_id }}/media",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "access_token",
+              "value": "={{ $json.access_token }}"
+            },
+            {
+              "name": "video_url",
+              "value": "={{ $json.media_url[0].file.url }}"
+            },
+            {
+              "name": "caption",
+              "value": "={{ $json.caption }}"
+            },
+            {
+              "name": "media_type",
+              "value": "REELS"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        540,
+        1240
+      ],
+      "id": "fe98c0e8-afec-4efb-b721-addb2ecbddfd",
+      "name": "Cria container Reels2"
+    },
+    {
+      "parameters": {
+        "maxItems": "={{ $('Tipo postagem1').all().length }}",
+        "keep": "lastItems"
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        120,
+        1120
+      ],
+      "id": "b0517803-3b37-4804-af27-c467600c7629",
+      "name": "Limit6"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        360,
+        1120
+      ],
+      "id": "3ea9a348-532c-4e35-9fe7-144dcc8b0ad3",
+      "name": "Loop Over Items6"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $('Loop Over Items6').item.json.instagram_id }}/media_publish",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "access_token",
+              "value": "={{ $('Loop Over Items6').item.json.access_token }}"
+            },
+            {
+              "name": "creation_id",
+              "value": "={{ $json.id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        900,
+        1240
+      ],
+      "id": "6d1b9b28-346b-4e17-89ca-ffb73f21e09a",
+      "name": "Publica o container de Reels2"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.status_code }}",
+                    "rightValue": "EXPIRED",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "EXPIRED"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "ce60e2c3-31ed-4245-a044-92a2d15bf5dc",
+                    "leftValue": "={{ $json.status_code }}",
+                    "rightValue": "ERROR",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "ERROR"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "1927c771-666b-4628-ad88-b2a1fec8bf7d",
+                    "leftValue": "={{ $json.status_code }}",
+                    "rightValue": "IN_PROGRESS",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "IN_PROGRESS"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "588d66e0-9926-41e9-8bfa-dda7792602ac",
+                    "leftValue": "={{ $json.status_code }}",
+                    "rightValue": "FINISHED",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "FINISHED"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "0410cebc-bb0e-4349-8d22-4789a7cd7b9b",
+                    "leftValue": "={{ $json.status_code }}",
+                    "rightValue": "PUBLISHED",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "PUBLISHED"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        1460,
+        1240
+      ],
+      "id": "d2936fc9-6522-4d5e-b47d-8125df5dc76b",
+      "name": "Switch",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "amount": 60
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        720,
+        1240
+      ],
+      "id": "684616da-9bdb-429a-8916-40ba5b7c090e",
+      "name": "Wait6",
+      "webhookId": "14df89b8-ac3e-4d03-952b-c04652f9899c"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $json.instagram_id }}/media",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "access_token",
+              "value": "={{ $json.access_token }}"
+            },
+            {
+              "name": "video_url",
+              "value": "={{ $json.media_url }}"
+            },
+            {
+              "name": "caption",
+              "value": "={{ $json.caption }}"
+            },
+            {
+              "name": "media_type",
+              "value": "STORIES"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        980,
+        1820
+      ],
+      "id": "75e19ddd-61c1-4ba7-a286-5380141bcaea",
+      "name": "Cria container Reels3"
+    },
+    {
+      "parameters": {
+        "maxItems": "={{ $('Tipo postagem1').all().length }}",
+        "keep": "lastItems"
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        140,
+        1700
+      ],
+      "id": "3f82f2b8-83a1-4d2e-af56-354c01943c46",
+      "name": "Limit7"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        380,
+        1720
+      ],
+      "id": "ce93dfa0-87d6-4fd8-af20-ed182dd1aa13",
+      "name": "Loop Over Items7"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $('Split Out3').item.json.instagram_id }}/media_publish",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "access_token",
+              "value": "={{ $('Split Out3').item.json.access_token }}"
+            },
+            {
+              "name": "creation_id",
+              "value": "={{ $('Cria container Reels3').item.json.id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1440,
+        1840
+      ],
+      "id": "4e9d6f59-83d6-422a-b77c-ccfa2e169d24",
+      "name": "Publica o container de Reels3"
+    },
+    {
+      "parameters": {
+        "amount": "={{ $('Split Out3').all().length }}",
+        "unit": "minutes"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1280,
+        1840
+      ],
+      "id": "bef6ea03-bc9a-464e-9c40-4153b6ce9ee3",
+      "name": "Wait7",
+      "webhookId": "14df89b8-ac3e-4d03-952b-c04652f9899c",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "media_url",
+        "include": "allOtherFields",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        640,
+        1820
+      ],
+      "id": "745e6cad-9f87-4617-9794-09c2cd7b9faa",
+      "name": "Split Out3",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "content": "## Posta post unico, somente imagem ",
+        "height": 440,
+        "width": 1740
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "f78d5f6c-93b5-48ed-b1fe-b0d0f9df7bb3",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "content": "## Posta post carrossel, somente imagem ",
+        "height": 460,
+        "width": 1740,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        480
+      ],
+      "id": "0afc9414-9f1c-4368-a2ce-ab6599d6dacd",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "content": "## Posta post Reels video unico",
+        "height": 480,
+        "width": 1740,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        1040
+      ],
+      "id": "657086e1-a3c0-46ec-9c24-2332587788ec",
+      "name": "Sticky Note7"
+    },
+    {
+      "parameters": {
+        "content": "## Posta post stories video unico",
+        "height": 520,
+        "width": 1740,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        1580
+      ],
+      "id": "4d1cf6ae-1fca-44d9-8a96-71abbcf8adbf",
+      "name": "Sticky Note8"
+    },
+    {
+      "parameters": {
+        "url": "=https://graph.facebook.com/v21.0/{{ $json.id }}?fields=id,status,status_code,video_status&access_token={{ $('Loop Over Items6').item.json.user_access_token }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1460,
+        1060
+      ],
+      "id": "af97467a-9ce2-484b-bdee-738e4eeb9fe3",
+      "name": "Status do container",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "update",
+        "pageId": {
+          "__rl": true,
+          "value": "={{ $('Webhook').item.json.body.data.id }}",
+          "mode": "id"
+        },
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Status|status",
+              "statusValue": "Publicado"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        720,
+        520
+      ],
+      "id": "3b86d4f6-0d6a-41de-94a4-4b4349db5eda",
+      "name": "atualiza alinha6",
+      "credentials": {
+        "notionApi": {
+          "id": "RqJiCMcIqeauBnye",
+          "name": "[pixeomarketing] - notion.so/app - agenciapixeo@gmail.com"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "property_criativo_final",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        880,
+        520
+      ],
+      "id": "ae3cf66a-73fa-4bf6-9fac-44a71a834956",
+      "name": "Split Out4"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "operation": "sendImage",
+        "instanceName": "pixeomkt",
+        "remoteJid": "={{ $('atualiza alinha6').item.json.property_group_id_sinapse[0] }}",
+        "media": "={{ $json.property_criativo_final }}",
+        "caption": "=*[Alerta de publicação]*\n\nNome: {{ $('atualiza alinha6').item.json.property_nome }}@{{ $('atualiza alinha6').item.json.property_t_tulo_do_criativo }}\n\nlink page notion: {{ $('atualiza alinha6').item.json.url }}\n\nEmpresa: {{ $('atualiza alinha6').item.json.property_business_name[0] }}\n\n---\n\nlegenda: {{ $('atualiza alinha6').item.json.property_legenda_do_criativo }}"
+      },
+      "type": "n8n-nodes-evolution-api.httpBin",
+      "typeVersion": 1,
+      "position": [
+        1060,
+        520
+      ],
+      "id": "05ccd098-d8c1-4bfd-ac3a-1967ee1b9daa",
+      "name": "Evolution API6",
+      "credentials": {
+        "httpbinApi": {
+          "id": "piJR2hgSQ8CBPgFX",
+          "name": "[https://wsapi.aimaze.com.br]"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "batchSize": "=1",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        420,
+        580
+      ],
+      "id": "93145489-8925-4bc9-afe6-3dbe607232db",
+      "name": "Loop Over Items4",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "update",
+        "pageId": {
+          "__rl": true,
+          "value": "={{ $('Webhook').first().json.body.data.id }}",
+          "mode": "id"
+        },
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Status|status",
+              "statusValue": "Publicado"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        680,
+        40
+      ],
+      "id": "258c7651-fc9b-4cca-afe7-2b3e7dee877f",
+      "name": "atualiza alinha7",
+      "credentials": {
+        "notionApi": {
+          "id": "RqJiCMcIqeauBnye",
+          "name": "[pixeomarketing] - notion.so/app - agenciapixeo@gmail.com"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "operation": "sendImage",
+        "instanceName": "pixeomkt",
+        "remoteJid": "={{ $('atualiza alinha7').item.json.property_group_id_sinapse[0] }}",
+        "media": "={{ $json.property_criativo_final[0] }}",
+        "caption": "=*[Alerta de publicação]*\n\nNome: {{ $('atualiza alinha7').item.json.property_nome }}@{{ $('atualiza alinha7').item.json.property_t_tulo_do_criativo }}\n\nlink page notion: {{ $('atualiza alinha7').item.json.url }}\n\nEmpresa: {{ $('atualiza alinha7').item.json.property_business_name[0] }}\n\n---\n\nlegenda: {{ $('atualiza alinha7').item.json.property_legenda_do_criativo }}"
+      },
+      "type": "n8n-nodes-evolution-api.httpBin",
+      "typeVersion": 1,
+      "position": [
+        1020,
+        40
+      ],
+      "id": "49a673a4-2cfc-45a5-804e-cdf5a4d1034f",
+      "name": "Evolution API7",
+      "credentials": {
+        "httpbinApi": {
+          "id": "piJR2hgSQ8CBPgFX",
+          "name": "[https://wsapi.aimaze.com.br]"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "update",
+        "pageId": {
+          "__rl": true,
+          "value": "={{ $('Webhook').first().json.body.data.id }}",
+          "mode": "id"
+        },
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Status|status",
+              "statusValue": "Publicado"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        540,
+        1080
+      ],
+      "id": "5b5bad17-436a-4270-93cc-6e0084d57d4d",
+      "name": "atualiza alinha8",
+      "credentials": {
+        "notionApi": {
+          "id": "RqJiCMcIqeauBnye",
+          "name": "[pixeomarketing] - notion.so/app - agenciapixeo@gmail.com"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "operation": "sendVideo",
+        "instanceName": "pixeomkt",
+        "remoteJid": "={{ $('atualiza alinha8').item.json.property_group_id_sinapse[0] }}",
+        "media": "={{ $json.property_criativo_final[0] }}",
+        "caption": "=*[Alerta de publicação]*\n\nNome: {{ $('atualiza alinha8').item.json.property_nome }}@{{ $('atualiza alinha8').item.json.property_t_tulo_do_criativo }}\n\nlink page notion: {{ $('atualiza alinha8').item.json.url }}\n\nEmpresa: {{ $('atualiza alinha8').item.json.property_business_name[0] }}\n\n---\n\nlegenda: {{ $('atualiza alinha8').item.json.property_legenda_do_criativo }}"
+      },
+      "type": "n8n-nodes-evolution-api.httpBin",
+      "typeVersion": 1,
+      "position": [
+        720,
+        1080
+      ],
+      "id": "4c62b201-6871-46c9-b1bf-6f62a5bebcc1",
+      "name": "Evolution API8",
+      "credentials": {
+        "httpbinApi": {
+          "id": "piJR2hgSQ8CBPgFX",
+          "name": "[https://wsapi.aimaze.com.br]"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "update",
+        "pageId": {
+          "__rl": true,
+          "value": "={{ $('Webhook').first().json.body.data.id }}",
+          "mode": "id"
+        },
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Status|status",
+              "statusValue": "Publicado"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        860,
+        1640
+      ],
+      "id": "64783954-dba3-4a55-b537-212e736aaf6c",
+      "name": "atualiza alinha9",
+      "credentials": {
+        "notionApi": {
+          "id": "RqJiCMcIqeauBnye",
+          "name": "[pixeomarketing] - notion.so/app - agenciapixeo@gmail.com"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "operation": "sendVideo",
+        "instanceName": "pixeomkt",
+        "remoteJid": "={{ $('atualiza alinha9').item.json.property_group_id_sinapse[0] }}",
+        "media": "={{ $json.property_criativo_final[0] }}",
+        "caption": "=*[Alerta de publicação]*\n\nNome: {{ $('atualiza alinha9').item.json.property_nome }}@{{ $('atualiza alinha9').item.json.property_t_tulo_do_criativo }}\n\nlink page notion: {{ $('atualiza alinha9').item.json.url }}\n\nEmpresa: {{ $('atualiza alinha9').item.json.property_business_name[0] }}\n\n---\n\nlegenda: {{ $('atualiza alinha9').item.json.property_legenda_do_criativo }}"
+      },
+      "type": "n8n-nodes-evolution-api.httpBin",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        1640
+      ],
+      "id": "0bbee41b-a987-4ced-97aa-6953a1584dac",
+      "name": "Evolution API9",
+      "credentials": {
+        "httpbinApi": {
+          "id": "piJR2hgSQ8CBPgFX",
+          "name": "[https://wsapi.aimaze.com.br]"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Variáveis importantes1": {
+      "main": [
+        [
+          {
+            "node": "Tem arquivo de criativo1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tem arquivo de criativo1": {
+      "main": [
+        [
+          {
+            "node": "Tipo postagem1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Variáveis importantes1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tipo postagem1": {
+      "main": [
+        [
+          {
+            "node": "Limit5",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Limit4",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Limit6",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Limit7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Carrega itens Carrossel1": {
+      "main": [
+        [
+          {
+            "node": "Aggregate1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cria Container Carrossel1": {
+      "main": [
+        [
+          {
+            "node": "Publica container1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate1": {
+      "main": [
+        [
+          {
+            "node": "Cria Container Carrossel1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Publica container1": {
+      "main": [
+        [
+          {
+            "node": "Wait3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait3": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit4": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out2": {
+      "main": [
+        [
+          {
+            "node": "Carrega itens Carrossel1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cria container post unico1": {
+      "main": [
+        [
+          {
+            "node": "Publica o container1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Publica o container1": {
+      "main": [
+        [
+          {
+            "node": "Wait5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items5": {
+      "main": [
+        [
+          {
+            "node": "atualiza alinha7",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Cria container post unico1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait5": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit5": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cria container Reels2": {
+      "main": [
+        [
+          {
+            "node": "Wait6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit6": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items6": {
+      "main": [
+        [
+          {
+            "node": "atualiza alinha8",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Cria container Reels2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Publica o container de Reels2": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait6": {
+      "main": [
+        [
+          {
+            "node": "Publica o container de Reels2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cria container Reels3": {
+      "main": [
+        [
+          {
+            "node": "Wait7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit7": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items7": {
+      "main": [
+        [
+          {
+            "node": "atualiza alinha9",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Split Out3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Publica o container de Reels3": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait7": {
+      "main": [
+        [
+          {
+            "node": "Publica o container de Reels3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out3": {
+      "main": [
+        [
+          {
+            "node": "Cria container Reels3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Status do container": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "atualiza alinha6": {
+      "main": [
+        [
+          {
+            "node": "Split Out4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out4": {
+      "main": [
+        [
+          {
+            "node": "Evolution API6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items4": {
+      "main": [
+        [
+          {
+            "node": "atualiza alinha6",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Split Out2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "atualiza alinha7": {
+      "main": [
+        [
+          {
+            "node": "Evolution API7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "atualiza alinha8": {
+      "main": [
+        [
+          {
+            "node": "Evolution API8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "atualiza alinha9": {
+      "main": [
+        [
+          {
+            "node": "Evolution API9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "workflows.aimaze.com.br",
+            "user-agent": "NotionAutomation",
+            "content-length": "9557",
+            "baggage": "sentry-environment=production,sentry-release=0.0.890,sentry-public_key=529a6d1990e5471d874257842c4f4ad8,sentry-trace_id=eb5183ed60df4c948e668427d50b5a2a",
+            "content-type": "application/json",
+            "sentry-trace": "eb5183ed60df4c948e668427d50b5a2a-a88525d5508115d2",
+            "traceparent": "00-677163a8000000006535cba8b91a3453-78a251f540f5200a-00",
+            "tracestate": "dd=t.tid:677163a800000000;t.dm:-4;s:-1;p:78a251f540f5200a",
+            "x-datadog-parent-id": "8692600344577122314",
+            "x-datadog-sampling-priority": "-1",
+            "x-datadog-tags": "_dd.p.tid=677163a800000000",
+            "x-datadog-trace-id": "7292959097116832851",
+            "x-forwarded-for": "44.227.140.35",
+            "x-forwarded-host": "workflows.aimaze.com.br",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "traefik_traefik.1",
+            "x-real-ip": "44.227.140.35",
+            "accept-encoding": "gzip"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "source": {
+              "type": "automation",
+              "automation_id": "16a16533-6e91-8069-b0dc-004d424fe168",
+              "action_id": "16a16533-6e91-8086-b169-005a3db69e00",
+              "event_id": "e1f6dd35-40e6-450f-9802-b4d8c475f59d",
+              "attempt": 1
+            },
+            "data": {
+              "object": "page",
+              "id": "16a16533-6e91-8075-ab47-db7f74572584",
+              "created_time": "2024-12-28T21:57:00.000Z",
+              "last_edited_time": "2024-12-29T14:58:00.000Z",
+              "created_by": {
+                "object": "user",
+                "id": "87d5f958-1e5f-4639-984d-18bc06d5db19"
+              },
+              "last_edited_by": {
+                "object": "user",
+                "id": "87d5f958-1e5f-4639-984d-18bc06d5db19"
+              },
+              "cover": null,
+              "icon": null,
+              "parent": {
+                "type": "database_id",
+                "database_id": "13216533-6e91-8032-b555-ec9affaf6ac9"
+              },
+              "archived": false,
+              "in_trash": false,
+              "properties": {
+                "Executou IA? [C]": {
+                  "id": "%3BUKz",
+                  "type": "checkbox",
+                  "checkbox": false
+                },
+                "Legenda do Criativo": {
+                  "id": "%3DVyS",
+                  "type": "rich_text",
+                  "rich_text": [
+                    {
+                      "type": "text",
+                      "text": {
+                        "content": "🐧✨ Descubra a Magia dos Pinguins! \n\nEsses adoráveis seres do reino gelado não só nadam como maestros, mas também têm um jeito único de socializar! 🐾 \n\n1️⃣ Amizade em equipe: juntos pela proteção e cuidado dos filhotes! \n2️⃣ Alegria contagiante: suas travessuras nos fazem sorrir! \n3️⃣ Resiliência: enfrentando desafios e encontrando alegria nas pequenas coisas! \n\n✨ Inspire-se com a beleza dos pinguins e compartilhe essa magia com alguém que precisa de um pouco de felicidade hoje! 💙🌍",
+                        "link": null
+                      },
+                      "annotations": {
+                        "bold": false,
+                        "italic": false,
+                        "strikethrough": false,
+                        "underline": false,
+                        "code": false,
+                        "color": "default"
+                      },
+                      "plain_text": "🐧✨ Descubra a Magia dos Pinguins! \n\nEsses adoráveis seres do reino gelado não só nadam como maestros, mas também têm um jeito único de socializar! 🐾 \n\n1️⃣ Amizade em equipe: juntos pela proteção e cuidado dos filhotes! \n2️⃣ Alegria contagiante: suas travessuras nos fazem sorrir! \n3️⃣ Resiliência: enfrentando desafios e encontrando alegria nas pequenas coisas! \n\n✨ Inspire-se com a beleza dos pinguins e compartilhe essa magia com alguém que precisa de um pouco de felicidade hoje! 💙🌍",
+                      "href": null
+                    }
+                  ]
+                },
+                "Criativo Final": {
+                  "id": "%3FP%7C%3E",
+                  "type": "files",
+                  "files": [
+                    {
+                      "name": "16. visita eco.mp4",
+                      "type": "file",
+                      "file": {
+                        "url": "https://prod-files-secure.s3.us-west-2.amazonaws.com/f7dfa2b2-a487-4ede-a435-4ed8b02a7bae/1ae2ad1e-8b4e-497c-9e17-917bd078b014/16._visita_eco.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45FSPPWI6X%2F20241229%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20241229T145848Z&X-Amz-Expires=3600&X-Amz-Signature=2813520b00f312cc88d761e9c2ec9f685ab8ce4d4e3b330446191a50c4df99d0&X-Amz-SignedHeaders=host&x-id=GetObject",
+                        "expiry_time": "2024-12-29T15:58:48.339Z"
+                      }
+                    }
+                  ]
+                },
+                "Seleção [D]": {
+                  "id": "A%7Bh%5E",
+                  "type": "checkbox",
+                  "checkbox": true
+                },
+                "Status": {
+                  "id": "CUYV",
+                  "type": "status",
+                  "status": {
+                    "id": "AFv@",
+                    "name": "Programado",
+                    "color": "purple"
+                  }
+                },
+                "Criado em": {
+                  "id": "C%5DJB",
+                  "type": "created_time",
+                  "created_time": "2024-12-28T21:57:00.000Z"
+                },
+                "Type": {
+                  "id": "Cm%7Bg",
+                  "type": "select",
+                  "select": {
+                    "id": ">dHr",
+                    "name": "Stories",
+                    "color": "purple"
+                  }
+                },
+                "RUN caption [C]": {
+                  "id": "Fgyf",
+                  "type": "checkbox",
+                  "checkbox": false
+                },
+                "Criado por": {
+                  "id": "GVgr",
+                  "type": "select",
+                  "select": {
+                    "id": "FIdt",
+                    "name": "Pixeo[AI]",
+                    "color": "green"
+                  }
+                },
+                "RUN IA [C]": {
+                  "id": "Gh%3AM",
+                  "type": "checkbox",
+                  "checkbox": false
+                },
+                "prompt_imagem": {
+                  "id": "J%3AeV",
+                  "type": "rich_text",
+                  "rich_text": []
+                },
+                "Prompt": {
+                  "id": "L%40Fk",
+                  "type": "rich_text",
+                  "rich_text": [
+                    {
+                      "type": "text",
+                      "text": {
+                        "content": "Prompt adicional $$$$$$$ crie um post aleatorio sobre pinguins",
+                        "link": null
+                      },
+                      "annotations": {
+                        "bold": false,
+                        "italic": false,
+                        "strikethrough": false,
+                        "underline": false,
+                        "code": false,
+                        "color": "default"
+                      },
+                      "plain_text": "Prompt adicional $$$$$$$ crie um post aleatorio sobre pinguins",
+                      "href": null
+                    }
+                  ]
+                },
+                "user_access_token": {
+                  "id": "LCHo",
+                  "type": "rollup",
+                  "rollup": {
+                    "type": "array",
+                    "array": [
+                      {
+                        "type": "formula",
+                        "formula": {
+                          "type": "string",
+                          "string": "EAASjtWPpvTMBO8T9ojeY0r2A4nG6CB5qgYZCeHfZBUep9qwyyAHQ3pcaPzwvbL2zmCM1rdta7GSYmZCsz3J3j5c56TPQHuzWwzaI4mIzZC9JnFbQ2Q2ZA7hHBtXMqeu3Arncys1R3u7xulj4gNlHReIlU6aFZBvdiSTxDZBFZChqkZAWdzAwPZAMZAOC7reqOtD8p5VPZAG2x6ZAx"
+                        }
+                      }
+                    ],
+                    "function": "show_original"
+                  }
+                },
+                "Empresa": {
+                  "id": "MMQ%5B",
+                  "type": "relation",
+                  "relation": [
+                    {
+                      "id": "15416533-6e91-804e-95f2-f33fe8c992fd"
+                    }
+                  ],
+                  "has_more": false
+                },
+                "ig_business_id": {
+                  "id": "M%5DY%3D",
+                  "type": "rollup",
+                  "rollup": {
+                    "type": "array",
+                    "array": [
+                      {
+                        "type": "rich_text",
+                        "rich_text": [
+                          {
+                            "type": "text",
+                            "text": {
+                              "content": "17841469741876571",
+                              "link": null
+                            },
+                            "annotations": {
+                              "bold": false,
+                              "italic": false,
+                              "strikethrough": false,
+                              "underline": false,
+                              "code": false,
+                              "color": "default"
+                            },
+                            "plain_text": "17841469741876571",
+                            "href": null
+                          }
+                        ]
+                      }
+                    ],
+                    "function": "show_original"
+                  }
+                },
+                "objetivo_post": {
+                  "id": "Mf%3DV",
+                  "type": "select",
+                  "select": {
+                    "id": "d70e49cd-005a-4f8c-80e2-ab8ed502ec70",
+                    "name": "Inspirar",
+                    "color": "brown"
+                  }
+                },
+                "media_type_post": {
+                  "id": "OMhC",
+                  "type": "formula",
+                  "formula": {
+                    "type": "string",
+                    "string": ""
+                  }
+                },
+                "Público Alvo": {
+                  "id": "Pb%5B%40",
+                  "type": "rollup",
+                  "rollup": {
+                    "type": "array",
+                    "array": [
+                      {
+                        "type": "rich_text",
+                        "rich_text": []
+                      }
+                    ],
+                    "function": "show_original"
+                  }
+                },
+                "Business_name": {
+                  "id": "Qx%3DF",
+                  "type": "rollup",
+                  "rollup": {
+                    "type": "array",
+                    "array": [
+                      {
+                        "type": "formula",
+                        "formula": {
+                          "type": "string",
+                          "string": "Aimaze Sistemas"
+                        }
+                      }
+                    ],
+                    "function": "show_original"
+                  }
+                },
+                "Postagem": {
+                  "id": "SOtg",
+                  "type": "date",
+                  "date": {
+                    "start": "2024-12-28T22:59:00.000-03:00",
+                    "end": null,
+                    "time_zone": null
+                  }
+                },
+                "Entrega": {
+                  "id": "VcS%5D",
+                  "type": "formula",
+                  "formula": {
+                    "type": "string",
+                    "string": "22/12/2024"
+                  }
+                },
+                "Sugestão de Imagens": {
+                  "id": "W%5EQ~",
+                  "type": "files",
+                  "files": []
+                },
+                "Título do Criativo": {
+                  "id": "%5DWb%40",
+                  "type": "rich_text",
+                  "rich_text": [
+                    {
+                      "type": "text",
+                      "text": {
+                        "content": "Descubra a Magia dos Pinguins! 🐧✨",
+                        "link": null
+                      },
+                      "annotations": {
+                        "bold": false,
+                        "italic": false,
+                        "strikethrough": false,
+                        "underline": false,
+                        "code": false,
+                        "color": "default"
+                      },
+                      "plain_text": "Descubra a Magia dos Pinguins! 🐧✨",
+                      "href": null
+                    }
+                  ]
+                },
+                "group_id_sinapse": {
+                  "id": "kUHh",
+                  "type": "rollup",
+                  "rollup": {
+                    "type": "array",
+                    "array": [
+                      {
+                        "type": "formula",
+                        "formula": {
+                          "type": "string",
+                          "string": "120363356138030656@g.us"
+                        }
+                      }
+                    ],
+                    "function": "show_original"
+                  }
+                },
+                "[G]": {
+                  "id": "msru",
+                  "type": "checkbox",
+                  "checkbox": true
+                },
+                "access_token": {
+                  "id": "pX%60%3D",
+                  "type": "rollup",
+                  "rollup": {
+                    "type": "array",
+                    "array": [
+                      {
+                        "type": "rich_text",
+                        "rich_text": [
+                          {
+                            "type": "text",
+                            "text": {
+                              "content": "EAASjtWPpvTMBO0bj4iXeAZBDeF6gZCjZBad2phZCftQd3LOVXHofPKPGKSvdJkSRjAzE8c2uCNYZCaBZB2dbOZCtZCwHPy2ENZCZAGPP3nlFJa036H7ddoxmG1OpEZBuq8Xak6SZB34hv7jV1KNGDFFCMRHK4tv1ttdRz6OflGaqMFfrdeCqveqIZCIM37ZB79mwhpq15nVaBDRolHOXZBe6TZBG",
+                              "link": null
+                            },
+                            "annotations": {
+                              "bold": false,
+                              "italic": false,
+                              "strikethrough": false,
+                              "underline": false,
+                              "code": true,
+                              "color": "blue"
+                            },
+                            "plain_text": "EAASjtWPpvTMBO0bj4iXeAZBDeF6gZCjZBad2phZCftQd3LOVXHofPKPGKSvdJkSRjAzE8c2uCNYZCaBZB2dbOZCtZCwHPy2ENZCZAGPP3nlFJa036H7ddoxmG1OpEZBuq8Xak6SZB34hv7jV1KNGDFFCMRHK4tv1ttdRz6OflGaqMFfrdeCqveqIZCIM37ZB79mwhpq15nVaBDRolHOXZBe6TZBG",
+                            "href": null
+                          }
+                        ]
+                      }
+                    ],
+                    "function": "show_original"
+                  }
+                },
+                "Status IA [F]": {
+                  "id": "pg%40b",
+                  "type": "formula",
+                  "formula": {
+                    "type": "string",
+                    "string": "🟥 IA STOP"
+                  }
+                },
+                "Corpo do Criativo": {
+                  "id": "rnGL",
+                  "type": "rich_text",
+                  "rich_text": [
+                    {
+                      "type": "text",
+                      "text": {
+                        "content": "Subtítulo: Pinguins, os encantadores do reino gelado!\n\nVocê sabia que esses adoráveis animais não só são ótimos nadadores, mas também possuem um jeito incrível de se socializar?\n\n1️⃣ **Amizade em equipe:** Pinguins são conhecidos por suas colônias unidas, onde trabalham juntos para se proteger e cuidar dos filhotes. Vamos ser mais como eles!\n\n2️⃣ **Alegria contagiante:** Seus passos desajeitados e brincadeiras enchem nosso coração de felicidade! Que tal aproveitar um momento divertido como eles?\n\n3️⃣ **Resiliência e Adaptabilidade:** Esses magníficos animais enfrentam desafios climáticos e ainda conseguem encontrar alegria nas pequenas coisas!\n\n✨ Inspire-se com a simplicidade e a beleza dos pinguins! \n\n👉 Compartilhe esse post com alguém que precisa de uma dose extra de inspiração hoje!",
+                        "link": null
+                      },
+                      "annotations": {
+                        "bold": false,
+                        "italic": false,
+                        "strikethrough": false,
+                        "underline": false,
+                        "code": false,
+                        "color": "default"
+                      },
+                      "plain_text": "Subtítulo: Pinguins, os encantadores do reino gelado!\n\nVocê sabia que esses adoráveis animais não só são ótimos nadadores, mas também possuem um jeito incrível de se socializar?\n\n1️⃣ **Amizade em equipe:** Pinguins são conhecidos por suas colônias unidas, onde trabalham juntos para se proteger e cuidar dos filhotes. Vamos ser mais como eles!\n\n2️⃣ **Alegria contagiante:** Seus passos desajeitados e brincadeiras enchem nosso coração de felicidade! Que tal aproveitar um momento divertido como eles?\n\n3️⃣ **Resiliência e Adaptabilidade:** Esses magníficos animais enfrentam desafios climáticos e ainda conseguem encontrar alegria nas pequenas coisas!\n\n✨ Inspire-se com a simplicidade e a beleza dos pinguins! \n\n👉 Compartilhe esse post com alguém que precisa de uma dose extra de inspiração hoje!",
+                      "href": null
+                    }
+                  ]
+                },
+                "Última edição": {
+                  "id": "rwRQ",
+                  "type": "last_edited_time",
+                  "last_edited_time": "2024-12-29T14:58:00.000Z"
+                },
+                "RUN content [C]": {
+                  "id": "uAsf",
+                  "type": "checkbox",
+                  "checkbox": false
+                },
+                "is_carousel_item": {
+                  "id": "weU%7C",
+                  "type": "formula",
+                  "formula": {
+                    "type": "boolean",
+                    "boolean": false
+                  }
+                },
+                "Nome": {
+                  "id": "title",
+                  "type": "title",
+                  "title": [
+                    {
+                      "type": "text",
+                      "text": {
+                        "content": "Publicação #555",
+                        "link": null
+                      },
+                      "annotations": {
+                        "bold": false,
+                        "italic": false,
+                        "strikethrough": false,
+                        "underline": false,
+                        "code": false,
+                        "color": "default"
+                      },
+                      "plain_text": "Publicação #555",
+                      "href": null
+                    }
+                  ]
+                }
+              },
+              "url": "https://www.notion.so/Publica-o-555-16a165336e918075ab47db7f74572584",
+              "public_url": null,
+              "request_id": "5912e534-1742-47b2-82ac-25d4861cc408"
+            }
+          },
+          "webhookUrl": "https://webhooks.aimaze.com.br/webhook-test/notion-pixeomarketing-dbdecreativemain",
+          "executionMode": "test"
+        }
+      }
+    ]
+  },
+  "versionId": "4fb0c7be-67b1-4638-a932-91669271784d",
+  "triggerCount": 0,
+  "tags": [
+    {
+      "createdAt": "2024-11-21T20:46:44.017Z",
+      "updatedAt": "2024-11-21T20:46:44.017Z",
+      "id": "rVIUphDhsgylz0zL",
+      "name": "Notion"
+    },
+    {
+      "createdAt": "2024-12-07T20:42:31.696Z",
+      "updatedAt": "2024-12-07T20:42:31.696Z",
+      "id": "87ddE3dAsl4FBatl",
+      "name": "api-graph"
+    }
+  ]
+}
