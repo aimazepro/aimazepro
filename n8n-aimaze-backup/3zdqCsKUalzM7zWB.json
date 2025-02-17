@@ -1,0 +1,647 @@
+{
+  "createdAt": "2025-01-20T18:33:49.866Z",
+  "updatedAt": "2025-02-17T17:42:35.803Z",
+  "id": "3zdqCsKUalzM7zWB",
+  "name": "Aviso banco de dados de notas notion",
+  "active": true,
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyX",
+              "value": 5,
+              "unit": "minutes"
+            }
+          ]
+        },
+        "databaseId": {
+          "__rl": true,
+          "value": "14516533-6e91-80c5-bf5b-fe54938b3a14",
+          "mode": "list",
+          "cachedResultName": "DB de anotações",
+          "cachedResultUrl": "https://www.notion.so/145165336e9180c5bf5bfe54938b3a14"
+        }
+      },
+      "type": "n8n-nodes-base.notionTrigger",
+      "typeVersion": 1,
+      "position": [
+        100,
+        80
+      ],
+      "id": "12215211-0d51-47cd-962d-9ac27a6645d4",
+      "name": "Notion Trigger2",
+      "credentials": {
+        "notionApi": {
+          "id": "RqJiCMcIqeauBnye",
+          "name": "[pixeomarketing] - notion.so/app - agenciapixeo@gmail.com"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c04cc0f3-1d09-415e-8bf9-32c7a188fda5",
+              "name": "titulo",
+              "value": "={{ $json.Nome }}",
+              "type": "string"
+            },
+            {
+              "id": "e41f4b68-f149-44b0-90e3-d77a4f98c206",
+              "name": "descrição",
+              "value": "={{ $json['Anotação'] }}",
+              "type": "string"
+            },
+            {
+              "id": "5e8e09fe-092a-4bcb-9200-264c5d638356",
+              "name": "Arquivos e mídia",
+              "value": "={{ $json['Arquivos e mídia'] }}",
+              "type": "array"
+            },
+            {
+              "id": "854bc834-2895-440a-9d54-3651a977dbf8",
+              "name": "Prazo",
+              "value": "={{ $json['S-Prazo'] }}",
+              "type": "string"
+            },
+            {
+              "id": "67944981-d44a-491e-8696-7fa4442b7675",
+              "name": "Data de entrega",
+              "value": "={{ $json['Data entrega'].start }}",
+              "type": "string"
+            },
+            {
+              "id": "bda606be-84c5-4080-a7eb-5e1d2706b22c",
+              "name": "Setor design",
+              "value": "={{ $json['Setor design'] }}",
+              "type": "boolean"
+            },
+            {
+              "id": "0449c305-ef89-440d-95b1-c5a8a097d55b",
+              "name": "Concluído",
+              "value": "={{ $json['Concluído'] }}",
+              "type": "boolean"
+            },
+            {
+              "id": "d0bdace4-2b96-40fe-9623-5fccb1b5e8a1",
+              "name": "notificado",
+              "value": "={{ $json.notificado }}",
+              "type": "boolean"
+            },
+            {
+              "id": "14080a78-db09-4243-bc03-cac28ad2f06b",
+              "name": "Criado por",
+              "value": "={{ $json['Criado por'] }}",
+              "type": "string"
+            },
+            {
+              "id": "e1efdb52-820e-46c0-92a1-f6f86865e672",
+              "name": "Responsável",
+              "value": "={{ $json['Responsável'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        400,
+        240
+      ],
+      "id": "a6ad425c-9426-49f2-a79f-5569d1fd8087",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyX",
+              "value": 5,
+              "unit": "minutes"
+            }
+          ]
+        },
+        "event": "pagedUpdatedInDatabase",
+        "databaseId": {
+          "__rl": true,
+          "value": "14516533-6e91-80c5-bf5b-fe54938b3a14",
+          "mode": "list",
+          "cachedResultName": "DB de anotações",
+          "cachedResultUrl": "https://www.notion.so/145165336e9180c5bf5bfe54938b3a14"
+        }
+      },
+      "type": "n8n-nodes-base.notionTrigger",
+      "typeVersion": 1,
+      "position": [
+        100,
+        400
+      ],
+      "id": "933eabc8-22d7-4404-8719-25fbe961697e",
+      "name": "Notion Trigger3",
+      "credentials": {
+        "notionApi": {
+          "id": "RqJiCMcIqeauBnye",
+          "name": "[pixeomarketing] - notion.so/app - agenciapixeo@gmail.com"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "pixeomkt",
+        "remoteJid": "120363356138030656@g.us",
+        "messageText": "=*[ 📒 Nota Adicionada ]*\n---\ndata: {{ $json['Data de entrega'].toDateTime().format('dd/LL/yyyy') }}\nPrazo: {{ $json.Prazo }}\nTítulo: {{ $json.titulo }}\nDescrição: {{ $json['descrição'] }}",
+        "options_message": {
+          "mentions": {
+            "mentionsSettings": {
+              "mentioned": "5538984097883"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        1320,
+        40
+      ],
+      "id": "72935e46-25bb-4e12-9efe-4a8cf29d0046",
+      "name": "Evolution API1",
+      "credentials": {
+        "evolutionApi": {
+          "id": "9cBJRHiC9OlAfm34",
+          "name": "wsapi.aimaze.com.br"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "bc50c89d-a9df-4542-ab82-09fa03c9ebed",
+              "leftValue": "={{ $json['Concluído'] }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "c6a63fde-006b-4cd6-8106-0fa4574736ff",
+              "leftValue": "={{ $json.notificado }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        600,
+        240
+      ],
+      "id": "8701fc78-ed27-47c8-af7c-4077f4268728",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "pixeomkt",
+        "remoteJid": "120363356138030656@g.us",
+        "messageText": "=*[ 📒 Nota Adicionada ]*\n---\ndata: {{ $json['Data de entrega'].toDateTime().format('dd/LL/yyyy') }}\nPrazo: {{ $json.Prazo }}\nTítulo: {{ $json.titulo }}\nDescrição: {{ $json['descrição'] }}",
+        "options_message": {
+          "mentions": {
+            "mentionsSettings": {
+              "mentioned": "5538988667317"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        1320,
+        220
+      ],
+      "id": "c3fa2189-2c91-463e-a099-812e4e76264a",
+      "name": "Evolution API2",
+      "credentials": {
+        "evolutionApi": {
+          "id": "9cBJRHiC9OlAfm34",
+          "name": "wsapi.aimaze.com.br"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Aviso de notas\n",
+        "height": 640,
+        "width": 1760
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        0
+      ],
+      "typeVersion": 1,
+      "id": "49f6a3fa-a5a9-409d-aec0-4d33551d7c6b",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "update",
+        "pageId": {
+          "__rl": true,
+          "value": "={{ $('Notion Trigger2').first().json.id }}",
+          "mode": "id"
+        },
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "notificado|checkbox",
+              "checkboxValue": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        1520,
+        40
+      ],
+      "id": "c383b727-7ac7-42e5-80ca-54c8ba40f1fb",
+      "name": "Notion",
+      "credentials": {
+        "notionApi": {
+          "id": "RqJiCMcIqeauBnye",
+          "name": "[pixeomarketing] - notion.so/app - agenciapixeo@gmail.com"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "update",
+        "pageId": {
+          "__rl": true,
+          "value": "={{ $('Notion Trigger2').first().json.id }}",
+          "mode": "id"
+        },
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "notificado|checkbox",
+              "checkboxValue": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        1520,
+        220
+      ],
+      "id": "3469ee64-3b1e-4275-9b7a-45a7b591e25d",
+      "name": "Notion4",
+      "credentials": {
+        "notionApi": {
+          "id": "RqJiCMcIqeauBnye",
+          "name": "[pixeomarketing] - notion.so/app - agenciapixeo@gmail.com"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ Boolean($('Edit Fields1').item.json['Setor design']) || $json['Responsável'] === 'Ana Clara' }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Setor design"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "ebfd02f6-ddb9-4b16-bc3e-6a8f95bf39b0",
+                    "leftValue": "={{ $json['Responsável'] }}",
+                    "rightValue": "=Bruna Gomes",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Aviso Setor de conteudo"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "f918f383-57db-4fee-ad2c-6ea125f4b1ae",
+                    "leftValue": "={{ $json['Responsável'] }}",
+                    "rightValue": "João Reis",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "setor de Gestão"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        960,
+        220
+      ],
+      "id": "cc93e673-fd78-4258-819e-8a0c7ccabd44",
+      "name": "Switch1"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "pixeomkt",
+        "remoteJid": "120363356138030656@g.us",
+        "messageText": "=*[ 📒 Nota Adicionada ]*\n---\ndata: {{ $json['Data de entrega'].toDateTime().format('dd/LL/yyyy') }}\nPrazo: {{ $json.Prazo }}\nTítulo: {{ $json.titulo }}\nDescrição: {{ $json['descrição'] }}",
+        "options_message": {
+          "mentions": {
+            "mentionsSettings": {
+              "mentioned": "5538988601343"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        1320,
+        420
+      ],
+      "id": "0203b8d6-d5fc-4925-bbd9-6cf2defaf446",
+      "name": "Evolution API3",
+      "credentials": {
+        "evolutionApi": {
+          "id": "9cBJRHiC9OlAfm34",
+          "name": "wsapi.aimaze.com.br"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "update",
+        "pageId": {
+          "__rl": true,
+          "value": "={{ $('Notion Trigger2').first().json.id }}",
+          "mode": "id"
+        },
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "notificado|checkbox",
+              "checkboxValue": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        1520,
+        420
+      ],
+      "id": "0adeadf2-c43a-44ff-832d-b496ce6d3758",
+      "name": "Notion5",
+      "credentials": {
+        "notionApi": {
+          "id": "RqJiCMcIqeauBnye",
+          "name": "[pixeomarketing] - notion.so/app - agenciapixeo@gmail.com"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        840,
+        440
+      ],
+      "id": "1cd3f656-2c87-4e81-add3-78d366094398",
+      "name": "No Operation, do nothing2"
+    }
+  ],
+  "connections": {
+    "Notion Trigger2": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Notion Trigger3": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Evolution API1": {
+      "main": [
+        [
+          {
+            "node": "Notion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Switch1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Evolution API2": {
+      "main": [
+        [
+          {
+            "node": "Notion4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch1": {
+      "main": [
+        [
+          {
+            "node": "Evolution API1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Evolution API2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Evolution API3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Evolution API3": {
+      "main": [
+        [
+          {
+            "node": "Notion5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": {
+    "node:Notion Trigger2": {
+      "lastTimeChecked": "2025-02-17T17:45:00.000Z",
+      "possibleDuplicates": [
+        "19916533-6e91-8053-9b9f-c1329f3a2794"
+      ]
+    },
+    "node:Notion Trigger3": {
+      "lastTimeChecked": "2025-02-17T17:50:00.000Z",
+      "possibleDuplicates": [
+        "19916533-6e91-8053-9b9f-c1329f3a2794"
+      ]
+    }
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "23e2aeab-7656-447a-9b6c-c33ad207a2d8",
+  "triggerCount": 2,
+  "tags": [
+    {
+      "createdAt": "2024-11-21T20:46:44.017Z",
+      "updatedAt": "2024-11-21T20:46:44.017Z",
+      "id": "rVIUphDhsgylz0zL",
+      "name": "Notion"
+    }
+  ]
+}
