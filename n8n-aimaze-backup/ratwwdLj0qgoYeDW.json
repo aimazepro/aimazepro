@@ -1,0 +1,3005 @@
+{
+  "createdAt": "2024-12-15T00:56:51.748Z",
+  "updatedAt": "2024-12-15T00:58:20.532Z",
+  "id": "ratwwdLj0qgoYeDW",
+  "name": "[modo fila] - Kit disparo em massa para campanhas do WhatsApp + followup de não vai se inscrever",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "update",
+        "databaseId": 151848,
+        "tableId": 384519,
+        "rowId": "={{ $('Baserow10').item.json.id }}",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": 2911310,
+              "fieldValue": "TRUE"
+            },
+            {
+              "fieldId": 2911311,
+              "fieldValue": "FALSE"
+            }
+          ]
+        }
+      },
+      "id": "517a4315-5eba-4e4a-8f34-048fd9189816",
+      "name": "Baserow2",
+      "type": "n8n-nodes-base.baserow",
+      "typeVersion": 1,
+      "position": [
+        7120,
+        2500
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "databaseId": 151848,
+        "tableId": 384519,
+        "rowId": "={{ $('Baserow10').item.json.id }}",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": 2911311,
+              "fieldValue": "TRUE"
+            },
+            {
+              "fieldId": 2911310,
+              "fieldValue": "FALSE"
+            }
+          ]
+        }
+      },
+      "id": "20d40610-db87-480a-927f-5ea2a5f478a5",
+      "name": "Baserow3",
+      "type": "n8n-nodes-base.baserow",
+      "typeVersion": 1,
+      "position": [
+        7120,
+        2840
+      ]
+    },
+    {
+      "parameters": {
+        "content": "# VERIFICA A RESPOSTA DO USUÁRIO E ATUALIZA NO BANCO DE DADOS",
+        "height": 659,
+        "width": 1385
+      },
+      "id": "79f79fa8-a496-47eb-ac79-0011cb6c4395",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        6000,
+        2380
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "databaseId": 151848,
+        "tableId": 384519,
+        "rowId": "={{ $('Baserow10').item.json.id }}",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": 2911309,
+              "fieldValue": "true"
+            },
+            {
+              "fieldId": 2911308,
+              "fieldValue": "true"
+            },
+            {
+              "fieldId": 2917057,
+              "fieldValue": "true"
+            }
+          ]
+        }
+      },
+      "id": "3b58d693-c73d-499f-b9e0-39f9feafb49f",
+      "name": "Baserow5",
+      "type": "n8n-nodes-base.baserow",
+      "typeVersion": 1,
+      "position": [
+        7740,
+        1320
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "databaseId": 151848,
+        "tableId": 384519,
+        "rowId": "={{ $('Baserow10').item.json.id }}",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": 2914050,
+              "fieldValue": "true"
+            },
+            {
+              "fieldId": 2917057,
+              "fieldValue": "false"
+            }
+          ]
+        }
+      },
+      "id": "77281484-01e8-4dff-8d4d-14b3a8e298b9",
+      "name": "Atualiza pessoa que saiu do grupo",
+      "type": "n8n-nodes-base.baserow",
+      "typeVersion": 1,
+      "position": [
+        7780,
+        1920
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "=testmaze",
+        "remoteJid": "={{ $('Webhook  - ChatMaze1').item.json.Contato }}",
+        "messageText": "={{ $json.message.content }}"
+      },
+      "id": "5785cadc-d903-4844-baa9-2fb1b9890786",
+      "name": "Parabeniza o usuário",
+      "type": "n8n-nodes-evolution-api.httpBin",
+      "typeVersion": 1,
+      "position": [
+        7260,
+        1540
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "=testmaze",
+        "remoteJid": "={{ $('Webhook  - ChatMaze1').item.json.Contato }}",
+        "messageText": "={{ $json.message.content }}"
+      },
+      "id": "e0e8c02f-d83c-4f2a-b02d-8dbca14e05c8",
+      "name": "Pergunta se ele quer mesmo sair e que ele perdera oportunidades",
+      "type": "n8n-nodes-evolution-api.httpBin",
+      "typeVersion": 1,
+      "position": [
+        7260,
+        1940
+      ]
+    },
+    {
+      "parameters": {
+        "content": "# Atualiza DB quando a pessoa entrar e sair do grupo",
+        "height": 1040,
+        "width": 2002,
+        "color": 7
+      },
+      "id": "12440df1-3a21-40c3-8429-76fbd8590b43",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        6000,
+        1280
+      ]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "daysInterval": 2,
+              "triggerAtHour": 8
+            }
+          ]
+        }
+      },
+      "id": "1f5be47f-a1d7-46b3-89fe-ffed0cfe6be1",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        4580,
+        3440
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "databaseId": 151848,
+        "tableId": 384519,
+        "returnAll": true,
+        "additionalOptions": {}
+      },
+      "id": "92849e89-c851-48ff-b874-360bbce7170a",
+      "name": "Lista todos os usuários para envio1",
+      "type": "n8n-nodes-base.baserow",
+      "typeVersion": 1,
+      "position": [
+        1000,
+        1740
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "3afbc317-8264-4595-a7b5-62a05a369eea",
+      "name": "Loop Over Items5",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        1260,
+        1740
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "225a8af0-a667-4479-a5ae-b51df22a9bcf",
+              "leftValue": "={{ $json['Enviado?'] }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "1dda8848-fc1a-45d9-b971-5f3319fdfbf9",
+      "name": "Verifica se o envio ja foi feito1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1520,
+        1840
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "databaseId": 151848,
+        "tableId": 384519,
+        "rowId": "={{ $('Lista todos os usuários para envio1').first().json.id }}",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": 2911308,
+              "fieldValue": "TRUE"
+            }
+          ]
+        }
+      },
+      "id": "2884f928-df50-4423-93f9-dce8a265d521",
+      "name": "Baserow6",
+      "type": "n8n-nodes-base.baserow",
+      "typeVersion": 1,
+      "position": [
+        3100,
+        1460
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2f32f35f-e985-47e0-be28-f6959d9844a9",
+              "name": "api_url",
+              "value": "=https://{{ $json.headers.host }}",
+              "type": "string"
+            },
+            {
+              "id": "4291ce09-2085-4137-b13e-37949e349c36",
+              "name": "api_instance",
+              "value": "chatmaze9230",
+              "type": "string"
+            },
+            {
+              "id": "4331c9c5-4713-4c11-8c08-c703e2c63332",
+              "name": "api_key",
+              "value": "8dcb88713769e3f1e202283bf1bea161",
+              "type": "string"
+            },
+            {
+              "id": "754fa844-9c6a-4a86-a7ea-057f67fbdd10",
+              "name": "delay",
+              "value": 5,
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "5e23227e-9051-41a5-b7ab-4b67f3ecb8e6",
+      "name": "All Data API1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [
+        840,
+        1740
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "databaseId": 151848,
+        "tableId": 384519,
+        "rowId": "={{ $('Lista todos os usuários para envio1').item.json.id }}",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": 2911528,
+              "fieldValue": "TRUE"
+            }
+          ]
+        }
+      },
+      "id": "8c4a6f08-8ff5-4a22-b52c-9ed98c1bfc3c",
+      "name": "ATUALIZA QUANDO O NUMERO É INVALIDO1",
+      "type": "n8n-nodes-base.baserow",
+      "typeVersion": 1,
+      "position": [
+        2360,
+        2140
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b70d8b1a-039b-4580-90f1-e22ab36de26b",
+              "leftValue": "={{ $json.numberExists }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "8c948d17-8ec7-41e7-806e-bca8f7d59e7c",
+      "name": "If4",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2180,
+        1840
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://evolution.pixeo.com.br/chat/fetchProfile/pixeomkt",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "=8dcb88713769e3f1e202283bf1bea161"
+            },
+            {
+              "name": "Content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "number",
+              "value": "={{ $('Lista todos os usuários para envio1').item.json.number_id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "064807b0-ce65-4c8f-ba2d-0bc39b0b01f2",
+      "name": "Check user profile2",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1860,
+        1860
+      ],
+      "disabled": true,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "content": "# AUTOMAÇÃO DE DISPARO EM MASSA - ANTIBLOQUEIO COM IA [com botão]",
+        "height": 1231.6963051490288,
+        "width": 2770.0795998044855,
+        "color": 7
+      },
+      "id": "e728e2e8-2b25-4867-904c-b4f6cae3aa07",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        580,
+        1300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://evolution.pixeo.com.br/message/sendButtons/pixeomkt",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "8dcb88713769e3f1e202283bf1bea161"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {}
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"thumbnailUrl\": \"https://s3.pixeo.com.br/notionfile/WhatsApp%20Image%202024-11-06%20at%2015.12.36.jpeg\",\n    \"number\": \"{{ $('Lista todos os usuários para envio1').item.json.number_id }}\",\n    \"title\": \"{{ $json.message.content.title }}\",\n    \"description\": \"{{ $json.message.content.description }}\",\n    \"footer\": \"Clique em 'QUERO SAIR DA LISTA' para não receber mais nossas mensagens\",\n    \"buttons\": [\n     \n       {\n        \n         \"type\": \"reply\",\n        \"displayText\": \"QUERO PARTICIPAR\",\n        \"id\": \"001\"\n         \n      },\n      {\n        \n         \"type\": \"reply\",\n        \"displayText\": \"QUERO SAIR DA LISTA\",\n        \"id\": \"002\"\n         \n      }\n      \n    ]\n}",
+        "options": {
+          "redirect": {
+            "redirect": {}
+          }
+        }
+      },
+      "id": "e38d9cf6-e350-49fb-90b7-b770c5da9ba5",
+      "name": "Send button+imagem1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2560,
+        1460
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "jsCode": "// Executa o código de geração do número aleatório\nconst min = 30;\nconst max = 60;\nconst randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;\n\n// Retorna o valor em um array de objetos com a propriedade \"json\"\nreturn [\n  {\n    json: {\n      randomNumber: randomNumber,\n    },\n  },\n];"
+      },
+      "id": "330a4028-54ee-4d07-b515-36185bf32fc6",
+      "name": "Code2",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2740,
+        1460
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "amount": "={{ $json.randomNumber }}"
+      },
+      "id": "003db1b0-eec7-4fbd-8195-d5bb3b18f2a9",
+      "name": "Wait3",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2920,
+        1460
+      ],
+      "webhookId": "f1cfd6e7-70d5-49cc-9f66-c2e4e3630118",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "6da9a0ee-27b8-4cdd-9608-7a54789d71f9",
+        "options": {}
+      },
+      "id": "a08ffd54-8119-4450-a473-25b8bb5d791b",
+      "name": "Webhook  - ChatMaze2",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        680,
+        1740
+      ],
+      "webhookId": "6da9a0ee-27b8-4cdd-9608-7a54789d71f9",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Crie variações do Title e do description.\n\ncrie variações do texto, mas mantenha exatamente o mesmo sentido, acrescente emojis. Sua resposta deve ser apenas o texto editado!\n\n\"title\": \"Garanta *35% de desconto na Black Friday Clin Dermy*! 🌟\",\n\n\"description\": \"Essa é a oportunidade de cuidar da sua beleza e elevar sua autoestima com procedimentos naquele precinho que você só ver *uma vez no ano*. 😍 A Black da Clin Dermy traz *condições exclusivas e únicas* que você não vai querer perder. E aí, vai ficar de fora dessa? Responda aqui para receber todos os detalhes!\",\n\n"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "id": "337ac175-5f75-4c49-9cd3-bf303968be6e",
+      "name": "RANDOMIZA AS MENSAGENS",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.5,
+      "position": [
+        2220,
+        1460
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "databaseId": 151848,
+        "tableId": 384519,
+        "returnAll": true,
+        "additionalOptions": {}
+      },
+      "id": "53d21bff-2d44-4061-99da-52d420810f90",
+      "name": "Lista todos os usuários para envio",
+      "type": "n8n-nodes-base.baserow",
+      "typeVersion": 1,
+      "position": [
+        420,
+        540
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "8f47e3a4-564b-4f9c-b26a-c167c1977820",
+      "name": "Loop Over Items",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        900,
+        540
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "225a8af0-a667-4479-a5ae-b51df22a9bcf",
+              "leftValue": "={{ $json['Enviado?'] }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "8ca8cec3-9b70-4e2c-b3dd-414d544162d4",
+      "name": "Verifica se o envio ja foi feito",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1160,
+        640
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "databaseId": 151848,
+        "tableId": 384519,
+        "rowId": "={{ $('Lista todos os usuários para envio').first().json.id }}",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": 2911308,
+              "fieldValue": "TRUE"
+            }
+          ]
+        }
+      },
+      "id": "ad5df97a-47d5-4061-aa73-a041821ba0ad",
+      "name": "Baserow",
+      "type": "n8n-nodes-base.baserow",
+      "typeVersion": 1,
+      "position": [
+        3020,
+        260
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2f32f35f-e985-47e0-be28-f6959d9844a9",
+              "name": "api_url",
+              "value": "=https://{{ $json.headers.host }}",
+              "type": "string"
+            },
+            {
+              "id": "4291ce09-2085-4137-b13e-37949e349c36",
+              "name": "api_instance",
+              "value": "chatmaze9230",
+              "type": "string"
+            },
+            {
+              "id": "4331c9c5-4713-4c11-8c08-c703e2c63332",
+              "name": "api_key",
+              "value": "8dcb88713769e3f1e202283bf1bea161",
+              "type": "string"
+            },
+            {
+              "id": "754fa844-9c6a-4a86-a7ea-057f67fbdd10",
+              "name": "delay",
+              "value": 5,
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "beea50dd-e10b-4103-a817-c76417d5d2e2",
+      "name": "All Data API",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [
+        260,
+        540
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "databaseId": 151848,
+        "tableId": 384519,
+        "rowId": "={{ $('Lista todos os usuários para envio').item.json.id }}",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": 2911528,
+              "fieldValue": "TRUE"
+            }
+          ]
+        }
+      },
+      "id": "eb1b89d5-1374-463a-b7e8-2e26f8d2d0c0",
+      "name": "ATUALIZA QUANDO O NUMERO É INVALIDO",
+      "type": "n8n-nodes-base.baserow",
+      "typeVersion": 1,
+      "position": [
+        2000,
+        940
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b70d8b1a-039b-4580-90f1-e22ab36de26b",
+              "leftValue": "={{ $json.numberExists }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "fab58d41-8d56-48de-b2ff-de971f397fdd",
+      "name": "If5",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1820,
+        640
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://evolution.pixeo.com.br/chat/fetchProfile/aimaze",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "=e738f4b73c3f37f01cdba168f6ee91b7"
+            },
+            {
+              "name": "Content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "number",
+              "value": "={{ $('Lista todos os usuários para envio').item.json.number_id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "6f9af93a-5331-44f0-bcc5-e106b23ef8c2",
+      "name": "Check user profile",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1500,
+        660
+      ],
+      "disabled": true,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "content": "# AUTOMAÇÃO DE DISPARO EM MASSA - ANTIBLOQUEIO COM IA [com envio de lista]",
+        "height": 1231.6963051490288,
+        "width": 3344.344049072103,
+        "color": 7
+      },
+      "id": "bd3d395d-19cb-48ba-82c4-e814591a4dd3",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "jsCode": "// Executa o código de geração do número aleatório\nconst min = 30;\nconst max = 60;\nconst randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;\n\n// Retorna o valor em um array de objetos com a propriedade \"json\"\nreturn [\n  {\n    json: {\n      randomNumber: randomNumber,\n    },\n  },\n];"
+      },
+      "id": "3ac379fc-7784-41c4-8df9-7fe36568bafe",
+      "name": "Code",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2660,
+        260
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "amount": "={{ $json.randomNumber }}"
+      },
+      "id": "647dd467-cb69-49d6-af36-22098faf0bbe",
+      "name": "Wait",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2840,
+        260
+      ],
+      "webhookId": "49cc92c4-8289-4188-94fd-62ce92aee886",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "operation": "sendImage",
+        "instanceName": "aimaze",
+        "remoteJid": "={{ $('Lista todos os usuários para envio').item.json.number_id }}",
+        "media": "https://s3.pixeo.com.br/notionfile/WhatsApp%20Image%202024-11-06%20at%2015.12.36.jpeg"
+      },
+      "id": "f95f2cc3-7b15-4304-a4d6-e62d7106e81a",
+      "name": "Evolution API",
+      "type": "n8n-nodes-evolution-api.httpBin",
+      "typeVersion": 1,
+      "position": [
+        2240,
+        260
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://evolution.pixeo.com.br/message/sendList/aimaze",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "e738f4b73c3f37f01cdba168f6ee91b7"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \n  \"thumbnailUrl\": \"https://s3.pixeo.com.br/notionfile/WhatsApp%20Image%202024-11-06%20at%2015.12.36.jpeg\",\n  \"number\": \"5538997404646\",\n  \"title\": \"Garanta *35% de desconto na Black Friday Clin Dermy*! 🌟\",\n  \"description\": \"Essa é a oportunidade de cuidar da sua beleza e elevar sua autoestima com procedimentos naquele precinho que você só ver *uma vez no ano*. 😍 A Black da Clin Dermy traz *condições exclusivas e únicas* que você não vai querer perder. E aí, vai ficar de fora dessa? Responda aqui para receber todos os detalhes!\",\n  \"buttonText\": \"Escolha uma opção\",\n  \"footerText\": \"Clique em 'QUERO SAIR DA LISTA' para não receber mais nossas mensagens\",\n    \"sections\": [\n        {\n            \"title\": \"Escolha uma opção\",\n            \"rows\": [\n                {\n                    \"title\": \"QUERO PARTICIPAR\",\n                    \n                    \"rowId\": \"rowId 001\"\n                },\n                {\n                    \"title\": \"QUERO SAIR DA LISTA\",\n                    \n                    \"rowId\": \"rowId 002\"\n                }\n            ]\n        }\n    ]\n}",
+        "options": {}
+      },
+      "id": "d14da91a-22d5-4ecf-b238-2c68d2909ec6",
+      "name": "Envia lista",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2460,
+        260
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "databaseId": 151848,
+        "tableId": 384519,
+        "limit": 1,
+        "additionalOptions": {}
+      },
+      "id": "35fead04-68e8-436f-bd35-91cfaabfa72f",
+      "name": "puxa lista de contato2",
+      "type": "n8n-nodes-base.baserow",
+      "typeVersion": 1,
+      "position": [
+        4760,
+        3440
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "570e1b46-38c7-4375-8594-16fbc49fa987",
+      "name": "Loop Over Items3",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        4980,
+        3440
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "ccac026e-c005-4559-8542-0ef176243028",
+              "leftValue": "={{ $('puxa lista de contato2').item.json['Está no grupo?'] }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "9827ac1f-03aa-408f-a9e2-102fb62c8622",
+              "leftValue": "={{ $json['Enviado?'] }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "ca3f9306-bec2-48db-9c86-a9f77f8a4708",
+              "leftValue": "={{ $json['Follow-up-grupo enviado?'] }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "f0a14935-0249-457d-9a47-d77c77dc6cd8",
+              "leftValue": "={{ $json['Quer sair da Lista?'] }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "f9443bcb-04d9-428e-8ce6-9c2e8f8c4c4b",
+      "name": "If6",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        5200,
+        3700
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "ce577c0a-c3b9-4a1f-9458-14776ca12207",
+      "name": "No Operation, do nothing1",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        5220,
+        3300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "databaseId": 151848,
+        "tableId": 384519,
+        "rowId": "={{ $('puxa lista de contato2').first().json.id }}",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": 2947943,
+              "fieldValue": "true"
+            }
+          ]
+        }
+      },
+      "id": "a04ae96a-a251-462d-b3fe-b0b9ded6cd2d",
+      "name": "Baserow1",
+      "type": "n8n-nodes-base.baserow",
+      "typeVersion": 1,
+      "position": [
+        5980,
+        3680
+      ]
+    },
+    {
+      "parameters": {
+        "content": "# Verifica se o usuário está no grupo e se foi enviado o followup",
+        "height": 729,
+        "width": 2048,
+        "color": 5
+      },
+      "id": "d1a2900d-75b4-4074-bb00-bd5ea46528c0",
+      "name": "Sticky Note4",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        4520,
+        3160
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "b86e743a-915b-4766-891a-0d0952f6bb4c",
+      "name": "When clicking ‘Test workflow’",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        60,
+        540
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Crie variações do Title e do description.\n\ncrie variações do texto, mas mantenha exatamente o mesmo sentido, acrescente emojis. Sua resposta deve ser apenas o texto editado!\n\n\"title\": \"Garanta *35% de desconto na Black Friday Clin Dermy*! 🌟\",\n\n\"description\": \"Essa é a oportunidade de cuidar da sua beleza e elevar sua autoestima com procedimentos naquele precinho que você só ver *uma vez no ano*. 😍 A Black da Clin Dermy traz *condições exclusivas e únicas* que você não vai querer perder. E aí, vai ficar de fora dessa? Responda aqui para receber todos os detalhes!\",\n\n"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "id": "419613f2-6982-43cb-b773-899d7ca56933",
+      "name": "RANDOMIZA AS MENSAGENS1",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.5,
+      "position": [
+        1860,
+        260
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "queue": "automação_black",
+        "options": {
+          "arguments": {
+            "argument": [
+              {
+                "key": "x-queue-type",
+                "value": "quorum"
+              }
+            ]
+          },
+          "acknowledge": "executionFinishesSuccessfully",
+          "jsonParseBody": true
+        }
+      },
+      "id": "3f011ab0-0c6a-4150-b151-551d566bacdb",
+      "name": "RabbitMQ Trigger",
+      "type": "n8n-nodes-base.rabbitmqTrigger",
+      "typeVersion": 1,
+      "position": [
+        4660,
+        2200
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "5c513b8f-5255-4e52-b713-a827975f7bbe",
+      "name": "Limit",
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        640,
+        540
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "=testmaze",
+        "remoteJid": "={{ $('puxa lista de contato2').item.json.number_id }}",
+        "messageText": "={{ $json.message.content }}"
+      },
+      "id": "3bac32d7-f3af-4fe5-b7bb-3021d23253af",
+      "name": "Follow-up",
+      "type": "n8n-nodes-evolution-api.httpBin",
+      "typeVersion": 1,
+      "position": [
+        5800,
+        3680
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "=testmaze",
+        "remoteJid": "={{ $('Webhook  - ChatMaze1').item.json.Contato }}",
+        "messageText": "=Fico feliz que você quer participar da nossa *Black Friday*! 😍 Para garantir seu acesso aos *melhores descontos*, basta entrar no nosso *grupo VIP*. \n\nSomente quem estiver lá terá acesso às *ofertas exclusivas* que preparamos, com até *35% de desconto*!  Clique abaixo e entre para o grupo para não perder nada!\n\nhttps://chat.whatsapp.com/FVHgIBMwAewIBjh15knIyO"
+      },
+      "id": "83daba8c-de43-42ef-94cc-922fa55b9923",
+      "name": "Quero Participar",
+      "type": "n8n-nodes-evolution-api.httpBin",
+      "typeVersion": 1,
+      "position": [
+        6940,
+        2500
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "=testmaze",
+        "remoteJid": "={{ $('Webhook  - ChatMaze1').item.json.Contato }}",
+        "messageText": "Tudo bem 😊, pedimos desculpa pelo incômodo. Você não receberá mais as nossas mensagens."
+      },
+      "id": "aeb0df30-9bb7-4b91-b72e-4c0bfc84977f",
+      "name": "Quero sair da lista",
+      "type": "n8n-nodes-evolution-api.httpBin",
+      "typeVersion": 1,
+      "position": [
+        6940,
+        2840
+      ]
+    },
+    {
+      "parameters": {
+        "height": 1903,
+        "width": 3684,
+        "color": 6
+      },
+      "id": "5bdf2f31-8f90-4c77-9a99-7e23aa7834ea",
+      "name": "Sticky Note7",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        4520,
+        1200
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://evolution.pixeo.com.br/message/sendButtons/pixeomkt",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "8dcb88713769e3f1e202283bf1bea161"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {}
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"thumbnailUrl\": \"https://s3.pixeo.com.br/notionfile/WhatsApp%20Image%202024-11-06%20at%2015.12.36.jpeg\",\n    \"number\": \"{{ $('Lista todos os usuários para envio1').item.json.number_id }}\",\n    \"title\": \"{{ $json.message.content.title }}\",\n    \"description\": \"{{ $json.message.content.description }}\",\n    \"footer\": \"Clique em 'QUERO SAIR DA LISTA' para não receber mais nossas mensagens\",\n    \"buttons\": [\n     \n       {\n        \n         \"type\": \"reply\",\n        \"displayText\": \"QUERO PARTICIPAR\",\n        \"id\": \"001\"\n         \n      },\n      {\n        \n         \"type\": \"reply\",\n        \"displayText\": \"QUERO SAIR DA LISTA\",\n        \"id\": \"002\"\n         \n      }\n      \n    ]\n}",
+        "options": {
+          "redirect": {
+            "redirect": {}
+          }
+        }
+      },
+      "id": "1bcc5f4c-5526-4399-a740-2d81c8647179",
+      "name": "Send button+imagem",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3020,
+        1000
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "8bc27d39-9b12-4162-ba11-fa4170ba8d1c",
+              "leftValue": "={{ $json.body.data.id }}",
+              "rightValue": "120363363685405032@g.us",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "0e889e27-f02b-48ea-844e-59f80b22c0db",
+      "name": "Verifica se é o grupo da josiani",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2780,
+        1000
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "databaseId": 151848,
+        "tableId": 384519,
+        "returnAll": true,
+        "additionalOptions": {
+          "filters": {
+            "fields": [
+              {
+                "field": 2911303,
+                "value": "={{ $('Webhook  - ChatMaze1').item.json.Contato }}"
+              }
+            ]
+          }
+        }
+      },
+      "id": "361e7b85-4325-48a9-84e4-d6d7f0f89196",
+      "name": "Baserow10",
+      "type": "n8n-nodes-base.baserow",
+      "typeVersion": 1,
+      "position": [
+        5460,
+        2200
+      ],
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "a233f61b-f20f-4097-ac32-3abcb604353e",
+              "leftValue": "={{ $json.Contato }}",
+              "rightValue": "553899225622",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            },
+            {
+              "id": "08d5db45-f480-4018-a14b-b82d494b3454",
+              "leftValue": "={{ $json.Contato }}",
+              "rightValue": "553897404646",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "id": "a01670c7-38a9-4e80-81e0-a3cc7a41a0a5",
+      "name": "If",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        4580,
+        2920
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0e96d10a-1e10-41ce-afc5-e8d7ba6c1cc5",
+              "name": "=contato",
+              "value": "={{  $json.content.body.data.participants[0].split('@') [0] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b8234021-dc84-45fd-b9e8-efc416305d69",
+      "name": "Participantes grupos",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        4960,
+        1920
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2a61dc81-b9e9-4a02-b142-8e30c9c01f55",
+              "name": "contato",
+              "value": "={{ $json.content.body.data.key.remoteJid.split('@') [0]  }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "4986a4cb-2bea-4712-a0f8-ca0d03cf0445",
+      "name": "Webhook  - ChatMaze",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        4960,
+        2460
+      ]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.content.body.data.participants[0].split('@') [0] }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "notEmpty",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Contato_group"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "a6351b73-438d-4a31-b5d9-6d0e2661d23e",
+                    "leftValue": "={{ $json.content.body.data.key.remoteJid.split('@') [0]  }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "notEmpty",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "contato_JiD"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "64070147-6a65-420a-9206-a83f9c3402f5",
+      "name": "Switch3",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        4860,
+        2200
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f577ea39-581a-49fa-8dd4-94a9a080ac2f",
+              "name": "Contato",
+              "value": "={{ $json.contato }}",
+              "type": "string"
+            },
+            {
+              "id": "937f1e21-460b-4c79-a350-2222fcca2e0f",
+              "name": "=body",
+              "value": "={{ $('RabbitMQ Trigger').item.json.content.body }}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a8c0051b-dc67-407c-aea0-6537706b06c2",
+      "name": "Webhook  - ChatMaze1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        5280,
+        2200
+      ]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Webhook  - ChatMaze1').item.json.body.data.action }}",
+                    "rightValue": "add",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "adicionar"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "9ff53977-b311-406c-be75-a68b51a63b15",
+                    "leftValue": "={{ $('Webhook  - ChatMaze1').item.json.body.data.action }}",
+                    "rightValue": "remove",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "remove"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "33169210-8fb2-4694-8f56-3020823c03ca",
+      "name": "Switch1",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        6040,
+        1740
+      ]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Webhook  - ChatMaze1').item.json.body.event }}",
+                    "rightValue": "group-participants.update",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "group-participants.update"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "19f8fe83-634f-4172-add5-f3c6843d8145",
+                    "leftValue": "={{ $('Webhook  - ChatMaze1').item.json.body.event }}",
+                    "rightValue": "messages.upsert",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "messages.upsert"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "3cf5d142-ccaa-4f6e-9681-cb37a15374f3",
+      "name": "Switch2",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        5640,
+        2200
+      ]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Webhook  - ChatMaze1').item.json.body.data.message.listResponseMessage.title }}",
+                    "rightValue": "QUERO PARTICIPAR",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "QUERO PARTICIPAR"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "dda07be2-3dc1-473d-a3da-95ab33c0573a",
+                    "leftValue": "={{ $('Webhook  - ChatMaze1').item.json.body.data.message.listResponseMessage.title }}",
+                    "rightValue": "QUERO SAIR DA LISTA",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "QUERO SAIR DA LISTA"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "fd35ac44-78c9-4eb9-b233-dd3a83dfae9e",
+      "name": "Switch",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        6040,
+        2680
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "id": "e9f99497-32dd-448b-a4db-f8d1b19b0bc4",
+              "leftValue": "={{ !!Object.keys($node[\"Baserow10\"].data).length }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "756e23b1-5aef-4f95-a94a-7ba3d1d3f733",
+      "name": "Usuário Existe?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.1,
+      "position": [
+        7460,
+        1540
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "27656132-8c59-4c60-be66-5ae1013c8561",
+      "name": "No Operation, do nothing",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        7740,
+        1560
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "0c4029ed-21e7-4006-9d91-f1d804bda13c",
+      "name": "No Operation, do nothing2",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        7780,
+        2140
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "id": "e9f99497-32dd-448b-a4db-f8d1b19b0bc4",
+              "leftValue": "={{ !!Object.keys($node[\"Baserow10\"].data).length }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "82568289-d868-4b5a-af4d-9a0f1c56a39f",
+      "name": "Usuário Existe?1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.1,
+      "position": [
+        7480,
+        1940
+      ]
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "crie variações do texto, mas mantenha exatamente o mesmo sentido, acrescente emojis. Sua resposta deve ser apenas o texto editado!\n\ndescription: \"Voltei, porque realmente não quero que você perca essa *oportunidade exclusiva*! 🎉 Percebi que não está no nosso *grupo VIP da Black Friday*… e olha, as ofertas estão incríveis e só quem estiver lá vai poder aproveitar!  \n\nÉ muito simples, só clicar no link abaixo que você já terá acesso 😉. Você não vai se arrepender!  \n\nhttps://chat.whatsapp.com/FVHgIBMwAewIBjh15knIyO\""
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        5440,
+        3680
+      ],
+      "id": "41cd767b-27c5-4105-ae95-e4dca4dc94e7",
+      "name": "OpenAI"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Executa o código de geração do número aleatório\nconst min = 8;\nconst max = 28;\nconst randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;\n\n// Retorna o valor em um array de objetos com a propriedade \"json\"\nreturn [\n  {\n    json: {\n      randomNumber: randomNumber,\n    },\n  },\n];"
+      },
+      "id": "fe1a6d5a-27e0-43e5-bb59-277f47a01197",
+      "name": "Code1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        6160,
+        3680
+      ]
+    },
+    {
+      "parameters": {
+        "amount": "={{ $('Code1').item.json.randomNumber }}"
+      },
+      "id": "e41698a4-61fb-4137-a473-17095756e3d0",
+      "name": "Wait1",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        6360,
+        3680
+      ],
+      "webhookId": "49cc92c4-8289-4188-94fd-62ce92aee886"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "crie variações do texto, mas mantenha exatamente o mesmo sentido, acrescente emojis. Sua resposta deve ser apenas o texto editado!\n\nCrie somente uma por vez. Cada vêz que voce for solicitado crie uma\n\ndescription: \"Olá, aqui é Joziani. Parabéns, agora você faz parte do *Grupo VIP da Black Friday Clin Dermy* 🖤! |Prepare-se para *descontos exclusivos* e a melhor experiência de Black Friday. Fique de olho, vem muita coisa boa por aí 🤗!Qualquer dúvida, pode entrar em contato comigo pelo link abaixo:https://wa.link/eokf57\""
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        6720,
+        1540
+      ],
+      "id": "101c26a7-3bb6-40a2-a0a8-728f4f7407d2",
+      "name": "OpenAI1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Executa o código de geração do número aleatório\nconst min = 5;\nconst max = 15;\nconst randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;\n\n// Retorna o valor em um array de objetos com a propriedade \"json\"\nreturn [\n  {\n    json: {\n      randomNumber: randomNumber,\n    },\n  },\n];"
+      },
+      "id": "629916f1-7342-4285-90b8-3c8049f68a33",
+      "name": "Code3",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        6300,
+        1540
+      ]
+    },
+    {
+      "parameters": {
+        "amount": "={{ $('Code3').item.json.randomNumber }}"
+      },
+      "id": "41ae1208-b07e-4a0b-bf44-29da06256e57",
+      "name": "Wait2",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        6460,
+        1540
+      ],
+      "webhookId": "49cc92c4-8289-4188-94fd-62ce92aee886"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "crie variações do texto, mas mantenha exatamente o mesmo sentido, acrescente emojis. Sua resposta deve ser apenas o texto editado!\n\nCrie somente uma por vez. Cada vez que você for solicitado crie uma\n\ndescription: \"Ei! Vi que você acabou saindo do nosso *grupo Vip da Black Friday*! 😅 Talvez tenha sido por engano, mas não quero que você perca essa oportunidade incrível! \n\nPor lá, vai rolar os *melhores descontos do ano* em *tratamentos queridinhos* aqui na Clin Dermy! 💖 Volte agora e aproveite as condições incriveis que preparamos para você! Só clicar no link abaixo 👇\n\nhttps://chat.whatsapp.com/FVHgIBMwAewIBjh15knIyO\""
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        6700,
+        1940
+      ],
+      "id": "9fb585c5-59db-4c30-9058-a3323e5e27a7",
+      "name": "OpenAI2"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Executa o código de geração do número aleatório\nconst min = 5;\nconst max = 15;\nconst randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;\n\n// Retorna o valor em um array de objetos com a propriedade \"json\"\nreturn [\n  {\n    json: {\n      randomNumber: randomNumber,\n    },\n  },\n];"
+      },
+      "id": "c814763b-85cb-4a60-9d6a-c5ee1a5d56d0",
+      "name": "Code4",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        6300,
+        1940
+      ]
+    },
+    {
+      "parameters": {
+        "amount": "={{ $('Code4').item.json.randomNumber }}"
+      },
+      "id": "68834563-e641-4386-9b3b-886964e0d8be",
+      "name": "Wait4",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        6460,
+        1940
+      ],
+      "webhookId": "49cc92c4-8289-4188-94fd-62ce92aee886"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=crie variações do texto, mas mantenha exatamente o mesmo sentido, acrescente emojis. Sua resposta deve ser apenas o texto editado!\n\nCrie somente uma por vez. Cada vez que você for solicitado crie uma\n\ndescription: \"Fico feliz que você quer participar da nossa *Black Friday*! 😍 Para garantir seu acesso aos *melhores descontos*, basta entrar no nosso *grupo VIP*. \n\nSomente quem estiver lá terá acesso às *ofertas exclusivas* que preparamos, com até *35% de desconto*!  Clique abaixo e entre para o grupo para não perder nada!\n\nhttps://chat.whatsapp.com/FVHgIBMwAewIBjh15knIyO\""
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        6620,
+        2500
+      ],
+      "id": "41e0b970-11a1-4df0-b61a-98d0c59f29ce",
+      "name": "OpenAI3"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Executa o código de geração do número aleatório\nconst min = 5;\nconst max = 15;\nconst randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;\n\n// Retorna o valor em um array de objetos com a propriedade \"json\"\nreturn [\n  {\n    json: {\n      randomNumber: randomNumber,\n    },\n  },\n];"
+      },
+      "id": "ff07cee8-336b-424d-af7d-aca63346f46e",
+      "name": "Code5",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        6280,
+        2500
+      ]
+    },
+    {
+      "parameters": {
+        "amount": "={{ $('Code5').item.json.randomNumber }}"
+      },
+      "id": "82cfe430-7458-489d-87f8-fcc381b74709",
+      "name": "Wait5",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        6440,
+        2500
+      ],
+      "webhookId": "49cc92c4-8289-4188-94fd-62ce92aee886"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=crie variações do texto, mas mantenha exatamente o mesmo sentido, acrescente emojis. Sua resposta deve ser apenas o texto editado!\n\nCrie somente uma por vez. Cada vez que você for solicitado crie uma\n\ndescription: \"Tudo bem 😊, pedimos desculpa pelo incômodo. Você não receberá mais as nossas mensagens.\""
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        6620,
+        2840
+      ],
+      "id": "9d5d494f-1a2d-4d3e-8ade-584c61dadad7",
+      "name": "OpenAI4"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Executa o código de geração do número aleatório\nconst min = 5;\nconst max = 15;\nconst randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;\n\n// Retorna o valor em um array de objetos com a propriedade \"json\"\nreturn [\n  {\n    json: {\n      randomNumber: randomNumber,\n    },\n  },\n];"
+      },
+      "id": "39806805-e773-47fe-b2b2-82cdd5a355a6",
+      "name": "Code6",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        6280,
+        2840
+      ]
+    },
+    {
+      "parameters": {
+        "amount": "={{ $('Code6').item.json.randomNumber }}"
+      },
+      "id": "9cdb9762-c820-4951-90e2-44a15d30bb66",
+      "name": "Wait6",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        6440,
+        2840
+      ],
+      "webhookId": "49cc92c4-8289-4188-94fd-62ce92aee886"
+    }
+  ],
+  "connections": {
+    "Parabeniza o usuário": {
+      "main": [
+        [
+          {
+            "node": "Usuário Existe?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pergunta se ele quer mesmo sair e que ele perdera oportunidades": {
+      "main": [
+        [
+          {
+            "node": "Usuário Existe?1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lista todos os usuários para envio1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items5": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Verifica se o envio ja foi feito1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Verifica se o envio ja foi feito1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items5",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Check user profile2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "All Data API1": {
+      "main": [
+        [
+          {
+            "node": "Lista todos os usuários para envio1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ATUALIZA QUANDO O NUMERO É INVALIDO1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If4": {
+      "main": [
+        [
+          {
+            "node": "RANDOMIZA AS MENSAGENS",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "ATUALIZA QUANDO O NUMERO É INVALIDO1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check user profile2": {
+      "main": [
+        [
+          {
+            "node": "If4",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "ATUALIZA QUANDO O NUMERO É INVALIDO1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code2": {
+      "main": [
+        [
+          {
+            "node": "Wait3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait3": {
+      "main": [
+        [
+          {
+            "node": "Baserow6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send button+imagem1": {
+      "main": [
+        [
+          {
+            "node": "Code2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Baserow6": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook  - ChatMaze2": {
+      "main": [
+        [
+          {
+            "node": "All Data API1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RANDOMIZA AS MENSAGENS": {
+      "main": [
+        [
+          {
+            "node": "Send button+imagem1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lista todos os usuários para envio": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Verifica se o envio ja foi feito",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Verifica se o envio ja foi feito": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Check user profile",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Baserow": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "All Data API": {
+      "main": [
+        [
+          {
+            "node": "Lista todos os usuários para envio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ATUALIZA QUANDO O NUMERO É INVALIDO": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If5": {
+      "main": [
+        [
+          {
+            "node": "RANDOMIZA AS MENSAGENS1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "ATUALIZA QUANDO O NUMERO É INVALIDO",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check user profile": {
+      "main": [
+        [
+          {
+            "node": "If5",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "ATUALIZA QUANDO O NUMERO É INVALIDO",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Baserow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Evolution API": {
+      "main": [
+        [
+          {
+            "node": "Envia lista",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Envia lista": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "puxa lista de contato2": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items3": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If6": {
+      "main": [
+        [
+          {
+            "node": "OpenAI",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop Over Items3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Baserow1": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "puxa lista de contato2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "All Data API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RANDOMIZA AS MENSAGENS1": {
+      "main": [
+        [
+          {
+            "node": "Evolution API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RabbitMQ Trigger": {
+      "main": [
+        [
+          {
+            "node": "Switch3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Follow-up": {
+      "main": [
+        [
+          {
+            "node": "Baserow1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Quero Participar": {
+      "main": [
+        [
+          {
+            "node": "Baserow2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Quero sair da lista": {
+      "main": [
+        [
+          {
+            "node": "Baserow3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Baserow10": {
+      "main": [
+        [
+          {
+            "node": "Switch2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Participantes grupos": {
+      "main": [
+        [
+          {
+            "node": "Webhook  - ChatMaze1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook  - ChatMaze": {
+      "main": [
+        [
+          {
+            "node": "Webhook  - ChatMaze1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch3": {
+      "main": [
+        [
+          {
+            "node": "Participantes grupos",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Webhook  - ChatMaze",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook  - ChatMaze1": {
+      "main": [
+        [
+          {
+            "node": "Baserow10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch1": {
+      "main": [
+        [
+          {
+            "node": "Code3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch2": {
+      "main": [
+        [
+          {
+            "node": "Switch1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Code5",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Usuário Existe?": {
+      "main": [
+        [
+          {
+            "node": "Baserow5",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Usuário Existe?1": {
+      "main": [
+        [
+          {
+            "node": "Atualiza pessoa que saiu do grupo",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI": {
+      "main": [
+        [
+          {
+            "node": "Follow-up",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code3": {
+      "main": [
+        [
+          {
+            "node": "Wait2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI1": {
+      "main": [
+        [
+          {
+            "node": "Parabeniza o usuário",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait2": {
+      "main": [
+        [
+          {
+            "node": "OpenAI1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code4": {
+      "main": [
+        [
+          {
+            "node": "Wait4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait4": {
+      "main": [
+        [
+          {
+            "node": "OpenAI2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI2": {
+      "main": [
+        [
+          {
+            "node": "Pergunta se ele quer mesmo sair e que ele perdera oportunidades",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code5": {
+      "main": [
+        [
+          {
+            "node": "Wait5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait5": {
+      "main": [
+        [
+          {
+            "node": "OpenAI3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code6": {
+      "main": [
+        [
+          {
+            "node": "Wait6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait6": {
+      "main": [
+        [
+          {
+            "node": "OpenAI4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI3": {
+      "main": [
+        [
+          {
+            "node": "Quero Participar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI4": {
+      "main": [
+        [
+          {
+            "node": "Quero sair da lista",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": {
+    "Webhook  - ChatMaze2": [
+      {
+        "json": {
+          "headers": {
+            "host": "automation.pixeo.com.br",
+            "user-agent": "axios/1.7.7",
+            "content-length": "1987",
+            "accept-encoding": "gzip, compress, deflate, br",
+            "content-type": "application/json",
+            "x-forwarded-for": "172.18.0.1",
+            "x-forwarded-host": "automation.pixeo.com.br",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "57e2113c05c3",
+            "x-real-ip": "172.18.0.1"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "event": "messages.upsert",
+            "instance": "chatmaze9230",
+            "data": {
+              "key": {
+                "remoteJid": "553888601343@s.whatsapp.net",
+                "fromMe": true,
+                "id": "3EB06A6DF3223C811AA4E6"
+              },
+              "pushName": "ChatMaze",
+              "status": "SERVER_ACK",
+              "message": {
+                "templateButtonReplyMessage": {
+                  "selectedId": "123",
+                  "selectedDisplayText": "Nem, gostei não 🙃",
+                  "contextInfo": {
+                    "stanzaId": "3EB026BE28F03B945E18A7",
+                    "participant": "553888601343@s.whatsapp.net",
+                    "quotedMessage": {
+                      "messageContextInfo": {},
+                      "interactiveMessage": {
+                        "body": {
+                          "text": "*Atualização V2 API Evolution Send Button*\n\nGostaram da nova atualização que é possível enviar botões?\n"
+                        },
+                        "footer": {
+                          "text": "Agora é possível enviar botões na api evolution igual a api oficial"
+                        },
+                        "nativeFlowMessage": {
+                          "buttons": [
+                            {
+                              "name": "quick_reply",
+                              "buttonParamsJson": "{\"display_text\":\"Nem, gostei não 🙃\",\"id\":\"123\"}"
+                            }
+                          ],
+                          "messageParamsJson": "{\"from\":\"api\",\"templateId\":\"d9e0205b-db77-40d9-b71c-55c0fe0e8291\"}",
+                          "messageVersion": 1
+                        }
+                      }
+                    }
+                  },
+                  "selectedIndex": 0
+                }
+              },
+              "contextInfo": {
+                "stanzaId": "3EB026BE28F03B945E18A7",
+                "participant": "553888601343@s.whatsapp.net",
+                "quotedMessage": {
+                  "messageContextInfo": {},
+                  "interactiveMessage": {
+                    "body": {
+                      "text": "*Atualização V2 API Evolution Send Button*\n\nGostaram da nova atualização que é possível enviar botões?\n"
+                    },
+                    "footer": {
+                      "text": "Agora é possível enviar botões na api evolution igual a api oficial"
+                    },
+                    "nativeFlowMessage": {
+                      "buttons": [
+                        {
+                          "name": "quick_reply",
+                          "buttonParamsJson": "{\"display_text\":\"Nem, gostei não 🙃\",\"id\":\"123\"}"
+                        }
+                      ],
+                      "messageParamsJson": "{\"from\":\"api\",\"templateId\":\"d9e0205b-db77-40d9-b71c-55c0fe0e8291\"}",
+                      "messageVersion": 1
+                    }
+                  }
+                }
+              },
+              "messageType": "templateButtonReplyMessage",
+              "messageTimestamp": 1730742365,
+              "instanceId": "ea9bf538-60aa-4d85-9664-d611f8d5605f",
+              "source": "web"
+            },
+            "destination": "https://automation.pixeo.com.br/webhook-test/chatmaze9230",
+            "date_time": "2024-11-04T14:46:20.837Z",
+            "sender": "554197269230@s.whatsapp.net",
+            "server_url": "https://evolution.pixeo.com.br",
+            "apikey": "258C129D7C3F-4661-BFDC-1FD708782BD0"
+          },
+          "webhookUrl": "https://n8n-webhook.pixeo.com.br/webhook-test/chatmaze9230",
+          "executionMode": "test"
+        }
+      }
+    ],
+    "RabbitMQ Trigger": [
+      {
+        "json": {
+          "fields": {
+            "consumerTag": "amq.ctag-zuVGnuDFcjLU7tYLvxv_Qw",
+            "deliveryTag": 1,
+            "redelivered": true,
+            "exchange": "",
+            "routingKey": "automação_black"
+          },
+          "properties": {
+            "headers": {
+              "x-delivery-count": 1
+            }
+          },
+          "content": {
+            "headers": {
+              "host": "n8n-webhook.pixeo.com.br",
+              "user-agent": "axios/1.7.7",
+              "content-length": "411",
+              "accept-encoding": "gzip, compress, deflate, br",
+              "content-type": "application/json",
+              "x-forwarded-for": "172.18.0.1",
+              "x-forwarded-host": "n8n-webhook.pixeo.com.br",
+              "x-forwarded-port": "443",
+              "x-forwarded-proto": "https",
+              "x-forwarded-server": "d4ba4135f018",
+              "x-real-ip": "172.18.0.1"
+            },
+            "params": {},
+            "query": {},
+            "body": {
+              "event": "group-participants.update",
+              "instance": "testmaze",
+              "data": {
+                "id": "120363184061713148@g.us",
+                "author": "",
+                "participants": [
+                  "553897404646@s.whatsapp.net"
+                ],
+                "action": "remove"
+              },
+              "destination": "https://n8n-webhook.pixeo.com.br/webhook/testmaze",
+              "date_time": "2024-11-13T11:39:39.327Z",
+              "sender": "5519992442768@s.whatsapp.net",
+              "server_url": "https://evolution.pixeo.com.br",
+              "apikey": "C2B0009C2AAF-4F76-815C-0D7FD2176580"
+            },
+            "webhookUrl": "https://n8n-webhook.pixeo.com.br/webhook/testmaze",
+            "executionMode": "production"
+          }
+        }
+      }
+    ]
+  },
+  "versionId": "e19b2d72-18fa-4476-beff-90e1cd078b35",
+  "triggerCount": 0,
+  "tags": [
+    {
+      "createdAt": "2024-12-15T00:44:23.824Z",
+      "updatedAt": "2024-12-15T00:44:23.824Z",
+      "id": "BHmWYme8tyIu8Zf8",
+      "name": "Disparo em massa"
+    },
+    {
+      "createdAt": "2024-12-15T00:44:23.824Z",
+      "updatedAt": "2024-12-15T00:44:23.824Z",
+      "id": "tNyueJWHgM3PkgCR",
+      "name": "Marketing"
+    },
+    {
+      "createdAt": "2024-12-15T00:57:09.028Z",
+      "updatedAt": "2024-12-15T00:57:09.028Z",
+      "id": "xBEQEwAcHtPXbxaq",
+      "name": "rabbitMQ"
+    }
+  ]
+}
