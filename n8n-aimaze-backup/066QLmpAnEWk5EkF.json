@@ -1,0 +1,3082 @@
+{
+  "createdAt": "2025-01-20T20:28:01.995Z",
+  "updatedAt": "2025-01-27T18:50:30.306Z",
+  "id": "066QLmpAnEWk5EkF",
+  "name": "[Automachine] -  chatmaze",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "e1b4d9e7-809d-4b63-967c-4c1439b48b3a",
+              "leftValue": "={{ !!Object.keys($node[\"Supabase - Get User\"].data).length }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        360,
+        0
+      ],
+      "id": "649e6302-e96d-4236-b2cd-40e3a9906f34",
+      "name": "Verifica se o usuário existe"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "master_user",
+        "returnAll": true,
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "Number_id",
+              "condition": "eq",
+              "keyValue": "={{ $json.number_id }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        180,
+        0
+      ],
+      "id": "3aea3754-7628-46c3-8ea8-f798cfe998f0",
+      "name": "Supabase - Get User",
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "6iN72E2v7DpeAMjr",
+          "name": "[chatmaze] - tools@aimaze.com.br - supabase.io"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        780,
+        0
+      ],
+      "id": "3e435f05-0dea-4a52-a400-621ba96f3f1b",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "tableId": "master_user",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "Number_id",
+              "fieldValue": "={{ $('Fields webhook - WhatsApp').item.json.number_id }}"
+            },
+            {
+              "fieldId": "User_name",
+              "fieldValue": "={{ $('Fields webhook - WhatsApp').item.json.user_name }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        560,
+        140
+      ],
+      "id": "c5fda336-fb67-47d2-ab0b-90decd32766a",
+      "name": "Supabase",
+      "credentials": {
+        "supabaseApi": {
+          "id": "6iN72E2v7DpeAMjr",
+          "name": "[chatmaze] - tools@aimaze.com.br - supabase.io"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "67118f58-0f7e-445e-a5e6-6ee4bfd21acf",
+              "leftValue": "={{ $json.thread_id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1040,
+        0
+      ],
+      "id": "c4a7688a-79ef-43cf-8990-10329c4880a3",
+      "name": "Possui Thread?"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/threads",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openAiApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "OpenAI-Beta",
+              "value": "assistants=v2"
+            },
+            {
+              "name": "Content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1060,
+        260
+      ],
+      "id": "861ada70-5ca4-40f9-aa9a-53979cfc86ca",
+      "name": "Create Thrad ID",
+      "credentials": {
+        "openAiApi": {
+          "id": "VAlj1CJfZ7eyoyoK",
+          "name": "[ChatMaze] - tools@aimaze.com.br"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "master_user",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $('Possui Thread?').item.json.id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "thread_id",
+              "fieldValue": "={{ $json.id }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1060,
+        540
+      ],
+      "id": "8a76eb80-c29a-41d8-8247-e3a95de1de10",
+      "name": "Update row thread_id",
+      "credentials": {
+        "supabaseApi": {
+          "id": "6iN72E2v7DpeAMjr",
+          "name": "[chatmaze] - tools@aimaze.com.br - supabase.io"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Verifica e Cria a Thread \nVerifica primeiro se o usuário possui Thread. Se ele não tive thread é criado a thread\nDepois é atualizado no banco de dados",
+        "height": 932,
+        "width": 299,
+        "color": 4
+      },
+      "id": "993f7fa3-57f7-47c3-847f-f6edcc910093",
+      "name": "Sticky Note11",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        960,
+        -180
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "wsapi-whatapp-0358EB2D8DBE-41B4-90E3-8C3B3F7E729E",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -280,
+        0
+      ],
+      "id": "b5a91d33-265b-4e94-a15f-dc73c9148856",
+      "name": "Webhook - WhatsApp",
+      "webhookId": "b539a3d2-4fe8-4567-93ff-128584b3971b"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "04446574-2ef7-4fdb-9edd-c98124048514",
+              "name": "instance",
+              "value": "={{ $json.body.instance }}",
+              "type": "string"
+            },
+            {
+              "id": "5eb5179e-aaac-4bee-8d07-c365b5388b02",
+              "name": "number_id",
+              "value": "={{ $json.body.data.key.remoteJid.split('@') [0] }}",
+              "type": "string"
+            },
+            {
+              "id": "9d093cea-7a29-4b73-9edf-0aaa04ecdd3d",
+              "name": "user_name",
+              "value": "={{ $json.body.data.pushName }}",
+              "type": "string"
+            },
+            {
+              "id": "e4ede913-aa19-4573-a2ef-bd92b94ba458",
+              "name": "SendFromMe",
+              "value": "={{ $json.body.data.key.fromMe }}",
+              "type": "boolean"
+            },
+            {
+              "id": "96921e5a-9a03-4ff6-98dd-ed4c59da9c0d",
+              "name": "user_message",
+              "value": "={{ $json.body.data.message.conversation }}",
+              "type": "string"
+            },
+            {
+              "id": "1c18f354-f668-49b1-8b86-ba9c1f79fcd8",
+              "name": "message_type",
+              "value": "={{ $json.body.data.messageType }}",
+              "type": "string"
+            },
+            {
+              "id": "09f850d6-8439-4875-8d5e-68b8e9762912",
+              "name": "send_dateTime",
+              "value": "={{ $json.body.date_time }}",
+              "type": "string"
+            },
+            {
+              "id": "f193bdad-800c-45a4-8720-2a7b95c6dc89",
+              "name": "sender_from",
+              "value": "whatsApp",
+              "type": "string"
+            },
+            {
+              "id": "74bbd041-4137-412c-b14d-0a3870305585",
+              "name": "base64",
+              "value": "={{ $json.body.data.message.base64 }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        0,
+        0
+      ],
+      "id": "968b3684-d720-42f3-9156-e25133207c6f",
+      "name": "Fields webhook - WhatsApp"
+    },
+    {
+      "parameters": {
+        "content": "## Verifica cadastro de usuário\n",
+        "height": 500,
+        "width": 980,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -40,
+        -180
+      ],
+      "typeVersion": 1,
+      "id": "6741740b-e697-4e61-a166-aa03ec87f2ae",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "# Sessão de Cadastro de usuário",
+        "height": 1080,
+        "width": 1380,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -80,
+        -300
+      ],
+      "typeVersion": 1,
+      "id": "dd1f6adc-403a-405d-86f7-cca7ebcf8986",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Fields webhook - WhatsApp').item.json.message_type }}",
+                    "rightValue": "/extendedTextMessage|conversation/",
+                    "operator": {
+                      "type": "string",
+                      "operation": "regex"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "text"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "66e5a5c2-bd42-4eb9-942b-55d64ad5c369",
+                    "leftValue": "={{ $('Fields webhook - WhatsApp').item.json.message_type }}",
+                    "rightValue": "/audioMessage/",
+                    "operator": {
+                      "type": "string",
+                      "operation": "regex"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "audio"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "0ef86abe-d368-456a-9091-659dd875fc9d",
+                    "leftValue": "={{ $('Fields webhook - WhatsApp').item.json.message_type }}",
+                    "rightValue": "/imageMessage/",
+                    "operator": {
+                      "type": "string",
+                      "operation": "regex"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "image"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "33fb0501-6b01-4c6f-a45a-3ec0d6a49e4a",
+                    "leftValue": "={{ $('Fields webhook - WhatsApp').item.json.message_type }}",
+                    "rightValue": "/documentWithCaptionMessage/",
+                    "operator": {
+                      "type": "string",
+                      "operation": "regex"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "pdf"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        1600,
+        -40
+      ],
+      "id": "7f10fef9-594c-45f0-92c4-d655f8ad77ed",
+      "name": "Tipo de mídia"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        3500,
+        -40
+      ],
+      "id": "7df4b45a-c04f-46c6-bd7c-3c02771ac656",
+      "name": "Merge2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "5ae8cba9-3d8c-465b-b5b0-69493b7e4e91",
+              "name": "=base64",
+              "value": "={{ $('Fields webhook - WhatsApp').first().json.base64 }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a796a239-6401-4809-9dbe-bd7e72ad366f",
+      "name": "Audio Base",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2000,
+        180
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "=base64",
+        "options": {
+          "fileName": "audio.mp3",
+          "mimeType": "audio/mpeg"
+        }
+      },
+      "id": "e420bdc5-7180-4250-b395-559a9a35cfcf",
+      "name": "Convert to File6",
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        2180,
+        180
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "99667d07-ff62-4627-9136-64622c85c979",
+              "name": "FinalTranscripition",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "49f5cbca-1a66-4ada-873f-72f27495332e",
+      "name": "Set Message from Audio3",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2520,
+        180
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "5ae8cba9-3d8c-465b-b5b0-69493b7e4e91",
+              "name": "=base64",
+              "value": "={{ $('Webhook - Instagram').item.json.body.data.message.base64 }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "65e252d2-95a8-4f14-bf4e-2890a8943961",
+      "name": "Image Base",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1980,
+        780
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "base64",
+        "options": {
+          "fileName": "image.png",
+          "mimeType": "image/png"
+        }
+      },
+      "id": "82a95427-56a9-4e37-820a-0a58800b2c62",
+      "name": "Convert to File7",
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        2120,
+        780
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Identifica e transcreve as imagens",
+        "height": 227.11653913117755,
+        "width": 809.4697158869521
+      },
+      "id": "e02618ab-3ec9-4c78-8954-0a14a7986ecb",
+      "name": "Sticky Note14",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1940,
+        720
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Identifica e transcreve os áudios",
+        "height": 255.41432385368404,
+        "width": 729.2230537404986,
+        "color": 4
+      },
+      "id": "ae7187dc-06cc-441d-b74b-4849c46976e8",
+      "name": "Sticky Note15",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1940,
+        100
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "99667d07-ff62-4627-9136-64622c85c979",
+              "name": "FinalTranscripition",
+              "value": "={{ $('Fields webhook - WhatsApp').item.json.user_message }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "c4515bb0-554b-41b8-8cd1-655a7685475b",
+      "name": "Set Message from image",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2000,
+        -60
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Obtendo o valor de 'content' do nó 'OpenAI7'\nconst content = $node[\"OpenAI8\"].json[\"content\"];\n\n// Obtendo o valor de 'caption' do nó 'Webhook4'\nconst caption = $node[\"Webhook - Instagram\"].json[\"body\"][\"data\"][\"message\"][\"imageMessage\"][\"caption\"];\n\n// Concatenar os valores\nconst concatenatedText = content + \" \" + caption;\n\n// Retorna o texto concatenado\nreturn {\n  json: {\n    concatenatedText\n  }\n};"
+      },
+      "id": "9c602e92-6b4e-43a8-b339-355361086ee8",
+      "name": "Code1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2420,
+        780
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "99667d07-ff62-4627-9136-64622c85c979",
+              "name": "FinalTranscripition",
+              "value": "={{ $json.concatenatedText }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "c36aae98-b475-4482-9b3f-7301319362d4",
+      "name": "Set Message from image4",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2580,
+        780
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "66f1b455-0f91-4380-acb3-3d3c515b3513",
+              "name": "UrlEvo",
+              "value": "={{ $('Webhook - WhatsApp').item.json.body.server_url }}",
+              "type": "string"
+            },
+            {
+              "id": "cd42d461-5c60-4023-8602-d545009b4d55",
+              "name": "Estancia",
+              "value": "={{ $('Webhook - WhatsApp').item.json.body.instance }}",
+              "type": "string"
+            },
+            {
+              "id": "18339a2f-8a33-489e-9a78-2534d9d194fe",
+              "name": "ApiKeyGroq",
+              "value": "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",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b531b8a3-dcf4-45fa-bdf0-e5ad33d10538",
+      "name": "Info Base1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2000,
+        500
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "fb5f6e40-23b7-46ac-a01b-a538d68b01e7",
+              "name": "base64",
+              "value": "={{ $('Fields webhook - WhatsApp').first().json.base64 }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "f0c24543-68da-4836-8bfb-46cbbe06a667",
+      "name": "Pega Base",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2140,
+        500
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.groq.com/openai/v1/audio/transcriptions",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=bearer {{ $('Info Base1').item.json[\"ApiKeyGroq\"] }}"
+            },
+            {
+              "name": "Content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "model",
+              "value": "whisper-large-v3"
+            },
+            {
+              "name": "temperature",
+              "value": "0.7"
+            },
+            {
+              "name": "response_format",
+              "value": "json"
+            },
+            {
+              "name": "language",
+              "value": "pt"
+            },
+            {
+              "parameterType": "formBinaryData",
+              "name": "file",
+              "inputDataFieldName": "mp4"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "f097f993-f7cc-44ea-a10b-f92537e1dd59",
+      "name": "GroqTranscreve1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2440,
+        500
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "base64",
+        "binaryPropertyName": "mp4",
+        "options": {
+          "fileName": "data.mp4"
+        }
+      },
+      "id": "daa0cb05-4b06-4947-96dd-fd20507a13e5",
+      "name": "Convert to File2",
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        2280,
+        500
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "99667d07-ff62-4627-9136-64622c85c979",
+              "name": "FinalTranscripition",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "25b36051-441e-471d-ab38-1d591d22b0e5",
+      "name": "Set Message from Audio1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2580,
+        500
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "operation": "transcribe",
+        "options": {}
+      },
+      "id": "cff03273-286d-4cd0-b0f3-ab92c0014c06",
+      "name": "OpenAI",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.4,
+      "position": [
+        2340,
+        180
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "VAlj1CJfZ7eyoyoK",
+          "name": "[ChatMaze] - tools@aimaze.com.br"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "operation": "analyze",
+        "modelId": {
+          "__rl": true,
+          "value": "chatgpt-4o-latest",
+          "mode": "list",
+          "cachedResultName": "CHATGPT-4O-LATEST"
+        },
+        "text": "=**Prompt para Descrição Detalhada da Estética Corporal com Base em Instruções de Imagem**\n\n**Instruções Iniciais:**\nAo descrever a imagem, foque exclusivamente na pessoa retratada, ignorando quaisquer elementos de fundo, roupas, ou outros objetos. Primeiramente, utilize qualquer texto fornecido no campo entre parentese {{ $('Webhook - Instagram').item.json.body.data.message.imageMessage.caption }} para guiar sua descrição. Se o campo estiver vazio, baseie-se apenas nos detalhes visuais observados na imagem.\n\n**Detalhes a serem descritos:**\n\n1. **Pele:**\n   - **Textura:** Descreva se a pele parece suave, áspera, ou mostra irregularidades.\n   - **Cor:** Mencione se a cor da pele é uniforme ou se há presença de manchas, hiperpigmentação.\n   - **Características Notáveis:** Identifique qualquer presença de rugas, linhas de expressão, cicatrizes ou outras marcas notáveis.\n   - **Hidratação e Brilho:** Observe e relate sobre o brilho e a hidratação da pele.\n\n2. **Gordura Abdominal:**\n   - **Distribuição:** Comente sobre a distribuição da gordura na região abdominal, descrevendo se parece proeminente, volumosa ou definida.\n   - **Definição Muscular:** Mencione se há definição muscular visível ou se a mesma está coberta por gordura.\n   - **Retenção de Líquidos:** Relate qualquer sinal observável de retenção de líquidos ou inchaço.\n\n3. **Medidas Corporais:**\n   - **Proporções:** Fale sobre as proporções entre a cintura, quadris e pernas.\n   - **Contorno Corporal:** Descreva o contorno corporal, observando simetria e quaisquer desproporções notáveis.\n\n**Informação Adicional:**\n   - Sua descrição deve ser clara e focada somente na pessoa na imagem, providenciando detalhes visuais pertinentes sem inferir qualidades ou análises.\n\nso descreva a imagem nao retorne nada falando que é uma descrição faça o texto sem qualquer formatação",
+        "inputType": "base64",
+        "options": {}
+      },
+      "id": "916b3e87-1f07-4a07-b72b-baf572799604",
+      "name": "OpenAI8",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.4,
+      "position": [
+        2280,
+        780
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "HqyrCnwePmXKkfxw",
+          "name": "[main] - openia.com - tools@aimaze.com.br"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3ad149bc-c41f-46bc-a641-5e96071244eb",
+              "name": "base64",
+              "value": "={{ $('Webhook - Instagram').item.json.body.data.message.base64 }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "2bfee9e5-9964-4613-87aa-d23df52ae800",
+      "name": "Edit Fields2",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2000,
+        1100
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "base64",
+        "options": {
+          "fileName": "={{ $('Webhook - Instagram').item.json.body.data.message.documentWithCaptionMessage.message.documentMessage.caption }}",
+          "mimeType": "application/pdf"
+        }
+      },
+      "id": "0a471121-820c-4c81-b48a-07666789f5f8",
+      "name": "Convert to File3",
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        2180,
+        1100
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "id": "32a1ecab-687d-47e9-88df-a20bb829b7d6",
+      "name": "Extract from File2",
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        2360,
+        1100
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3b76d240-b6ff-44bd-85f1-5be645a1c877",
+              "name": "FinalTranscripition",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "cb67d208-de22-4301-8469-4e6f7c84bce7",
+      "name": "Edit Fields3",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2540,
+        1100
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Recebe documentos em PDF",
+        "height": 255,
+        "width": 756,
+        "color": 6
+      },
+      "id": "3deeb544-04f9-4a76-bf05-746116fd6d64",
+      "name": "Sticky Note16",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1940,
+        1020
+      ]
+    },
+    {
+      "parameters": {
+        "content": "# Vision\n",
+        "height": 1777,
+        "width": 1577,
+        "color": 5
+      },
+      "id": "5b96c554-fdd8-418f-8baf-059ed213e59b",
+      "name": "Sticky Note17",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1540,
+        -300
+      ]
+    },
+    {
+      "parameters": {
+        "content": "# TRANSCRIÇÃO DE AUDIO FEITA PELO GROQ",
+        "height": 270,
+        "width": 807,
+        "color": 3
+      },
+      "id": "b1105bae-82ce-41b2-9456-c8f933e798e9",
+      "name": "Sticky Note18",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1940,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "13d150a0-29db-406c-a68f-68a216b20cd7",
+              "leftValue": "={{ $json.FinalTranscripition }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3020,
+        0
+      ],
+      "id": "29ca205f-8046-425b-b298-91c8101b0d29",
+      "name": "Verifica se o texto estiver vazio"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "e1b4d9e7-809d-4b63-967c-4c1439b48b3a",
+              "leftValue": "={{ !!Object.keys($node[\"Supabase - Get User1\"].data).length }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        320,
+        1900
+      ],
+      "id": "d777935c-ab11-4bbc-bfba-a878ef9512bb",
+      "name": "Verifica se o usuário existe1"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "master_user",
+        "returnAll": true,
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "instagram_id",
+              "condition": "eq",
+              "keyValue": "={{ $('Edit Fields').item.json.sender_id }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        80,
+        1920
+      ],
+      "id": "830754eb-0b97-4fac-9937-a7bd1ca9f229",
+      "name": "Supabase - Get User1",
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "6iN72E2v7DpeAMjr",
+          "name": "[chatmaze] - tools@aimaze.com.br - supabase.io"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        740,
+        1900
+      ],
+      "id": "f440cd3b-046b-40e8-ab5a-27f18b2e9ce6",
+      "name": "Merge1"
+    },
+    {
+      "parameters": {
+        "tableId": "master_user",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "instagram_id",
+              "fieldValue": "={{ $('Filter').item.json.sender_id }}"
+            },
+            {
+              "fieldId": "User_name",
+              "fieldValue": "={{ $('GET Profile Info').item.json.name }}"
+            },
+            {
+              "fieldId": "arroba_instagram",
+              "fieldValue": "={{ $('GET Profile Info').item.json.username }}"
+            },
+            {
+              "fieldId": "is_following?",
+              "fieldValue": "={{ $('GET Profile Info').item.json.is_user_follow_business }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        520,
+        2040
+      ],
+      "id": "57dccd53-2795-470f-a827-a21024e35aa4",
+      "name": "Supabase1",
+      "credentials": {
+        "supabaseApi": {
+          "id": "6iN72E2v7DpeAMjr",
+          "name": "[chatmaze] - tools@aimaze.com.br - supabase.io"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "67118f58-0f7e-445e-a5e6-6ee4bfd21acf",
+              "leftValue": "={{ $json.thread_id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1000,
+        1900
+      ],
+      "id": "764a5ffe-13c2-428d-bd2b-4e5d6ba3a5ad",
+      "name": "Possui Thread?1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/threads",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openAiApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "OpenAI-Beta",
+              "value": "assistants=v2"
+            },
+            {
+              "name": "Content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1020,
+        2160
+      ],
+      "id": "da1cc573-0bd2-44f0-8926-b308e13aee42",
+      "name": "Create Thrad ID1",
+      "credentials": {
+        "openAiApi": {
+          "id": "VAlj1CJfZ7eyoyoK",
+          "name": "[ChatMaze] - tools@aimaze.com.br"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "master_user",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $('Supabase1').first().json.id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "thread_id",
+              "fieldValue": "={{ $json.id }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1020,
+        2440
+      ],
+      "id": "553176f9-7cd0-4ee7-9e6a-fed290c65f30",
+      "name": "Update row thread_id1",
+      "credentials": {
+        "supabaseApi": {
+          "id": "6iN72E2v7DpeAMjr",
+          "name": "[chatmaze] - tools@aimaze.com.br - supabase.io"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Verifica e Cria a Thread \nVerifica primeiro se o usuário possui Thread. Se ele não tive thread é criado a thread\nDepois é atualizado no banco de dados",
+        "height": 932,
+        "width": 299,
+        "color": 5
+      },
+      "id": "4dc57dbe-40de-486c-aa5f-0a7df54c38b5",
+      "name": "Sticky Note12",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        920,
+        1720
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Verifica cadastro de usuário\n",
+        "height": 500,
+        "width": 1320,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -420,
+        1720
+      ],
+      "typeVersion": 1,
+      "id": "def90e83-4fb1-4050-b8db-6bdcaec201c7",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "# Sessão de Cadastro de usuário",
+        "height": 1080,
+        "width": 1700,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -440,
+        1600
+      ],
+      "typeVersion": 1,
+      "id": "10d436e0-bc35-422a-849c-7bd6f287ba34",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0ff94bb8-6715-4a9d-b7f9-d10e902e21a3",
+              "name": "meu_id",
+              "value": "={{ $json.body.entry[0].id }}",
+              "type": "string"
+            },
+            {
+              "id": "b96aac7d-5b41-4ea4-9c65-2f08d50ffe18",
+              "name": "sender_id",
+              "value": "={{ $json.body.entry[0].messaging[0].sender.id }}",
+              "type": "string"
+            },
+            {
+              "id": "6310c0da-da43-473c-abcc-2c7b63f4a418",
+              "name": "recipient_id",
+              "value": "={{ $json.body.entry[0].messaging[0].recipient.id }}",
+              "type": "string"
+            },
+            {
+              "id": "0f108a78-d0f4-45cb-bf41-6c4cac92ecb9",
+              "name": "message_id",
+              "value": "={{ $json.body.entry[0].messaging[0].message.mid }}",
+              "type": "string"
+            },
+            {
+              "id": "038f1459-a7ac-4a63-bdc3-f0d96d0446e4",
+              "name": "message",
+              "value": "={{ $json.body.entry[0].messaging[0].message.text }}",
+              "type": "string"
+            },
+            {
+              "id": "390c0066-cf5c-456f-81f1-c953ff73ca49",
+              "name": "type",
+              "value": "={{ $json.body.entry[0].messaging[0].message.attachments[0].type }}",
+              "type": "string"
+            },
+            {
+              "id": "db4dc4a1-9e5c-41ca-bad4-4c81a8625e33",
+              "name": "link_media",
+              "value": "={{ $json.body.entry[0].messaging[0].message.attachments[0].payload.url }}",
+              "type": "string"
+            },
+            {
+              "id": "96b7c097-0caa-4a69-85c4-018092874db3",
+              "name": "type",
+              "value": "={{ $json.body.entry[0].messaging[0].message.attachments[0].type }}",
+              "type": "string"
+            },
+            {
+              "id": "835e520a-02b0-40cd-94c9-8fe767980418",
+              "name": "Story_id",
+              "value": "={{ $json.body.entry[0].messaging[0].message.reply_to.story.id }}",
+              "type": "string"
+            },
+            {
+              "id": "412efa51-2761-4f81-9852-15fa178237be",
+              "name": "link_media_stories",
+              "value": "={{ $json.body.entry[0].messaging[0].message.reply_to.story.url }}",
+              "type": "string"
+            },
+            {
+              "id": "6e2d57dd-c0e7-4b79-bd3c-32866e8250d9",
+              "name": "action",
+              "value": "={{ $json.body.entry[0].messaging[0].reaction.action }}",
+              "type": "string"
+            },
+            {
+              "id": "6439c935-b46d-46e9-8c10-5086d143f564",
+              "name": "perfil_id",
+              "value": "={{ $json.body.entry[0].changes[0].value.from.id }}",
+              "type": "string"
+            },
+            {
+              "id": "03003f91-b839-4777-824b-aa730deb73aa",
+              "name": "username",
+              "value": "={{ $json.body.entry[0].changes[0].value.from.username }}",
+              "type": "string"
+            },
+            {
+              "id": "0ce9d6c7-96d4-43c1-a395-cf3de8ef1fd8",
+              "name": "post_id",
+              "value": "={{ $json.body.entry[0].changes[0].value.media.id }}",
+              "type": "string"
+            },
+            {
+              "id": "65fd7773-0ce0-412e-9db4-6c2da2cbb3c3",
+              "name": "media_product_type",
+              "value": "={{ $json.body.entry[0].changes[0].value.media.media_product_type }}",
+              "type": "string"
+            },
+            {
+              "id": "0a973f97-2ef0-4a36-b580-14413a960bef",
+              "name": "comment_id",
+              "value": "={{ $json.body.entry[0].changes[0].value.id }}",
+              "type": "string"
+            },
+            {
+              "id": "82854282-3b87-4dd2-949c-1dc1aa8b1f77",
+              "name": "comment",
+              "value": "={{ $json.body.entry[0].changes[0].value.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "f8276ee0-5f27-40fc-a11f-97873d325827",
+      "name": "Edit Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -520,
+        1920
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "1ab64830-2c33-46b8-b5ab-b3fec5ff453a",
+              "leftValue": "={{ $json.sender_id }}",
+              "rightValue": "={{ $json.meu_id }}",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "f6f4819f-a900-4578-8bc1-9a18c26dec85",
+      "name": "Filter",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        -340,
+        1920
+      ]
+    },
+    {
+      "parameters": {
+        "url": "=https://graph.instagram.com/v21.0/{{ $json.sender_id }}",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "fields",
+              "value": "name,username,profile_pic,follower_count,is_user_follow_business,is_business_follow_user "
+            },
+            {
+              "name": "access_token",
+              "value": "IGAAZAFLZCIXx0NBZAE96c0VhTE5WcGhYTXk1RVcwN3gwYmMwTUpSbUUxd3hJYnZAQd21GcXdseVhWZADlyZAmZAyVFlONURQdkl6dk85YjVYc2ZAhci1qcVNjbUZA3cUktQXl3ZAzQ0c1hyN1ZAZAdmQ0Tmx6Ry0xZAnVJa2pFaVVEc29tU2N3bwZDZD"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -120,
+        1920
+      ],
+      "id": "54aa426b-7858-45d2-a895-fb35b3908e9b",
+      "name": "GET Profile Info"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 1
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Edit Fields').item.json.Story_id }}",
+                    "rightValue": "text",
+                    "operator": {
+                      "type": "string",
+                      "operation": "notEmpty",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Text"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 1
+                },
+                "conditions": [
+                  {
+                    "id": "aed1a90c-0df2-4b08-9fbb-885d88b783fe",
+                    "leftValue": "={{ $('Edit Fields').item.json.type }}",
+                    "rightValue": "audio",
+                    "operator": {
+                      "type": "string",
+                      "operation": "regex"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "audio"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 1
+                },
+                "conditions": [
+                  {
+                    "id": "7eed5bb8-5c70-4395-86fe-612043a74037",
+                    "leftValue": "={{ $json.Story_id.length }}",
+                    "rightValue": "story_mention",
+                    "operator": {
+                      "type": "number",
+                      "operation": "notEmpty",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "story_mention"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 1
+                },
+                "conditions": [
+                  {
+                    "id": "26e40a8a-8cc6-49af-9c5e-5ace09818a2a",
+                    "leftValue": "={{ $('Edit Fields').item.json.type }}",
+                    "rightValue": "image",
+                    "operator": {
+                      "type": "string",
+                      "operation": "regex"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "image"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 1
+                },
+                "conditions": [
+                  {
+                    "id": "2445ba93-a8d9-4f95-82dc-e49e266f421a",
+                    "leftValue": "={{ $('Edit Fields').item.json.type }}",
+                    "rightValue": "video",
+                    "operator": {
+                      "type": "string",
+                      "operation": "regex"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "video"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 1
+                },
+                "conditions": [
+                  {
+                    "id": "bbec40cd-df84-40ee-a21d-8120be49ca30",
+                    "leftValue": "={{ $json.action }}",
+                    "rightValue": "react",
+                    "operator": {
+                      "type": "string",
+                      "operation": "regex"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "react"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 1
+                },
+                "conditions": [
+                  {
+                    "id": "35572ebc-0489-4bdb-b07a-33abfe5b011d",
+                    "leftValue": "={{ $json.action }}",
+                    "rightValue": "unreact",
+                    "operator": {
+                      "type": "string",
+                      "operation": "regex"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "unreact"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 1
+                },
+                "conditions": [
+                  {
+                    "id": "1868382a-f7ef-4676-86d0-a06735fdf1f1",
+                    "leftValue": "={{ $('Edit Fields').item.json.type }}",
+                    "rightValue": "true",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "unsupported"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "c2b292b1-7efd-4d59-8626-1f87524567b3",
+      "name": "Switch1",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.1,
+      "position": [
+        1580,
+        1800
+      ]
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1620,
+        2380
+      ],
+      "id": "efaec375-7106-4036-9144-d64be5febc19",
+      "name": "Adicionar um aviso para o adm"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        3520,
+        1800
+      ],
+      "id": "7d5bca5a-7da8-4e95-b6f3-74f8220d3eb4",
+      "name": "Merge3"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "99667d07-ff62-4627-9136-64622c85c979",
+              "name": "FinalTranscripition",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "0a4782da-306c-4005-89a8-da4fcf57dc68",
+      "name": "Set Message from Audio",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2360,
+        2060
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "5ae8cba9-3d8c-465b-b5b0-69493b7e4e91",
+              "name": "=base64",
+              "value": "={{ $('Webhook - Instagram').item.json.body.data.message.base64 }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "50cdb73c-3e4a-4fb9-8c24-47581d0da325",
+      "name": "Image Base1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2000,
+        2660
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "base64",
+        "options": {
+          "fileName": "image.png",
+          "mimeType": "image/png"
+        }
+      },
+      "id": "a8ee5110-d628-4608-99d7-412cd982864f",
+      "name": "Convert to File8",
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        2140,
+        2660
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Identifica e transcreve as imagens",
+        "height": 227.11653913117755,
+        "width": 809.4697158869521
+      },
+      "id": "16dac956-280e-45e7-8ac7-86f51ec7c516",
+      "name": "Sticky Note19",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1940,
+        2600
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Identifica e transcreve os áudios",
+        "height": 255.41432385368404,
+        "width": 729.2230537404986,
+        "color": 4
+      },
+      "id": "e57ebf83-2163-4fcf-8f37-bd7886f2908f",
+      "name": "Sticky Note20",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1940,
+        1980
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "99667d07-ff62-4627-9136-64622c85c979",
+              "name": "FinalTranscripition",
+              "value": "={{ $('Edit Fields').item.json.message }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a22f4ca4-a3ee-4e10-9bd5-8c92d2ed76aa",
+      "name": "Set Message from image1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1980,
+        1780
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Obtendo o valor de 'content' do nó 'OpenAI7'\nconst content = $node[\"OpenAI9\"].json[\"content\"];\n\n// Obtendo o valor de 'caption' do nó 'Webhook4'\nconst caption = $node[\"Webhook - Instagram\"].json[\"body\"][\"data\"][\"message\"][\"imageMessage\"][\"caption\"];\n\n// Concatenar os valores\nconst concatenatedText = content + \" \" + caption;\n\n// Retorna o texto concatenado\nreturn {\n  json: {\n    concatenatedText\n  }\n};"
+      },
+      "id": "56362d10-3099-4143-ac28-b67c84bb789a",
+      "name": "Code",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2440,
+        2660
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "99667d07-ff62-4627-9136-64622c85c979",
+              "name": "FinalTranscripition",
+              "value": "={{ $json.concatenatedText }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "98548b89-0d15-4216-9d8c-1aa27f38d087",
+      "name": "Set Message from image5",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2600,
+        2660
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.groq.com/openai/v1/audio/transcriptions",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=bearer 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"
+            },
+            {
+              "name": "Content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "model",
+              "value": "whisper-large-v3"
+            },
+            {
+              "name": "temperature",
+              "value": "0.7"
+            },
+            {
+              "name": "response_format",
+              "value": "json"
+            },
+            {
+              "name": "language",
+              "value": "pt"
+            },
+            {
+              "parameterType": "formBinaryData",
+              "name": "file",
+              "inputDataFieldName": "data"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "f3bfdac2-ed48-4582-8a27-2b322b2fe80f",
+      "name": "GroqTranscreve",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2180,
+        2380
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "99667d07-ff62-4627-9136-64622c85c979",
+              "name": "FinalTranscripition",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "af286b6d-f397-4baf-9d1e-9697062a0d84",
+      "name": "Set Message from Audio2",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2400,
+        2380
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "operation": "transcribe",
+        "options": {}
+      },
+      "id": "26d97f22-135c-4960-9576-41a12013cf47",
+      "name": "OpenAI1",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.4,
+      "position": [
+        2160,
+        2060
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "VAlj1CJfZ7eyoyoK",
+          "name": "[ChatMaze] - tools@aimaze.com.br"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "operation": "analyze",
+        "modelId": {
+          "__rl": true,
+          "value": "chatgpt-4o-latest",
+          "mode": "list",
+          "cachedResultName": "CHATGPT-4O-LATEST"
+        },
+        "text": "=**Prompt para Descrição Detalhada da Estética Corporal com Base em Instruções de Imagem**\n\n**Instruções Iniciais:**\nAo descrever a imagem, foque exclusivamente na pessoa retratada, ignorando quaisquer elementos de fundo, roupas, ou outros objetos. Primeiramente, utilize qualquer texto fornecido no campo entre parentese {{ $('Webhook - Instagram').item.json.body.data.message.imageMessage.caption }} para guiar sua descrição. Se o campo estiver vazio, baseie-se apenas nos detalhes visuais observados na imagem.\n\n**Detalhes a serem descritos:**\n\n1. **Pele:**\n   - **Textura:** Descreva se a pele parece suave, áspera, ou mostra irregularidades.\n   - **Cor:** Mencione se a cor da pele é uniforme ou se há presença de manchas, hiperpigmentação.\n   - **Características Notáveis:** Identifique qualquer presença de rugas, linhas de expressão, cicatrizes ou outras marcas notáveis.\n   - **Hidratação e Brilho:** Observe e relate sobre o brilho e a hidratação da pele.\n\n2. **Gordura Abdominal:**\n   - **Distribuição:** Comente sobre a distribuição da gordura na região abdominal, descrevendo se parece proeminente, volumosa ou definida.\n   - **Definição Muscular:** Mencione se há definição muscular visível ou se a mesma está coberta por gordura.\n   - **Retenção de Líquidos:** Relate qualquer sinal observável de retenção de líquidos ou inchaço.\n\n3. **Medidas Corporais:**\n   - **Proporções:** Fale sobre as proporções entre a cintura, quadris e pernas.\n   - **Contorno Corporal:** Descreva o contorno corporal, observando simetria e quaisquer desproporções notáveis.\n\n**Informação Adicional:**\n   - Sua descrição deve ser clara e focada somente na pessoa na imagem, providenciando detalhes visuais pertinentes sem inferir qualidades ou análises.\n\nso descreva a imagem nao retorne nada falando que é uma descrição faça o texto sem qualquer formatação",
+        "inputType": "base64",
+        "options": {}
+      },
+      "id": "b2c73c75-ffd6-40c7-a50f-fcc83ef6ff46",
+      "name": "OpenAI9",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.4,
+      "position": [
+        2300,
+        2660
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "HqyrCnwePmXKkfxw",
+          "name": "[main] - openia.com - tools@aimaze.com.br"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3ad149bc-c41f-46bc-a641-5e96071244eb",
+              "name": "base64",
+              "value": "={{ $('Webhook - Instagram').item.json.body.data.message.base64 }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "144010b2-6922-4268-bcf0-0036a33ee2fd",
+      "name": "Edit Fields4",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2000,
+        2980
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "base64",
+        "options": {
+          "fileName": "={{ $('Webhook - Instagram').item.json.body.data.message.documentWithCaptionMessage.message.documentMessage.caption }}",
+          "mimeType": "application/pdf"
+        }
+      },
+      "id": "7983653a-be9e-49e8-9ace-88de3741a6e1",
+      "name": "Convert to File5",
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        2180,
+        2980
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "id": "ac5c1f54-1e1f-4d26-bd5f-71541e3d4e3a",
+      "name": "Extract from File",
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        2360,
+        2980
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3b76d240-b6ff-44bd-85f1-5be645a1c877",
+              "name": "FinalTranscripition",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "aa53bffd-505c-4bb7-bd33-70d71e12345d",
+      "name": "Edit Fields5",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2540,
+        2980
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Recebe documentos em PDF",
+        "height": 255,
+        "width": 756,
+        "color": 6
+      },
+      "id": "88fc3469-9008-408b-90f8-09e287863d0c",
+      "name": "Sticky Note21",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1940,
+        2900
+      ]
+    },
+    {
+      "parameters": {
+        "content": "# Vision\n",
+        "height": 1777,
+        "width": 1577,
+        "color": 5
+      },
+      "id": "3f8feafe-8a64-4278-bb80-c1ec5879692c",
+      "name": "Sticky Note22",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1540,
+        1580
+      ]
+    },
+    {
+      "parameters": {
+        "content": "# TRANSCRIÇÃO DE AUDIO FEITA PELO GROQ",
+        "height": 270,
+        "width": 807,
+        "color": 3
+      },
+      "id": "45429796-7c61-4e94-9e96-f1154cb810e9",
+      "name": "Sticky Note23",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1940,
+        2280
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "13d150a0-29db-406c-a68f-68a216b20cd7",
+              "leftValue": "={{ $json.FinalTranscripition }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3240,
+        2060
+      ],
+      "id": "49e37f7e-0c43-4eaf-b7c6-9d7ae62a25b4",
+      "name": "Verifica se o texto estiver vazio1"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "aimazei-ai",
+        "options": {}
+      },
+      "id": "ad3d5501-d2c7-43cb-8559-fe26bad24223",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -740,
+        1920
+      ],
+      "webhookId": "801cd3a5-9d47-4221-b334-a8cbdff1600a"
+    },
+    {
+      "parameters": {
+        "url": "={{ $('Edit Fields').item.json.link_media }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1980,
+        2060
+      ],
+      "id": "0971e1c7-1504-4441-a2b4-90444fd243c1",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "url": "={{ $('Edit Fields').item.json.link_media }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1980,
+        2380
+      ],
+      "id": "4fdcdae7-7a31-44fb-b2d1-a821e7252d48",
+      "name": "HTTP Request1"
+    }
+  ],
+  "connections": {
+    "Verifica se o usuário existe": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Supabase",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase - Get User": {
+      "main": [
+        [
+          {
+            "node": "Verifica se o usuário existe",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Possui Thread?": {
+      "main": [
+        [
+          {
+            "node": "Tipo de mídia",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Create Thrad ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Thrad ID": {
+      "main": [
+        [
+          {
+            "node": "Update row thread_id",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Possui Thread?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update row thread_id": {
+      "main": [
+        [
+          {
+            "node": "Possui Thread?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook - WhatsApp": {
+      "main": [
+        [
+          {
+            "node": "Fields webhook - WhatsApp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fields webhook - WhatsApp": {
+      "main": [
+        [
+          {
+            "node": "Supabase - Get User",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tipo de mídia": {
+      "main": [
+        [
+          {
+            "node": "Set Message from image",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Info Base1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Image Base",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Audio Base": {
+      "main": [
+        [
+          {
+            "node": "Convert to File6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File6": {
+      "main": [
+        [
+          {
+            "node": "OpenAI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Message from Audio3": {
+      "main": [
+        [
+          {
+            "node": "Verifica se o texto estiver vazio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Image Base": {
+      "main": [
+        [
+          {
+            "node": "Convert to File7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File7": {
+      "main": [
+        [
+          {
+            "node": "OpenAI8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Message from image": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Set Message from image4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Message from image4": {
+      "main": [
+        [
+          {
+            "node": "Verifica se o texto estiver vazio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Info Base1": {
+      "main": [
+        [
+          {
+            "node": "Pega Base",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pega Base": {
+      "main": [
+        [
+          {
+            "node": "Convert to File2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GroqTranscreve1": {
+      "main": [
+        [
+          {
+            "node": "Set Message from Audio1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File2": {
+      "main": [
+        [
+          {
+            "node": "GroqTranscreve1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Message from Audio1": {
+      "main": [
+        [
+          {
+            "node": "Verifica se o texto estiver vazio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI": {
+      "main": [
+        [
+          {
+            "node": "Set Message from Audio3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI8": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Convert to File3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File3": {
+      "main": [
+        [
+          {
+            "node": "Extract from File2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File2": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields3": {
+      "main": [
+        [
+          {
+            "node": "Verifica se o texto estiver vazio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Verifica se o texto estiver vazio": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Verifica se o usuário existe1": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Supabase1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase - Get User1": {
+      "main": [
+        [
+          {
+            "node": "Verifica se o usuário existe1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "Possui Thread?1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase1": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Possui Thread?1": {
+      "main": [
+        [
+          {
+            "node": "Switch1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Create Thrad ID1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Thrad ID1": {
+      "main": [
+        [
+          {
+            "node": "Update row thread_id1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update row thread_id1": {
+      "main": [
+        [
+          {
+            "node": "Possui Thread?1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter": {
+      "main": [
+        [
+          {
+            "node": "GET Profile Info",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GET Profile Info": {
+      "main": [
+        [
+          {
+            "node": "Supabase - Get User1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch1": {
+      "main": [
+        [
+          {
+            "node": "Set Message from image1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [
+          {
+            "node": "Adicionar um aviso para o adm",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Message from Audio": {
+      "main": [
+        [
+          {
+            "node": "Verifica se o texto estiver vazio1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Image Base1": {
+      "main": [
+        [
+          {
+            "node": "Convert to File8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File8": {
+      "main": [
+        [
+          {
+            "node": "OpenAI9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Message from image1": {
+      "main": [
+        [
+          {
+            "node": "Merge3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Set Message from image5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Message from image5": {
+      "main": [
+        [
+          {
+            "node": "Verifica se o texto estiver vazio1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GroqTranscreve": {
+      "main": [
+        [
+          {
+            "node": "Set Message from Audio2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Message from Audio2": {
+      "main": [
+        [
+          {
+            "node": "Verifica se o texto estiver vazio1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI1": {
+      "main": [
+        [
+          {
+            "node": "Set Message from Audio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI9": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields4": {
+      "main": [
+        [
+          {
+            "node": "Convert to File5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File5": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields5": {
+      "main": [
+        [
+          {
+            "node": "Verifica se o texto estiver vazio1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Verifica se o texto estiver vazio1": {
+      "main": [
+        [
+          {
+            "node": "Merge3",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "OpenAI1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "GroqTranscreve",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {
+    "Webhook - WhatsApp": [
+      {
+        "json": {
+          "headers": {
+            "host": "webhooks.aimaze.com.br",
+            "user-agent": "axios/1.7.7",
+            "content-length": "9494",
+            "accept-encoding": "gzip, compress, deflate, br",
+            "content-type": "application/json",
+            "x-forwarded-for": "172.18.0.1",
+            "x-forwarded-host": "webhooks.aimaze.com.br",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "traefik_traefik.1",
+            "x-real-ip": "172.18.0.1"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "event": "messages.upsert",
+            "instance": "pixeomkt",
+            "data": {
+              "key": {
+                "remoteJid": "553899225622@s.whatsapp.net",
+                "fromMe": false,
+                "id": "3EB01B3A0B7FDEAC0CC9D1"
+              },
+              "pushName": "João Reis",
+              "status": "DELIVERY_ACK",
+              "message": {
+                "audioMessage": {
+                  "url": "https://mmg.whatsapp.net/v/t62.7117-24/35716918_1322973439122404_5301139907674930057_n.enc?ccb=11-4&oh=01_Q5AaIFFF-uI4eMwUiHUhB5C7bKv5FM2lwohehxyAqmr3GiL_&oe=679D6540&_nc_sid=5e03e0&mms3=true",
+                  "mimetype": "audio/ogg; codecs=opus",
+                  "fileSha256": "2xYksJa3TN4PgFlL4Dn9h6t4h0QQbpoQXZv9A6Op2FE=",
+                  "fileLength": "5731",
+                  "seconds": 3,
+                  "ptt": true,
+                  "mediaKey": "dLyIRS78YwdEo5R1Vl0p4yBjnPGTh5MWQb6Mw/cWXSQ=",
+                  "fileEncSha256": "dZ5YsguHG0RoOtSLzzyVHDj9qBRrbcTnUeJnJlZUG0s=",
+                  "directPath": "/v/t62.7117-24/35716918_1322973439122404_5301139907674930057_n.enc?ccb=11-4&oh=01_Q5AaIFFF-uI4eMwUiHUhB5C7bKv5FM2lwohehxyAqmr3GiL_&oe=679D6540&_nc_sid=5e03e0",
+                  "mediaKeyTimestamp": "1735787408",
+                  "waveform": "AAAAAAAAAAAAAAAAAAAKHi4zOTk5PUNKUVRPSktLR0E+PTs4NCsiLkFOV11dXVpYV1ZRRz8/P0NHSk49GgAAAA==",
+                  "viewOnce": false
+                },
+                "messageContextInfo": {
+                  "deviceListMetadata": {
+                    "senderKeyHash": "knnk/tDC0802vA==",
+                    "senderTimestamp": "1735604575",
+                    "senderAccountType": "E2EE",
+                    "receiverAccountType": "E2EE",
+                    "recipientKeyHash": "jPCbiNa6LAeYMw==",
+                    "recipientTimestamp": "1735431582"
+                  },
+                  "deviceListMetadataVersion": 2,
+                  "messageSecret": "ITuMu8J73lNVNaeXZgjCnXFhQNZZdBNppmu2lGSN/Tk="
+                },
+                "base64": "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"
+              },
+              "contextInfo": null,
+              "messageType": "audioMessage",
+              "messageTimestamp": 1735787410,
+              "instanceId": "8a65b3cb-cee2-47b5-aa0f-2efa77a4803d",
+              "source": "web",
+              "chatwootMessageId": 679,
+              "chatwootInboxId": 1,
+              "chatwootConversationId": 14
+            },
+            "destination": "https://webhooks.aimaze.com.br/webhook/wsapi-whatapp-0358EB2D8DBE-41B4-90E3-8C3B3F7E729E",
+            "date_time": "2025-01-02T00:10:10.955Z",
+            "sender": "553888601343@s.whatsapp.net",
+            "server_url": "https://wsapi.aimaze.com.br",
+            "apikey": "0358EB2D8DBE-41B4-90E3-8C3B3F7E729E"
+          },
+          "webhookUrl": "https://webhooks.aimaze.com.br/webhook/wsapi-whatapp-0358EB2D8DBE-41B4-90E3-8C3B3F7E729E",
+          "executionMode": "production"
+        }
+      }
+    ],
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "webhooks.aimaze.com.br",
+            "user-agent": "facebookexternalua",
+            "content-length": "743",
+            "accept": "*/*",
+            "accept-encoding": "deflate, gzip",
+            "content-type": "application/json",
+            "instagram-api-version": "v21.0",
+            "x-forwarded-for": "173.252.95.43",
+            "x-forwarded-host": "webhooks.aimaze.com.br",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "traefik_traefik.1",
+            "x-hub-signature": "sha1=7484e5575fe28011e37781ce64a0224b0b7cb4df",
+            "x-hub-signature-256": "sha256=ad7c40a09cb035fe97da22a53228b59a98c50e5cfd70cb02716c1ce42f8d7825",
+            "x-real-ip": "173.252.95.43"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "object": "instagram",
+            "entry": [
+              {
+                "time": 1737491498117,
+                "id": "17841469741876571",
+                "messaging": [
+                  {
+                    "sender": {
+                      "id": "937218378456580"
+                    },
+                    "recipient": {
+                      "id": "17841469741876571"
+                    },
+                    "timestamp": 1737491497882,
+                    "message": {
+                      "mid": "aWdfZAG1faXRlbToxOklHTWVzc2FnZAUlEOjE3ODQxNDY5NzQxODc2NTcxOjM0MDI4MjM2Njg0MTcxMDMwMTI0NDI1OTczMzkwMDI1OTI1OTk4MzozMjA1MTA2MDk5MTY5MzMxNjU2MTUyNTU2MzM5NDYyMTQ0MAZDZD",
+                      "attachments": [
+                        {
+                          "type": "audio",
+                          "payload": {
+                            "url": "https://lookaside.fbsbx.com/ig_messaging_cdn/?asset_id=1110691447468684&signature=Abx6wAqkFauC4sD2J_NXRM9RVRapVKArvwNooZBePXypX3mFJlxwDDoOko3NyDCLwRNCVmyrt2broa-zSF_B1ZaX9aYmZvxBn1L1ZpUZWTZ3F9Jnu8_tWgY-1_Utq_gnW_hDQ5EqSNvmFcj_DJUg-FY-NAsiTheJ7bMbcn4Xt2NVM3WBkZWD6ZbyDQtXa32FGXoLs8yWF9EXq0jjez36oaprx66CsFI"
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "webhookUrl": "https://webhooks.aimaze.com.br/webhook/aimazei-ai",
+          "executionMode": "production"
+        }
+      }
+    ]
+  },
+  "versionId": "b2061eb8-c936-4e08-9c58-e68edf39f4e5",
+  "triggerCount": 0,
+  "tags": [
+    {
+      "createdAt": "2025-01-20T20:28:06.355Z",
+      "updatedAt": "2025-01-20T20:28:06.355Z",
+      "id": "78TBEipiZikEQJ4W",
+      "name": "aimaze"
+    }
+  ]
+}
