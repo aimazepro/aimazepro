@@ -1,0 +1,487 @@
+{
+  "createdAt": "2024-11-29T21:51:13.004Z",
+  "updatedAt": "2024-12-26T19:13:09.410Z",
+  "id": "lBWws33lkTArmBLq",
+  "name": "[notion] - Gerador de ideias de conteúdo",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "databaseId": {
+          "__rl": true,
+          "value": "14d16533-6e91-8049-8be3-e6f58976bf14",
+          "mode": "list",
+          "cachedResultName": "DB de Gerador de conteúdo",
+          "cachedResultUrl": "https://www.notion.so/14d165336e9180498be3e6f58976bf14"
+        }
+      },
+      "type": "n8n-nodes-base.notionTrigger",
+      "typeVersion": 1,
+      "position": [
+        -300,
+        -100
+      ],
+      "id": "254c1bf4-7f1d-4c7e-a991-ecd14bec86fe",
+      "name": "Notion Trigger",
+      "credentials": {
+        "notionApi": {
+          "id": "RqJiCMcIqeauBnye",
+          "name": "[pixeomarketing] - notion.so/app - agenciapixeo@gmail.com"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "event": "pagedUpdatedInDatabase",
+        "databaseId": {
+          "__rl": true,
+          "value": "14d16533-6e91-8049-8be3-e6f58976bf14",
+          "mode": "list",
+          "cachedResultName": "DB de Gerador de conteúdo",
+          "cachedResultUrl": "https://www.notion.so/14d165336e9180498be3e6f58976bf14"
+        }
+      },
+      "type": "n8n-nodes-base.notionTrigger",
+      "typeVersion": 1,
+      "position": [
+        -300,
+        120
+      ],
+      "id": "37fd873f-44cd-482f-ab1c-dba94339f635",
+      "name": "Notion Trigger1",
+      "credentials": {
+        "notionApi": {
+          "id": "RqJiCMcIqeauBnye",
+          "name": "[pixeomarketing] - notion.so/app - agenciapixeo@gmail.com"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1ba1850d-e45a-4954-9720-af5455d5c3ba",
+              "name": "row_id",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "4c92d81b-1899-4030-b09b-9cade99018d6",
+              "name": "main_title",
+              "value": "={{ $json.Nome }}",
+              "type": "string"
+            },
+            {
+              "id": "33ca8023-e7bf-4cac-9492-989e11a0c3af",
+              "name": "business_id",
+              "value": "={{ $json.Empresas[0] }}",
+              "type": "string"
+            },
+            {
+              "id": "95ad2d93-abec-4f2f-a816-0443132ae10f",
+              "name": "business_name",
+              "value": "={{ $json.Business_name[0] }}",
+              "type": "string"
+            },
+            {
+              "id": "4f7c8ef8-6f99-4d8f-a523-88c40cb6f00e",
+              "name": "publico",
+              "value": "={{ $json['Publico Alvo'][0] }}",
+              "type": "string"
+            },
+            {
+              "id": "876f4877-74e3-43ec-8a1b-45c7975ad09c",
+              "name": "tipo_conteudo",
+              "value": "={{ $json['Tipo Conteúdo'] }}",
+              "type": "string"
+            },
+            {
+              "id": "84abf377-c5b4-47f7-9376-f7defa8430cb",
+              "name": "objetivo_conteúdo",
+              "value": "={{ $json['Objetivo Conteúdo'] }}",
+              "type": "string"
+            },
+            {
+              "id": "9695969f-9ddc-4d50-897d-d1b29545a05f",
+              "name": "Qte_post",
+              "value": "={{ $json['Quantidade Post'] }}",
+              "type": "string"
+            },
+            {
+              "id": "f4b2f8b3-bb22-4cdc-af2b-f6487b2b72bf",
+              "name": "run_content",
+              "value": "={{ $json['Gerar conteúdo[C]'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -20,
+        20
+      ],
+      "id": "21b84f19-c274-41aa-8855-26c8aa8f7452",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=# Informações Importantes\nEmpresa:{{ $json.business_name }}\nQuantidade de post:{{ $json.Qte_post }}\npublico alvo: {{ $json.publico }}\ntipo de conteúdo:{{ $json.tipo_conteudo }}\nObjetivo de conteúdo:{{ $json['objetivo_conteúdo'] }}\nbusiness_id: {{ $json.business_id }}\nrow_id:{{ $json.row_id }}\n\nVocê é um especialista em criação de ideias altamente chamativos, criativos e relevantes, com foco em engajamento máximo e atração de audiência de conteúdo, focado em atender demandas específicas de diferentes públicos alvo e objetivo de comunicação.\n\n---\n\n#Instruções\n-Divida as ideias de conteúdo proporcionalmente a quantidade solicitada quando o conteúdo não for dado, caso seja dado crie somente a ideia solicitada, por objetivos do post, que são: aumentar engajamento, atrair seguidores, gerar vendas, educar, divertir, ou inspirar.\n\n\n- Divida também os formatos de conteúdo proporcionalmente quanto a quantidade solicitada quando o conteúdo não for dado, caso seja dado crie somente do formato solicitado. os formatos são, Post estático, carrossel, Reels, Stories.\n\n-Crie ideias, usando seu conhecimento, criatividade. Quando necessário use o publico alvo somente para você entender como é a empresa, mas não crie somente baseado nisso. Caso a empresa não tenha publico alvo não use.\n\n---\n\n#objetivo\nCom base nos critérios gere uma lista de quantidade de ideias criativas. Para cada ideia inclua O título criativo e uma breve descrição do conceito informando sua ideia.\n\n--\n\n#Retorne\n-titulo_pag: Aqui você colocará o titulo da pagina com o seguinte nome Publicação#[n] começando pelo 1 e indo até a quantidade dada, segundo cada publicação, ou seja, a ideia 1 vai se chamar Publicação #1, a doi, Publicação #2 e assim sucessivamente. Sempre gere esse nome. Sempre. Retorne o nome da pagina gerado\n\n-ideia_conteudo: aqui você colocará a ideia com o titulo e o conceito gerado por você, não separe esses itens e um json quero tudo como um texto único.\n\n-business_id: o id da empresa\n-row_id: o id da linha\n-objetivo_post: coloque aqui o objetivo dessa postagem baseado no que te dei acima.\n-tipo_conteúdo: coloque aqui o tipo de conteúdo dessa postagem baseado no que te dei acima."
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        420,
+        -200
+      ],
+      "id": "91e10e82-f6c3-4d25-ae88-13da14898825",
+      "name": "OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "HqyrCnwePmXKkfxw",
+          "name": "[main] - openia.com - tools@aimaze.com.br"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "getAll",
+        "databaseId": {
+          "__rl": true,
+          "value": "4b5d1fa7-bac4-4701-8f52-380397ace514",
+          "mode": "list",
+          "cachedResultName": "Creative Main",
+          "cachedResultUrl": "https://www.notion.so/4b5d1fa7bac447018f52380397ace514"
+        },
+        "returnAll": true,
+        "filterType": "manual",
+        "matchType": "allFilters",
+        "filters": {
+          "conditions": [
+            {
+              "key": "Empresa Texto|formula",
+              "condition": "equals",
+              "returnType": "text",
+              "textValue": "={{ $json.business_name }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notionTool",
+      "typeVersion": 2.2,
+      "position": [
+        500,
+        220
+      ],
+      "id": "3af3fa1a-7600-45fb-b278-b9576a71826a",
+      "name": "Notion",
+      "credentials": {
+        "notionApi": {
+          "id": "RqJiCMcIqeauBnye",
+          "name": "[pixeomarketing] - notion.so/app - agenciapixeo@gmail.com"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "8aa32a51-2771-4079-9dfe-22b0aebd5e2d",
+              "leftValue": "={{ $json.run_content.toBoolean() }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        160,
+        20
+      ],
+      "id": "271d3452-ac11-47c3-88da-3f3f58f40a11",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "update",
+        "pageId": {
+          "__rl": true,
+          "value": "={{ $('If').item.json.row_id }}",
+          "mode": "id"
+        },
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Gerar conteúdo[C]|checkbox"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        920,
+        0
+      ],
+      "id": "4d7d44b1-514f-482a-b9d1-94414fcefbf0",
+      "name": "Notion1",
+      "credentials": {
+        "notionApi": {
+          "id": "RqJiCMcIqeauBnye",
+          "name": "[pixeomarketing] - notion.so/app - agenciapixeo@gmail.com"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "databaseId": {
+          "__rl": true,
+          "value": "13216533-6e91-8032-b555-ec9affaf6ac9",
+          "mode": "list",
+          "cachedResultName": "DB de Creative Main",
+          "cachedResultUrl": "https://www.notion.so/132165336e918032b555ec9affaf6ac9"
+        },
+        "title": "={{ $('Split Out').item.json.titulo_pag }}",
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Conteúdo adicional|rich_text",
+              "textContent": "={{ $('Split Out').item.json.ideia_conteudo.titulo }}\n{{ $('Split Out').item.json.ideia_conteudo.descricao }}"
+            },
+            {
+              "key": "Empresa|relation",
+              "relationValue": [
+                "={{ $('If').item.json.business_id }}"
+              ]
+            },
+            {
+              "key": "[G]|checkbox",
+              "checkboxValue": true
+            },
+            {
+              "key": "Criado por|select",
+              "selectValue": "=Pixeo[AI]"
+            },
+            {
+              "key": "objetivo_post|select",
+              "selectValue": "={{ $('Split Out').item.json.objetivo_post }}"
+            },
+            {
+              "key": "Type|select",
+              "selectValue": "={{ $('Split Out').item.json['tipo_conteúdo'] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        1080,
+        0
+      ],
+      "id": "09fc5b38-9fd0-4757-a1df-dd2459682b24",
+      "name": "Notion2",
+      "credentials": {
+        "notionApi": {
+          "id": "RqJiCMcIqeauBnye",
+          "name": "[pixeomarketing] - notion.so/app - agenciapixeo@gmail.com"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=# Informações Importantes\nEmpresa:{{ $json.business_name }}\nCrie exatamente ideias:{{ $json.Qte_post }}\npublico alvo: {{ $json.publico }}\ntipo de conteúdo:{{ $json.tipo_conteudo }}\nObjetivo de conteúdo:{{ $json['objetivo_conteúdo'] }}\nbusiness_id: {{ $json.business_id }}\nrow_id:{{ $json.row_id }}\n\nVocê é um especialista em criação de ideias altamente chamativos, criativos e relevantes, com foco em engajamento máximo e atração de audiência de conteúdo, focado em atender demandas específicas de diferentes públicos alvo e objetivo de comunicação.\n\n---\n\n#Instruções\n-Divida as ideias de conteúdo proporcionalmente a quantidade solicitada quando o conteúdo não for dado, caso seja dado crie somente a ideia solicitada, por objetivos do post, que são: aumentar engajamento, atrair seguidores, gerar vendas, educar, divertir, ou inspirar.\n\nEvite criar ideias que parece que a empresa está se autopromovendo, crie conteúdos interessantes de verdade para o publico.\n\n\n- Divida também os formatos de conteúdo proporcionalmente quanto a quantidade solicitada quando o conteúdo não for dado, caso seja dado crie somente do formato solicitado. os formatos são, Post estático, carrossel, Reels, Stories.\n\n-Crie ideias, usando seu conhecimento, criatividade. Quando necessário use o publico alvo somente para você entender como é a empresa, mas não crie somente baseado nisso. Caso a empresa não tenha publico alvo não use.\n\n-Nunca use aspas duplas ou qualquer outra coisa que possa quebrar meu json\n\n---\n\n#objetivo\nCom base nos critérios gere uma lista de quantidade de ideias criativas. Para cada ideia inclua O título criativo e uma breve descrição do conceito informando sua ideia.\n\n--\n\n#Retorne\n-titulo_pag: Aqui você colocará o titulo da pagina com o seguinte nome Publicação#[n] começando pelo 1 e indo até a quantidade dada, segundo cada publicação, ou seja, a ideia 1 vai se chamar Publicação #1, a doi, Publicação #2 e assim sucessivamente. Sempre gere esse nome.\n\n-ideia_conteudo: aqui você colocará a ideia com o titulo e o conceito gerado por você.\n\n-business_id: o id da empresa\n-row_id: o id da linha\n-objetivo_post: coloque aqui o objetivo dessa postagem baseado no que te dei acima.\n-tipo_conteúdo: coloque aqui o tipo de conteúdo dessa postagem baseado no que te dei acima.\n\nnome_row: qui você colocará o titulo da pagina com o seguinte nome Publicação#[n] começando pelo 1 e indo até a quantidade dada, segundo cada publicação, ou seja, a ideia 1 vai se chamar Publicação #1, a doi, Publicação #2 e assim sucessivamente.\n\nretorne esses dados em uma array com o nome content"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        420,
+        0
+      ],
+      "id": "4dd22b10-10ea-4699-8af7-1e7d7d9831fb",
+      "name": "OpenAI1",
+      "credentials": {
+        "openAiApi": {
+          "id": "HqyrCnwePmXKkfxw",
+          "name": "[main] - openia.com - tools@aimaze.com.br"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "message.content.content",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        740,
+        0
+      ],
+      "id": "2e40d01d-f299-426f-b2f3-717403104a88",
+      "name": "Split Out"
+    }
+  ],
+  "connections": {
+    "Notion Trigger": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Notion Trigger1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "OpenAI1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Notion1": {
+      "main": [
+        [
+          {
+            "node": "Notion2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI1": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Notion1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": {
+    "node:Notion Trigger": {
+      "lastTimeChecked": "2024-12-09T05:35:00.000Z"
+    },
+    "node:Notion Trigger1": {
+      "lastTimeChecked": "2024-12-09T05:35:00.000Z"
+    }
+  },
+  "meta": null,
+  "pinData": {},
+  "versionId": "6483f0d0-e465-4c8c-9d6b-2714fe786d71",
+  "triggerCount": 2,
+  "tags": []
+}
