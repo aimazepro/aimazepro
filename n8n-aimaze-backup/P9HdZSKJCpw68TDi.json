@@ -1,0 +1,97 @@
+{
+  "createdAt": "2025-02-15T03:00:21.146Z",
+  "updatedAt": "2025-02-17T17:45:37.682Z",
+  "id": "P9HdZSKJCpw68TDi",
+  "name": "My workflow",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "sendTo": "joaoreiscefet@gmail.com",
+        "subject": "Aprove a continuação",
+        "message": "Aprove para continuar",
+        "approvalOptions": {
+          "values": {
+            "approvalType": "double",
+            "approveLabel": "Aprovar",
+            "disapproveLabel": "REPROVAR"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        220,
+        0
+      ],
+      "id": "d66e6c10-7d10-42e4-a8db-842aed867d65",
+      "name": "Gmail",
+      "webhookId": "cc22a388-93a4-4939-b3e2-8aa36dfe4e0a",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "JXmfEF1VHoEAyonF",
+          "name": "[mail.google.com] - aimazemachine@gmail.com"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "seconds"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "32acb5c1-8d09-4414-8319-669d7ba89c51",
+      "name": "Schedule Trigger"
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Gmail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "none",
+    "saveExecutionProgress": true,
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "83c9a567-772d-429d-b9fc-1364e0b45adf",
+  "triggerCount": 1,
+  "tags": []
+}
