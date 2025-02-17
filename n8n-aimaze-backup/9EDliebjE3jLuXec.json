@@ -1,0 +1,1828 @@
+{
+  "createdAt": "2024-12-15T01:01:15.514Z",
+  "updatedAt": "2024-12-15T01:02:15.625Z",
+  "id": "9EDliebjE3jLuXec",
+  "name": "Disparo em massa Anti-ban",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {
+        "databaseId": 151848,
+        "tableId": 384519,
+        "returnAll": true,
+        "additionalOptions": {}
+      },
+      "id": "457460d9-f720-4644-a917-45f0678055ef",
+      "name": "Lista todos os usuários para envio",
+      "type": "n8n-nodes-base.baserow",
+      "typeVersion": 1,
+      "position": [
+        660,
+        1620
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "146fdf92-8617-4ac7-bfc0-d83b97193920",
+      "name": "Loop Over Items",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        1240,
+        1640
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "225a8af0-a667-4479-a5ae-b51df22a9bcf",
+              "leftValue": "={{ $json['Enviado?'] }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "42b98398-f9b8-4332-b5e9-51acbfb2dac9",
+      "name": "Verifica se o envio ja foi feito",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1500,
+        1740
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "databaseId": 151848,
+        "tableId": 384519,
+        "rowId": "={{ $('Lista todos os usuários para envio').item.json.id }}",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": 2911308,
+              "fieldValue": "TRUE"
+            }
+          ]
+        }
+      },
+      "id": "d20769b7-c2f0-4d73-9e44-d1030e6263b4",
+      "name": "Baserow",
+      "type": "n8n-nodes-base.baserow",
+      "typeVersion": 1,
+      "position": [
+        2880,
+        1360
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2f32f35f-e985-47e0-be28-f6959d9844a9",
+              "name": "api_url",
+              "value": "=https://{{ $json.headers.host }}",
+              "type": "string"
+            },
+            {
+              "id": "4291ce09-2085-4137-b13e-37949e349c36",
+              "name": "api_instance",
+              "value": "chatmaze9230",
+              "type": "string"
+            },
+            {
+              "id": "4331c9c5-4713-4c11-8c08-c703e2c63332",
+              "name": "api_key",
+              "value": "8dcb88713769e3f1e202283bf1bea161",
+              "type": "string"
+            },
+            {
+              "id": "754fa844-9c6a-4a86-a7ea-057f67fbdd10",
+              "name": "delay",
+              "value": 5,
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b11c378c-1b09-40f0-9a02-3e4bf2569227",
+      "name": "All Data API",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [
+        500,
+        1620
+      ]
+    },
+    {
+      "parameters": {
+        "content": "# AUTOMAÇÃO DE DISPARO EM MASSA - ANTIBLOQUEIO COM IA [com envio de lista]",
+        "height": 872,
+        "width": 2965,
+        "color": 3
+      },
+      "id": "e6091f90-8aa1-459e-b784-0d56655118cb",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        280,
+        1200
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Executa o código de geração do número aleatório\nconst min = 8;\nconst max = 28;\nconst randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;\n\n// Retorna o valor em um array de objetos com a propriedade \"json\"\nreturn [\n  {\n    json: {\n      randomNumber: randomNumber,\n    },\n  },\n];"
+      },
+      "id": "231ea194-8e17-4a5a-82ed-6db6acdee154",
+      "name": "Code",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2720,
+        1360
+      ]
+    },
+    {
+      "parameters": {
+        "amount": "={{ $('Code').item.json.randomNumber }}"
+      },
+      "id": "734e43b4-d776-4473-bab6-38c249607c3a",
+      "name": "Wait",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        3060,
+        1360
+      ],
+      "webhookId": "49cc92c4-8289-4188-94fd-62ce92aee886"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "operation": "sendImage",
+        "instanceName": "testmaze",
+        "remoteJid": "={{ $('Lista todos os usuários para envio').item.json.number_id }}",
+        "media": "https://s3.pixeo.com.br/notionfile/WhatsApp%20Image%202024-11-06%20at%2015.12.36.jpeg"
+      },
+      "id": "50f6ec1b-d36d-4398-a516-5349cfb4c89f",
+      "name": "Evolution API",
+      "type": "n8n-nodes-evolution-api.httpBin",
+      "typeVersion": 1,
+      "position": [
+        2000,
+        1360
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://evolution.pixeo.com.br/message/sendList/testmaze",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "e738f4b73c3f37f01cdba168f6ee91b7"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \n  \"thumbnailUrl\": \"https://s3.pixeo.com.br/notionfile/WhatsApp%20Image%202024-11-06%20at%2015.12.36.jpeg\",\n  \"number\": \"{{ $('Lista todos os usuários para envio').item.json.number_id }}\",\n  \"title\": \"{{ $('Lista todos os usuários para envio').item.json.user_name }}! {{ $('RANDOMIZA AS MENSAGENS1').item.json.message.content.title }}\",\n  \"description\": \"{{ $('RANDOMIZA AS MENSAGENS1').item.json.message.content.description }}\",\n  \"buttonText\": \"Escolha uma opção\",\n  \"footerText\": \"Clique em 'QUERO SAIR DA LISTA' para não receber mais nossas mensagens\",\n    \"sections\": [\n        {\n            \"title\": \"Escolha uma opção\",\n            \"rows\": [\n                {\n                    \"title\": \"QUERO PARTICIPAR\",\n                    \n                    \"rowId\": \"rowId 001\"\n                },\n                {\n                    \"title\": \"QUERO SAIR DA LISTA\",\n                    \n                    \"rowId\": \"rowId 002\"\n                }\n            ]\n        }\n    ]\n}",
+        "options": {}
+      },
+      "id": "89640294-8360-4b70-9487-8446d2abc320",
+      "name": "Envia lista",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2160,
+        1360
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "1f9098f3-a300-45ae-b3f1-c2774195b394",
+      "name": "When clicking ‘Test workflow’",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        340,
+        1620
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "operation": "sendAudio",
+        "instanceName": "testmaze",
+        "remoteJid": "={{ $('Lista todos os usuários para envio').item.json.number_id }}",
+        "media": "https://s3.pixeo.com.br/notionfile/WhatsApp%20Ptt%202024-11-13%20at%2013.46.46.ogg"
+      },
+      "id": "3a823a56-e443-48ea-a790-27751021aec6",
+      "name": "Evolution API2",
+      "type": "n8n-nodes-evolution-api.httpBin",
+      "typeVersion": 1,
+      "position": [
+        2540,
+        1360
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "testmaze",
+        "remoteJid": "={{ $('Lista todos os usuários para envio').item.json.number_id }}",
+        "messageText": "={{ $('RANDOMIZA AS MENSAGENS1').item.json.message.content.Nota }}"
+      },
+      "id": "f7e3242e-cc7d-43d6-ba6c-1cb82d77faf6",
+      "name": "Nota de esclarecimento",
+      "type": "n8n-nodes-evolution-api.httpBin",
+      "typeVersion": 1,
+      "position": [
+        2340,
+        1360
+      ]
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Crie variações do Title, do description, e da Nota.\n\ncrie variações do texto, mas mantenha exatamente o mesmo sentido, acrescente emojis. Sua resposta deve ser apenas o texto editado!\n\n\"title\": \"Garanta *35% de desconto na Black Friday* ! 🌟\",\n\n\"description\": \"Essa é a oportunidade de cuidar da sua beleza e elevar sua autoestima com procedimentos naquele precinho que você só ver *uma vez no ano*. 😍 A Black da Clin Dermy traz *condições exclusivas e únicas* que você não vai querer perder. E aí, vai ficar de fora dessa? Responda aqui para receber todos os detalhes!\",\n\n\"Nota\": \"⚠️ Nota de Esclarecimento ⚠️\\n\\nAvisamos que a mensagem enviada aos contatos não é golpe, faz parte da ação de marketing da Black Friday da Clin Dermy, por isso atualizamos os números para o DDD 31, para evitar confusão. Qualquer dúvida entre em contato com a Joziani pelo link: https://wa.link/eokf57 \\n\\n*Escute o áudio abaixo:*\""
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "id": "558cd340-e38a-408e-9f3e-ba4c4048ced6",
+      "name": "RANDOMIZA AS MENSAGENS1",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.5,
+      "position": [
+        1680,
+        1360
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Executa o código de geração do número aleatório\nconst min = 6;\nconst max = 18;\nconst randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;\n\n// Retorna o valor em um array de objetos com a propriedade \"json\"\nreturn [\n  {\n    json: {\n      randomNumber: randomNumber,\n    },\n  },\n];"
+      },
+      "id": "c80863f3-fbff-4d7e-8c4e-5cc4485f0a99",
+      "name": "Code4",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3940,
+        800
+      ]
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1kBhxCODu-m47y5dlIJGAFjyLgAQuHEV0OmY23BDNz28",
+          "mode": "list",
+          "cachedResultName": "LISTA BLACK FRIDAY",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1kBhxCODu-m47y5dlIJGAFjyLgAQuHEV0OmY23BDNz28/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Página1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1kBhxCODu-m47y5dlIJGAFjyLgAQuHEV0OmY23BDNz28/edit#gid=0"
+        },
+        "options": {}
+      },
+      "id": "6fab77aa-cf39-45f4-8cc4-a3d0846185d7",
+      "name": "Pega todos os contatos",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        2460,
+        660
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "062b8804-17a0-4a7b-8b70-e3df9b6e55b8",
+              "name": "numero",
+              "value": "={{ $json.number_id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "d3bf5f2f-68d2-49d3-b97c-5e94a6758d78",
+      "name": "Pega a variável número",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3140,
+        820
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1kBhxCODu-m47y5dlIJGAFjyLgAQuHEV0OmY23BDNz28",
+          "mode": "list",
+          "cachedResultName": "LISTA BLACK FRIDAY",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1kBhxCODu-m47y5dlIJGAFjyLgAQuHEV0OmY23BDNz28/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Página1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1kBhxCODu-m47y5dlIJGAFjyLgAQuHEV0OmY23BDNz28/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "row_number": "={{ $('Pega todos os contatos').item.json.row_number }}",
+            "Inválido?": "true"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "number_id",
+              "displayName": "number_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Inválido?",
+              "displayName": "Inválido?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "aa3e5472-0d6b-4831-851c-81355734bc07",
+      "name": "Google Sheets2",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        3620,
+        980
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1kBhxCODu-m47y5dlIJGAFjyLgAQuHEV0OmY23BDNz28",
+          "mode": "list",
+          "cachedResultName": "LISTA BLACK FRIDAY",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1kBhxCODu-m47y5dlIJGAFjyLgAQuHEV0OmY23BDNz28/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Página1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1kBhxCODu-m47y5dlIJGAFjyLgAQuHEV0OmY23BDNz28/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Verificado?": "true",
+            "row_number": "={{ $('Pega todos os contatos').item.json.row_number }}"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "number_id",
+              "displayName": "number_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Inválido?",
+              "displayName": "Inválido?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Verificado?",
+              "displayName": "Verificado?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "c17034db-2d54-4c00-8063-349deb729d5e",
+      "name": "Google Sheets3",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        4300,
+        600
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://evolution.pixeo.com.br/chat/fetchProfile/testmaze",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "=e738f4b73c3f37f01cdba168f6ee91b7"
+            },
+            {
+              "name": "Content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "number",
+              "value": "={{ $json.numero }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "75070858-4388-459f-8d64-52e0ec97a073",
+      "name": "Check user profile1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3300,
+        820
+      ],
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "74e83786-8b81-4634-bd6f-f3a85e6014c1",
+      "name": "Loop Over Items1",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        2940,
+        680
+      ]
+    },
+    {
+      "parameters": {
+        "content": "# Verificador de números válidos no WhatsApp [google sheets]",
+        "height": 673,
+        "width": 2086
+      },
+      "id": "7d712b6b-59a8-4d29-95d4-d84846fdf5c8",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2420,
+        480
+      ]
+    },
+    {
+      "parameters": {
+        "amount": "={{ $json.randomNumber }}"
+      },
+      "id": "2df2ad0d-7514-4ea1-9e19-6aec170e878d",
+      "name": "Wait2",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        4160,
+        600
+      ],
+      "webhookId": "e3e2cbdc-2f39-4b0a-9b2d-8904570b8fe9"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "cc0919f4-6e50-479c-92e1-e00cb70a6cd8",
+              "leftValue": "={{ $json['Verificado?'].length }}",
+              "rightValue": "",
+              "operator": {
+                "type": "number",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "1fd02747-1ca6-463d-b80c-388c8b0f0de2",
+      "name": "If1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2660,
+        660
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## essa parte é alterável",
+        "height": 240,
+        "width": 700
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1960,
+        1300
+      ],
+      "id": "5ea26460-d827-42e4-a5c4-7936b175f98e",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Executa o código de geração do número aleatório\nconst min = 6;\nconst max = 18;\nconst randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;\n\n// Retorna o valor em um array de objetos com a propriedade \"json\"\nreturn [\n  {\n    json: {\n      randomNumber: randomNumber,\n    },\n  },\n];"
+      },
+      "id": "e479a90e-5e8d-4575-87fb-d6d28c439436",
+      "name": "Code5",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1840,
+        780
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "062b8804-17a0-4a7b-8b70-e3df9b6e55b8",
+              "name": "numero",
+              "value": "={{ $json.number_id }}",
+              "type": "string"
+            },
+            {
+              "id": "609bd427-2638-4719-8f4d-c6ef5b4a52b5",
+              "name": "id",
+              "value": "={{ $('Baserow1').item.json.id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "64ebe264-5c94-4c09-bccf-565b7a55905e",
+      "name": "Pega a variável número1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        980,
+        800
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://evolution.pixeo.com.br/chat/fetchProfile/testmaze",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "=e738f4b73c3f37f01cdba168f6ee91b7"
+            },
+            {
+              "name": "Content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "number",
+              "value": "={{ $json.numero }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "7141392d-3510-45f6-8c6c-80e3ab374847",
+      "name": "Check user profile2",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1160,
+        800
+      ],
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "cf3708eb-8cef-4ea4-91a6-79e33741ff04",
+      "name": "Loop Over Items2",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        780,
+        700
+      ]
+    },
+    {
+      "parameters": {
+        "content": "# Verificador de números válidos no WhatsApp [Baserow]",
+        "height": 673,
+        "width": 2086,
+        "color": 5
+      },
+      "id": "082aaac6-2d16-4e6c-ae90-3a2d07e79a2d",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        280,
+        480
+      ]
+    },
+    {
+      "parameters": {
+        "amount": "={{ $json.randomNumber }}"
+      },
+      "id": "3e1fd3fa-6919-48ca-a531-f9a92a3f3e35",
+      "name": "Wait3",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2020,
+        620
+      ],
+      "webhookId": "e3e2cbdc-2f39-4b0a-9b2d-8904570b8fe9"
+    },
+    {
+      "parameters": {
+        "databaseId": 151848,
+        "tableId": 384519,
+        "limit": 1,
+        "additionalOptions": {}
+      },
+      "type": "n8n-nodes-base.baserow",
+      "typeVersion": 1,
+      "position": [
+        320,
+        680
+      ],
+      "id": "c3f25351-cc19-4db6-b43f-d2d8934633e6",
+      "name": "Baserow1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "cc0919f4-6e50-479c-92e1-e00cb70a6cd8",
+              "leftValue": "={{ $json['Invalido ?'].length }}",
+              "rightValue": "",
+              "operator": {
+                "type": "number",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "9c82f934-6cf3-4c33-9d9e-2041ab88a743",
+      "name": "Verificado?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        500,
+        680
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "databaseId": 151848,
+        "tableId": 384519,
+        "rowId": "={{ $('Pega a variável número1').first().json.id }}",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": 2975116,
+              "fieldValue": "true"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.baserow",
+      "typeVersion": 1,
+      "position": [
+        1500,
+        980
+      ],
+      "id": "ecad39d5-0bb1-49e4-b609-f1d5647cb298",
+      "name": "Baserow2"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "databaseId": 151848,
+        "tableId": 384519,
+        "rowId": "={{ $('Baserow1').first().json.id }}",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": 2911528,
+              "fieldValue": "true"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.baserow",
+      "typeVersion": 1,
+      "position": [
+        2180,
+        620
+      ],
+      "id": "47ddfe5f-2257-48a2-9815-8089a9691462",
+      "name": "Baserow3"
+    },
+    {
+      "parameters": {
+        "databaseId": 151848,
+        "tableId": 384519,
+        "returnAll": true,
+        "additionalOptions": {}
+      },
+      "id": "498cca42-5dde-4c81-b603-b208998eaccd",
+      "name": "Baserow7",
+      "type": "n8n-nodes-base.baserow",
+      "typeVersion": 1,
+      "position": [
+        340,
+        60
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "databaseId": 151848,
+        "tableId": 384519,
+        "rowId": "={{ $('Baserow7').item.json.id }}",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": 2948444,
+              "fieldValue": "={{ $json.formatted_number }}"
+            }
+          ]
+        }
+      },
+      "id": "5e336ddc-39e5-4db6-ba08-3c0690b10596",
+      "name": "Baserow10",
+      "type": "n8n-nodes-base.baserow",
+      "typeVersion": 1,
+      "position": [
+        760,
+        60
+      ]
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1kBhxCODu-m47y5dlIJGAFjyLgAQuHEV0OmY23BDNz28",
+          "mode": "list",
+          "cachedResultName": "LISTA BLACK FRIDAY",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1kBhxCODu-m47y5dlIJGAFjyLgAQuHEV0OmY23BDNz28/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Página1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1kBhxCODu-m47y5dlIJGAFjyLgAQuHEV0OmY23BDNz28/edit#gid=0"
+        },
+        "options": {}
+      },
+      "id": "5b60f6b8-5d53-46e7-8313-e34d583b0a9a",
+      "name": "Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        340,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1kBhxCODu-m47y5dlIJGAFjyLgAQuHEV0OmY23BDNz28",
+          "mode": "list",
+          "cachedResultName": "LISTA BLACK FRIDAY",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1kBhxCODu-m47y5dlIJGAFjyLgAQuHEV0OmY23BDNz28/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Página1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1kBhxCODu-m47y5dlIJGAFjyLgAQuHEV0OmY23BDNz28/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "number_id2": "={{ $json.formatted_number }}",
+            "row_number": "={{ $('Google Sheets').item.json.row_number }}"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "number_id",
+              "displayName": "number_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "number_id2",
+              "displayName": "number_id2",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "9ee8279c-4793-4b9c-a655-119974cbb7a5",
+      "name": "Google Sheets1",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        760,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Variável de entrada, assumindo que \"number_id\" contém o número a ser formatado\nlet numero = String($json.number_id); // Converte para string\n\n// Remove quaisquer espaços ou caracteres não numéricos\nnumero = numero.replace(/\\D/g, \"\");\n\n// Verifica se o número começa com \"55\" e se o primeiro dígito após o DDD é \"9\"\nif (numero.startsWith(\"55\") && numero[4] === \"9\") {\n  // Remove o primeiro \"9\" após o DDD (posição 4)\n  numero = numero.slice(0, 4) + numero.slice(5);\n}\n\n// Retorna o número formatado\nreturn {\n  formatted_number: numero\n};"
+      },
+      "id": "673769fa-5fff-488a-b65a-acf66fd94703",
+      "name": "Remove um 9",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1340,
+        40
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Variável de entrada, assumindo que \"number_id\" contém o número a ser formatado\nlet numero = $json.number_id;\n\n// Remove quaisquer espaços ou caracteres não numéricos\nnumero = numero.replace(/\\D/g, \"\");\n\n// Adiciona o prefixo 55 se não estiver presente\nif (!numero.startsWith(\"55\")) {\n  numero = \"55\" + numero;\n}\n\n// Verifica se o número contém o nono dígito (9) depois do DDD\nif (numero.length === 12 && numero.startsWith(\"55\")) {\n  // Adiciona o nono dígito \"9\" para números com 11 dígitos após o prefixo\n  numero = numero.slice(0, 4) + \"9\" + numero.slice(4);\n}\n\n// Retorna o número formatado\nreturn {\n  formatted_number: numero\n};"
+      },
+      "id": "3840bb47-c02f-442f-85a3-e9b88435fc1e",
+      "name": "Adiciona 55 e um 9",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        560,
+        60
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "databaseId": 151848,
+        "tableId": 384519,
+        "rowId": "={{ $('Baserow4').item.json.id }}",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": 2911303,
+              "fieldValue": "={{ $json.formatted_number }}"
+            }
+          ]
+        }
+      },
+      "id": "744e690e-d57a-45ec-8397-7367a4600e49",
+      "name": "Baserow13",
+      "type": "n8n-nodes-base.baserow",
+      "typeVersion": 1,
+      "position": [
+        1540,
+        40
+      ]
+    },
+    {
+      "parameters": {
+        "content": "# Atualiza número em um formáto válido\n",
+        "height": 502,
+        "width": 738
+      },
+      "id": "9ec73d70-4927-4937-9f45-065d2dfd27c5",
+      "name": "Sticky Note4",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        280,
+        -60
+      ]
+    },
+    {
+      "parameters": {
+        "databaseId": 151848,
+        "tableId": 384519,
+        "returnAll": true,
+        "additionalOptions": {}
+      },
+      "id": "86c61092-b632-497a-9d42-3d2499fd85d5",
+      "name": "Baserow4",
+      "type": "n8n-nodes-base.baserow",
+      "typeVersion": 1,
+      "position": [
+        1120,
+        40
+      ]
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1kBhxCODu-m47y5dlIJGAFjyLgAQuHEV0OmY23BDNz28",
+          "mode": "list",
+          "cachedResultName": "LISTA BLACK FRIDAY",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1kBhxCODu-m47y5dlIJGAFjyLgAQuHEV0OmY23BDNz28/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Página1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1kBhxCODu-m47y5dlIJGAFjyLgAQuHEV0OmY23BDNz28/edit#gid=0"
+        },
+        "options": {}
+      },
+      "id": "75ef2894-f1aa-4a64-9b28-4a4cbb7586fa",
+      "name": "Google Sheets4",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1120,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1kBhxCODu-m47y5dlIJGAFjyLgAQuHEV0OmY23BDNz28",
+          "mode": "list",
+          "cachedResultName": "LISTA BLACK FRIDAY",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1kBhxCODu-m47y5dlIJGAFjyLgAQuHEV0OmY23BDNz28/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Página1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1kBhxCODu-m47y5dlIJGAFjyLgAQuHEV0OmY23BDNz28/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "number_id2": "={{ $json.formatted_number }}",
+            "row_number": "={{ $('Google Sheets4').item.json.row_number }}"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "number_id",
+              "displayName": "number_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "number_id2",
+              "displayName": "number_id2",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "414ce2a6-de24-4859-b64c-c81679abf8c7",
+      "name": "Google Sheets5",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1540,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "content": "# Atualiza número em um formáto válido\n",
+        "height": 502,
+        "width": 858,
+        "color": 5
+      },
+      "id": "52326691-aab3-4ae0-8e34-39d987ef46fa",
+      "name": "Sticky Note5",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1060,
+        -60
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Variável de entrada, assumindo que \"$json.number_id\" contém o número a ser formatado\nlet numero = String($json.number_id); // Converte para string\n\n// Remove quaisquer espaços ou caracteres não numéricos\nnumero = numero.replace(/\\D/g, \"\");\n\n// Adiciona o prefixo 55 se não estiver presente\nif (!numero.startsWith(\"55\")) {\n  numero = \"55\" + numero;\n}\n\n// Verifica se o número contém o nono dígito (9) depois do DDD\nif (numero.length === 12 && numero.startsWith(\"55\")) {\n  // Adiciona o nono dígito \"9\" para números com 11 dígitos após o prefixo\n  numero = numero.slice(0, 4) + \"9\" + numero.slice(4);\n}\n\n// Retorna o número formatado\nreturn {\n  formatted_number: numero\n};"
+      },
+      "id": "ef5d6dc2-8d94-4103-ba91-94cc535ba5c6",
+      "name": "Adiciona 55 e 9",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        560,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Variável de entrada, assumindo que \"$json.number_id\" contém o número a ser formatado\nlet numero = String($json.number_id); // Converte para string\n\n// Remove quaisquer espaços ou caracteres não numéricos\nnumero = numero.replace(/\\D/g, \"\");\n\n// Adiciona o prefixo 55 se não estiver presente\nif (!numero.startsWith(\"55\")) {\n  numero = \"55\" + numero;\n}\n\n// Verifica se o número contém o nono dígito (9) depois do DDD\nif (numero.length === 12 && numero.startsWith(\"55\")) {\n  // Adiciona o nono dígito \"9\" para números com 11 dígitos após o prefixo\n  numero = numero.slice(0, 4) + \"9\" + numero.slice(4);\n}\n\n// Retorna o número formatado\nreturn {\n  formatted_number: numero\n};"
+      },
+      "id": "891bb572-1dd5-4333-aaf9-74c3e470ce50",
+      "name": "Remove o 9 adicional",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1340,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "cc0919f4-6e50-479c-92e1-e00cb70a6cd8",
+              "leftValue": "={{ $json['Enviado?'] }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "60ed92a4-701e-4e1d-ab64-02a7ab4b070e",
+      "name": "Enviado ao usuário?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        900,
+        1620
+      ]
+    }
+  ],
+  "connections": {
+    "Lista todos os usuários para envio": {
+      "main": [
+        [
+          {
+            "node": "Enviado ao usuário?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Verifica se o envio ja foi feito",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Verifica se o envio ja foi feito": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "RANDOMIZA AS MENSAGENS1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Baserow": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "All Data API": {
+      "main": [
+        [
+          {
+            "node": "Lista todos os usuários para envio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Baserow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Evolution API": {
+      "main": [
+        [
+          {
+            "node": "Envia lista",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Envia lista": {
+      "main": [
+        [
+          {
+            "node": "Nota de esclarecimento",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "All Data API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Evolution API2": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Nota de esclarecimento": {
+      "main": [
+        [
+          {
+            "node": "Evolution API2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RANDOMIZA AS MENSAGENS1": {
+      "main": [
+        [
+          {
+            "node": "Evolution API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code4": {
+      "main": [
+        [
+          {
+            "node": "Wait2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pega todos os contatos": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pega a variável número": {
+      "main": [
+        [
+          {
+            "node": "Check user profile1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets2": {
+      "main": [
+        [
+          {
+            "node": "Code4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets3": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check user profile1": {
+      "main": [
+        [
+          {
+            "node": "Code4",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Google Sheets2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items1": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Pega a variável número",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait2": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code5": {
+      "main": [
+        [
+          {
+            "node": "Wait3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pega a variável número1": {
+      "main": [
+        [
+          {
+            "node": "Check user profile2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check user profile2": {
+      "main": [
+        [
+          {
+            "node": "Code5",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Baserow2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items2": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Pega a variável número1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait3": {
+      "main": [
+        [
+          {
+            "node": "Baserow3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Baserow1": {
+      "main": [
+        [
+          {
+            "node": "Verificado?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Verificado?": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Loop Over Items2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Baserow2": {
+      "main": [
+        [
+          {
+            "node": "Code5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Baserow3": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Baserow7": {
+      "main": [
+        [
+          {
+            "node": "Adiciona 55 e um 9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Adiciona 55 e 9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remove um 9": {
+      "main": [
+        [
+          {
+            "node": "Baserow13",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Adiciona 55 e um 9": {
+      "main": [
+        [
+          {
+            "node": "Baserow10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Baserow4": {
+      "main": [
+        [
+          {
+            "node": "Remove um 9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets4": {
+      "main": [
+        [
+          {
+            "node": "Remove o 9 adicional",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Adiciona 55 e 9": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remove o 9 adicional": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviado ao usuário?": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": {
+    "Baserow1": [
+      {
+        "json": {
+          "id": 1074,
+          "order": "0.14285714285714284921",
+          "number_id": "553877404646",
+          "user_name": "Bruna",
+          "Enviado?": true,
+          "Entrou no grupo?": true,
+          "Quer Participar do black?": true,
+          "Quer sair da Lista?": false,
+          "Verificado ?": true,
+          "Saiu do grupo?": true,
+          "Está no grupo?": false,
+          "Follow-up-grupo enviado?": true,
+          "Invalido?": false
+        }
+      }
+    ]
+  },
+  "versionId": "71bbae82-77c6-4d0a-8f42-8e4630c44329",
+  "triggerCount": 0,
+  "tags": [
+    {
+      "createdAt": "2024-12-15T00:44:23.824Z",
+      "updatedAt": "2024-12-15T00:44:23.824Z",
+      "id": "BHmWYme8tyIu8Zf8",
+      "name": "Disparo em massa"
+    },
+    {
+      "createdAt": "2024-12-15T00:44:23.824Z",
+      "updatedAt": "2024-12-15T00:44:23.824Z",
+      "id": "tNyueJWHgM3PkgCR",
+      "name": "Marketing"
+    },
+    {
+      "createdAt": "2024-12-15T01:01:01.468Z",
+      "updatedAt": "2024-12-15T01:01:01.468Z",
+      "id": "EFY7In0c5w5QDWyB",
+      "name": "Prodution"
+    },
+    {
+      "createdAt": "2024-12-15T01:01:01.471Z",
+      "updatedAt": "2024-12-15T01:01:01.471Z",
+      "id": "36GkJd1yVD3u0zrN",
+      "name": "Api-evolution"
+    },
+    {
+      "createdAt": "2024-12-15T01:02:05.805Z",
+      "updatedAt": "2024-12-15T01:02:05.805Z",
+      "id": "JzMZXBbPeEBvHT62",
+      "name": "Testado[V]"
+    }
+  ]
+}
