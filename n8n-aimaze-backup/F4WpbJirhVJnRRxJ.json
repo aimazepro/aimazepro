@@ -1,0 +1,468 @@
+{
+  "createdAt": "2024-11-21T13:43:31.135Z",
+  "updatedAt": "2025-02-17T17:54:34.706Z",
+  "id": "F4WpbJirhVJnRRxJ",
+  "name": "[Backup - Fluxos] - workflows.aimaze.com.br - joao@aimaze.com.br",
+  "active": true,
+  "nodes": [
+    {
+      "parameters": {
+        "filters": {},
+        "requestOptions": {}
+      },
+      "id": "bd10baa0-6a56-46f6-ad93-22b21def861c",
+      "name": "n8n",
+      "type": "n8n-nodes-base.n8n",
+      "typeVersion": 1,
+      "position": [
+        -180,
+        260
+      ],
+      "credentials": {
+        "n8nApi": {
+          "id": "YcCnSNvusbWcGTpD",
+          "name": "[workflows.aimaze.com.br] - joao@aimaze.com.br"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0712954e-62da-4ae2-9920-5f5920707aa1",
+              "name": "owner",
+              "value": "aimazepro",
+              "type": "string"
+            },
+            {
+              "id": "29c802c0-f374-4214-a1ad-b115dd0e7583",
+              "name": "repository",
+              "value": "n8n-aimaze-backup",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "46cacd6c-fed6-4d88-b5d6-8df8f15e7e7f",
+      "name": "Edit Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -340,
+        260
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d854bb7b-f2dd-4431-9868-d72a5bdb3027",
+              "name": "data",
+              "value": "={{ $json }}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "256f529d-6e53-400c-84bf-ef4191b1272f",
+      "name": "workflow-data",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        0,
+        500
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "toJson",
+        "mode": "each",
+        "options": {
+          "format": true,
+          "fileName": "={{ $json.id }}-{{ $json.name }}.json"
+        }
+      },
+      "id": "638ab759-3fc9-42a5-a6ce-240086bdc30d",
+      "name": "Convert to File",
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        800,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "fromJson",
+        "options": {}
+      },
+      "id": "8a3399b2-62d5-4ace-b646-409e45935ebd",
+      "name": "Extract from File",
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        300,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "mergeByFields": {
+          "values": [
+            {
+              "field1": "data.id",
+              "field2": "data.id"
+            }
+          ]
+        },
+        "resolve": "preferInput2",
+        "options": {}
+      },
+      "id": "4f2c7d59-d2c5-4a0e-8666-6a9e36c73f2d",
+      "name": "Compare Datasets",
+      "type": "n8n-nodes-base.compareDatasets",
+      "typeVersion": 2.3,
+      "position": [
+        300,
+        260
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "file",
+        "operation": "get",
+        "owner": {
+          "__rl": true,
+          "value": "={{ $('Edit Fields').item.json.owner }}",
+          "mode": "name"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "={{ $('Edit Fields').item.json.repository }}",
+          "mode": "name"
+        },
+        "filePath": "=n8n-aimaze-backup/{{ $json.id }}.json",
+        "additionalParameters": {}
+      },
+      "id": "718a93b4-86db-4b03-a8b1-f1c15cd21ef2",
+      "name": "GitHub",
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "githubOAuth2Api": {
+          "id": "csIRPiHxHkuSEveU",
+          "name": "[github.com] - tools@aimaze.com.br"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={{ $json.data }}",
+        "options": {}
+      },
+      "id": "677cdcdf-04af-40ca-bb4a-6374436067e1",
+      "name": "workflows",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        620,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "toJson",
+        "mode": "each",
+        "options": {
+          "format": true,
+          "fileName": "={{ $json.data.id }}.json"
+        }
+      },
+      "id": "6c55ef69-9cb5-4e15-93bc-3819d1466b31",
+      "name": "Convert to File1",
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        800,
+        40
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={{ $json.data }}",
+        "options": {}
+      },
+      "id": "b28deb58-a175-414f-8063-8519a0a48d5b",
+      "name": "workflows1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        620,
+        40
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "file",
+        "operation": "edit",
+        "owner": {
+          "__rl": true,
+          "value": "={{ $('Edit Fields').first().json.owner }}",
+          "mode": "name"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "={{ $('Edit Fields').first().json.repository }}",
+          "mode": "name"
+        },
+        "filePath": "=n8n-aimaze-backup/{{ $('workflows1').item.json.id }}.json",
+        "binaryData": true,
+        "commitMessage": "={{ $('workflows1').item.json.name }}"
+      },
+      "id": "d5f6a582-34e1-4921-8172-2955935021a8",
+      "name": "GitHub - edit file",
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1,
+      "position": [
+        960,
+        40
+      ],
+      "credentials": {
+        "githubOAuth2Api": {
+          "id": "csIRPiHxHkuSEveU",
+          "name": "[github.com] - tools@aimaze.com.br"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {}
+          ]
+        }
+      },
+      "id": "151a259f-284a-4bf9-b07c-17d3cb3c0d6a",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -500,
+        260
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "file",
+        "owner": {
+          "__rl": true,
+          "value": "={{ $('Edit Fields').first().json.owner }}",
+          "mode": "name"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "={{ $('Edit Fields').first().json.repository }}",
+          "mode": "name"
+        },
+        "filePath": "=n8n-aimaze-backup/{{ $('workflows').item.json.id }}.json",
+        "binaryData": true,
+        "commitMessage": "={{ $('workflows').item.json.name }} {{ $now.toString() }}"
+      },
+      "id": "4716690e-9a30-4cd9-87b8-c55531420855",
+      "name": "GitHub - edit file1",
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1,
+      "position": [
+        980,
+        460
+      ],
+      "credentials": {
+        "githubOAuth2Api": {
+          "id": "csIRPiHxHkuSEveU",
+          "name": "[github.com] - tools@aimaze.com.br"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "n8n": {
+      "main": [
+        [
+          {
+            "node": "GitHub",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "workflow-data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "n8n",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "workflow-data": {
+      "main": [
+        [
+          {
+            "node": "Compare Datasets",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Convert to File": {
+      "main": [
+        [
+          {
+            "node": "GitHub - edit file1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Compare Datasets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GitHub": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Compare Datasets": {
+      "main": [
+        [],
+        [],
+        [
+          {
+            "node": "workflows1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "workflows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "workflows": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "workflows1": {
+      "main": [
+        [
+          {
+            "node": "Convert to File1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File1": {
+      "main": [
+        [
+          {
+            "node": "GitHub - edit file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveDataSuccessExecution": "all",
+    "saveManualExecutions": false,
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
+  "meta": null,
+  "pinData": {},
+  "versionId": "31101ce0-abee-419e-9c62-1b28705e16c2",
+  "triggerCount": 1,
+  "tags": [
+    {
+      "createdAt": "2024-11-20T15:37:03.630Z",
+      "updatedAt": "2024-11-20T15:37:03.630Z",
+      "id": "MntiHdeut912Rbwe",
+      "name": "backup"
+    },
+    {
+      "createdAt": "2024-11-20T21:22:28.345Z",
+      "updatedAt": "2024-11-20T21:22:28.345Z",
+      "id": "7F9yOqhoeiiO1xNv",
+      "name": "produção"
+    }
+  ]
+}
