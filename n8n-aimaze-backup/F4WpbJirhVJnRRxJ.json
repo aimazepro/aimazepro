@@ -1,6 +1,6 @@
 {
   "createdAt": "2024-11-21T13:43:31.135Z",
-  "updatedAt": "2025-02-17T18:14:37.596Z",
+  "updatedAt": "2025-02-17T18:15:26.595Z",
   "id": "F4WpbJirhVJnRRxJ",
   "name": "[Backup - Fluxos] - workflows.aimaze.com.br - joao@aimaze.com.br",
   "active": true,
@@ -449,7 +449,7 @@
   },
   "meta": null,
   "pinData": {},
-  "versionId": "83764837-da9a-47af-bc4a-ac4b2d760fa2",
+  "versionId": "09b7a5e2-81b2-4c57-8729-a423f96fa707",
   "triggerCount": 1,
   "tags": [
     {
