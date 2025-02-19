@@ -618,15 +618,16 @@
   },
   "staticData": {
     "node:Notion Trigger2": {
-      "lastTimeChecked": "2025-02-17T17:45:00.000Z",
+      "lastTimeChecked": "2025-02-18T23:25:00.000Z",
       "possibleDuplicates": [
-        "19916533-6e91-8053-9b9f-c1329f3a2794"
+        "19e16533-6e91-8035-b210-d7a26623a019"
       ]
     },
     "node:Notion Trigger3": {
-      "lastTimeChecked": "2025-02-17T17:50:00.000Z",
+      "lastTimeChecked": "2025-02-18T23:30:00.000Z",
       "possibleDuplicates": [
-        "19916533-6e91-8053-9b9f-c1329f3a2794"
+        "18516533-6e91-8058-9728-ce33d2c63f37",
+        "18b16533-6e91-805d-a967-d87d84f9fedc"
       ]
     }
   },
