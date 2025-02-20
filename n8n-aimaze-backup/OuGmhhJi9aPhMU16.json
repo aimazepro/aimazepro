@@ -871,16 +871,13 @@
       "recurrenceRules": []
     },
     "node:Notion Trigger": {
-      "lastTimeChecked": "2025-02-19T00:37:00.000Z",
+      "lastTimeChecked": "2025-02-20T12:37:00.000Z",
       "possibleDuplicates": [
         "19e16533-6e91-80bb-bfde-f710308a6379"
       ]
     },
     "node:Notion Trigger1": {
-      "lastTimeChecked": "2025-02-19T00:38:00.000Z",
-      "possibleDuplicates": [
-        "18216533-6e91-809c-93be-f2a2d507bede"
-      ]
+      "lastTimeChecked": "2025-02-20T12:37:00.000Z"
     },
     "node:Notion Trigger2": {
       "lastTimeChecked": "2025-01-20T18:33:00.000Z",
