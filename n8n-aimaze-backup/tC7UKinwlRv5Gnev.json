@@ -1,6 +1,6 @@
 {
   "createdAt": "2024-12-22T23:57:45.058Z",
-  "updatedAt": "2025-02-07T01:41:32.793Z",
+  "updatedAt": "2025-03-03T17:12:44.893Z",
   "id": "tC7UKinwlRv5Gnev",
   "name": "Automaster",
   "active": false,
@@ -2159,8 +2159,8 @@
       "type": "n8n-nodes-base.baserow",
       "typeVersion": 1,
       "position": [
-        1620,
-        -600
+        1460,
+        -540
       ],
       "id": "5602f61c-c35f-46eb-aa40-37e5a5f392de",
       "name": "Baserow1",
@@ -2180,8 +2180,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1800,
-        -600
+        1640,
+        -540
       ],
       "id": "4a03321d-e397-4b0a-8b9f-8596b0cec837",
       "name": "Prepara outpoot"
@@ -2201,8 +2201,8 @@
       "type": "n8n-nodes-base.summarize",
       "typeVersion": 1,
       "position": [
-        3020,
-        -800
+        2200,
+        -540
       ],
       "id": "31f792b6-1787-4ed1-a5e2-3b88deab5ac0",
       "name": "Summarize"
@@ -2316,8 +2316,8 @@
       "type": "n8n-nodes-base.baserow",
       "typeVersion": 1,
       "position": [
-        1620,
-        -420
+        1460,
+        -340
       ],
       "id": "1e5593cc-07c9-4777-ba9c-8e838f7a6ab1",
       "name": "Baserow3",
@@ -2337,8 +2337,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1800,
-        -420
+        1640,
+        -340
       ],
       "id": "203a318f-ffdc-4d60-82a0-219f9c0a7ac1",
       "name": "Prepara outpoot1"
@@ -2353,8 +2353,8 @@
       "type": "n8n-nodes-base.baserow",
       "typeVersion": 1,
       "position": [
-        1620,
-        -800
+        1460,
+        -720
       ],
       "id": "e4453ffa-4316-4098-89a3-6718fde2098b",
       "name": "Baserow4",
@@ -2374,8 +2374,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1800,
-        -800
+        1640,
+        -720
       ],
       "id": "7e15bf21-dd42-4d14-b2ed-bf2e802bc366",
       "name": "Prepara outpoot2"
@@ -2617,8 +2617,8 @@
       "type": "n8n-nodes-base.googleCalendar",
       "typeVersion": 1.3,
       "position": [
-        2080,
-        -1360
+        1360,
+        -1340
       ],
       "id": "46ee4eee-3b28-4f65-9d8d-0371c6305c69",
       "name": "Google Calendar",
@@ -2693,8 +2693,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        2740,
-        -1280
+        2020,
+        -1260
       ],
       "id": "d71e7bbf-5320-4b66-871a-c007e2ccd10c",
       "name": "Prepara outpoot4"
@@ -2727,7 +2727,7 @@
           "conditions": [
             {
               "id": "fed27473-b969-4f3d-8ced-5509a399da3d",
-              "leftValue": "={{ $json.available }}",
+              "leftValue": "={{ $('Google Calendar').item.json.available }}",
               "rightValue": "",
               "operator": {
                 "type": "boolean",
@@ -2743,8 +2743,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        2520,
-        -1360
+        1800,
+        -1340
       ],
       "id": "8fd024d9-e40f-40ed-b775-8dac2b5cb015",
       "name": "Checa disponibilidade"
@@ -2767,8 +2767,8 @@
       "type": "n8n-nodes-base.googleCalendar",
       "typeVersion": 1.3,
       "position": [
-        2740,
-        -1460
+        2020,
+        -1440
       ],
       "id": "e9116d9f-c3b2-4440-b685-4f564589ecf7",
       "name": "Google Calendar1",
@@ -2788,8 +2788,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        2980,
-        -1580
+        2260,
+        -1560
       ],
       "id": "81cb0041-1588-443c-bcd2-f7e5380014f5",
       "name": "Prepara outpoot5"
@@ -2811,11 +2811,12 @@
       "type": "n8n-nodes-base.googleCalendar",
       "typeVersion": 1.3,
       "position": [
-        2300,
-        -1360
+        1580,
+        -1340
       ],
       "id": "488ce2bf-6ac7-4342-8b06-916045e1a9a4",
       "name": "Google Calendar2",
+      "alwaysOutputData": true,
       "credentials": {
         "googleCalendarOAuth2Api": {
           "id": "Eqt8e2WwupPypoIC",
@@ -3887,7 +3888,7 @@
       }
     ]
   },
-  "versionId": "e6e3af2e-67cf-46c2-b73a-12941350245f",
+  "versionId": "338895a7-6d18-4b43-9016-108ae1f176d5",
   "triggerCount": 1,
   "tags": [
     {
