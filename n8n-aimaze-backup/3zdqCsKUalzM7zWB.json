@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-01-20T18:33:49.866Z",
-  "updatedAt": "2025-02-27T19:17:32.979Z",
+  "updatedAt": "2025-03-03T19:57:24.151Z",
   "id": "3zdqCsKUalzM7zWB",
   "name": "Aviso banco de dados de notas notion",
   "active": true,
@@ -618,16 +618,15 @@
   },
   "staticData": {
     "node:Notion Trigger2": {
-      "lastTimeChecked": "2025-02-27T19:17:00.000Z",
+      "lastTimeChecked": "2025-03-03T19:57:00.000Z",
       "possibleDuplicates": [
-        "1a516533-6e91-8090-98df-ee619e6ba2cd"
+        "1ab16533-6e91-80e6-ac3a-c8580e012f77"
       ]
     },
     "node:Notion Trigger3": {
-      "lastTimeChecked": "2025-02-27T19:17:00.000Z",
+      "lastTimeChecked": "2025-03-03T19:57:00.000Z",
       "possibleDuplicates": [
-        "1a516533-6e91-8090-98df-ee619e6ba2cd",
-        "19f16533-6e91-8052-ad14-d889a3e0f551"
+        "1ab16533-6e91-80e6-ac3a-c8580e012f77"
       ]
     }
   },
