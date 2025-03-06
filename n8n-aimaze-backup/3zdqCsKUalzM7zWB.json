@@ -618,16 +618,13 @@
   },
   "staticData": {
     "node:Notion Trigger2": {
-      "lastTimeChecked": "2025-03-05T23:50:00.000Z",
+      "lastTimeChecked": "2025-03-06T17:23:00.000Z",
       "possibleDuplicates": [
         "1ad16533-6e91-80b5-8893-df4829bec4bc"
       ]
     },
     "node:Notion Trigger3": {
-      "lastTimeChecked": "2025-03-05T23:50:00.000Z",
-      "possibleDuplicates": [
-        "1ad16533-6e91-80b5-8893-df4829bec4bc"
-      ]
+      "lastTimeChecked": "2025-03-06T17:23:00.000Z"
     }
   },
   "meta": {
